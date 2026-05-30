@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>English Daily - Luyện Đọc & Đàm Thoại AI Học Sinh Các Cấp</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        },
+                        streak: '#ef4444'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; user-select: none; -webkit-font-smoothing: antialiased; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        @keyframes pulse-wave { 0%, 100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.15); opacity: 1; } }
+        .pulse-wave { animation: pulse-wave 1.5s infinite ease-in-out; }
+        @keyframes slide-up { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .animate-slide-up { animation: slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes bubble-float { 0% { transform: translateY(100%) scale(0.9); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-120%) scale(1.1); opacity: 0; } }
+        .bubble-item { animation: bubble-float 6s linear infinite; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
+        .animate-shake { animation: shake 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col md:py-6">
+
+    <div class="w-full max-w-3xl mx-auto bg-white min-h-[100dvh] md:min-h-0 md:h-[92vh] flex flex-col md:rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.1)] relative overflow-hidden transition-all duration-300">
+        
+        <!-- MÀN HÌNH CHỜ & ĐĂNG NHẬP -->
+        <div id="view-auth" class="flex-1 flex flex-col p-6 md:p-10 justify-center bg-gradient-to-b from-brand-50 to-white overflow-y-auto custom-scrollbar">
+            <div class="max-w-md w-full mx-auto space-y-6">
+                <div class="text-center">
+                    <div class="w-20 h-20 rounded-3xl bg-brand-600 text-white flex items-center justify-center mx-auto shadow-lg shadow-brand-500/30 mb-5 animate-bounce">
+                        <i class="fa-solid fa-book-open-reader text-4xl"></i>
+                    </div>
+                    <h1 class="text-2xl md:text-3xl font-black text-slate-900 tracking-tight leading-tight">English Daily<br><span class="text-lg md:text-xl text-brand-600">BY Chú Còn ECO</span></h1>
+                    <p class="text-sm text-slate-500 mt-2 font-medium">Luyện đọc và Đàm thoại AI thông minh (Cloud Sync)</p>
+                </div>
+
+                <div class="bg-slate-100 rounded-2xl p-1.5 flex shadow-inner">
+                    <button onclick="window.switchAuthTab('login')" id="auth-tab-login" class="flex-1 py-3 text-center text-sm font-bold rounded-xl transition bg-white text-brand-600 shadow-sm"><i class="fa-solid fa-key mr-1.5"></i> Đăng Nhập</button>
+                    <button onclick="window.switchAuthTab('register')" id="auth-tab-register" class="flex-1 py-3 text-center text-sm font-bold rounded-xl transition text-slate-500 hover:text-slate-800"><i class="fa-solid fa-user-plus mr-1.5"></i> Đăng Ký</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="form-auth-login" class="space-y-5">
+                    <div class="bg-white border border-slate-200/60 rounded-2xl p-5 shadow-sm">
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2.5">Mã Học Sinh ECO</label>
+                        <div class="relative">
+                            <input type="text" id="input-auth-student-code" placeholder="Ví dụ: ECO892" class="w-full text-center uppercase tracking-widest bg-slate-50 border border-slate-200 rounded-xl py-4 text-xl md:text-2xl font-extrabold text-brand-700 focus:outline-none focus:border-brand-500 transition-all">
+                        </div>
+                    </div>
+                    <button onclick="window.handleStudentLogin()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-base py-4 rounded-2xl shadow-lg shadow-brand-500/20 transition active:scale-95 flex items-center justify-center space-x-2">
+                        <span>Vào Học Ngay</span><i class="fa-solid fa-arrow-right text-sm"></i>
+                    </button>
+                </div>
+
+                <!-- Registration Form -->
+                <div id="form-auth-register" class="space-y-5 hidden">
+                    <div class="bg-white border border-slate-200/60 rounded-2xl p-5 shadow-sm space-y-4">
+                        <div><label class="block text-xs font-bold text-slate-400 uppercase mb-2">Tên của con</label><input type="text" id="input-register-name" placeholder="Nguyễn Minh Thư" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-base font-semibold focus:outline-none focus:border-brand-500"></div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Cấp lớp</label>
+                            <select id="input-register-grade" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-base font-semibold focus:outline-none focus:border-brand-500">
+                                <option value="cap_1">Cấp 1 (Lớp 1 - 5)</option><option value="cap_2">Cấp 2 (Lớp 6 - 9)</option><option value="cap_3">Cấp 3 (Lớp 10 - 12)</option>
+                            </select>
+                        </div>
+                        <div><label class="block text-xs font-bold text-slate-400 uppercase mb-2">SĐT Phụ Huynh</label><input type="tel" id="input-register-phone" placeholder="Nhập để xác minh" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-base font-semibold focus:outline-none focus:border-brand-500"></div>
+                    </div>
+                    <button onclick="window.handleParentRegister()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-base py-4 rounded-2xl shadow-lg transition active:scale-95 flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-cloud-arrow-up"></i><span>Tạo Tài Khoản Cloud</span>
+                    </button>
+                </div>
+
+                <div class="mt-8 text-center border-t border-slate-200 pt-6">
+                    <button onclick="window.openAdminModal()" class="text-sm text-slate-400 font-bold hover:text-brand-600 transition flex items-center justify-center w-full space-x-1.5"><i class="fa-solid fa-sliders text-xs"></i><span>Giáo viên / Admin</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MÀN HÌNH CHÍNH APP -->
+        <div id="view-main-app" class="flex-1 flex-col hidden h-full overflow-hidden">
+            <header class="bg-gradient-to-r from-brand-600 to-brand-700 text-white px-4 md:px-6 py-4 z-40 shrink-0">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center border-2 border-white/30"><i class="fa-solid fa-user-graduate text-2xl text-white"></i></div>
+                        <div>
+                            <div class="flex items-center space-x-2"><h2 id="display-student-name" class="font-bold text-base tracking-wide">...</h2><span id="sync-badge" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" title="Cloud Synced"></span></div>
+                            <select id="grade-selector" onchange="window.changeGrade(this.value)" class="bg-transparent text-xs font-bold focus:outline-none cursor-pointer border border-white/30 rounded px-1.5 py-0.5 mt-0.5"><option value="cap_1" class="text-slate-800">Cấp 1</option><option value="cap_2" class="text-slate-800">Cấp 2</option><option value="cap_3" class="text-slate-800">Cấp 3</option></select>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 md:space-x-3">
+                        <div class="bg-amber-500 text-white px-3 py-1.5 rounded-full flex items-center space-x-1.5 text-xs font-extrabold shadow-md"><i class="fa-solid fa-gem text-yellow-200"></i><span id="display-points-count">0</span></div>
+                        <div class="bg-red-500/90 text-white px-3 py-1.5 rounded-full flex items-center space-x-1.5 text-xs font-extrabold shadow-md"><i class="fa-solid fa-fire text-amber-300"></i><span id="display-streak-count">0</span></div>
+                        <button onclick="window.handleLogOutStudent()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition active:scale-95" title="Đăng xuất"><i class="fa-solid fa-power-off text-sm"></i></button>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 p-4 md:p-6 overflow-y-auto custom-scrollbar bg-slate-50 relative pb-20 md:pb-24">
+                <div class="grid grid-cols-3 bg-slate-200 rounded-xl p-1.5 mb-5 shadow-inner">
+                    <button onclick="window.switchTab('reading')" id="tab-btn-reading" class="py-2.5 md:py-3 text-center text-xs md:text-sm font-extrabold rounded-lg transition-all bg-white text-brand-600 shadow-sm"><i class="fa-solid fa-book-open mr-1"></i> Luyện Đọc</button>
+                    <button onclick="window.switchTab('chat')" id="tab-btn-chat" class="py-2.5 md:py-3 text-center text-xs md:text-sm font-extrabold rounded-lg transition-all text-slate-500 hover:text-slate-800"><i class="fa-solid fa-robot mr-1"></i> AI Chat</button>
+                    <button onclick="window.switchTab('game')" id="tab-btn-game" class="py-2.5 md:py-3 text-center text-xs md:text-sm font-extrabold rounded-lg transition-all text-slate-500 hover:text-slate-800"><i class="fa-solid fa-gamepad mr-1"></i> Vui Chơi</button>
+                </div>
+
+                <!-- READING SECTION -->
+                <section id="section-reading" class="space-y-5">
+                    <div class="bg-brand-50 rounded-2xl p-4 border border-brand-100 flex flex-wrap md:flex-nowrap items-center justify-between gap-3">
+                        <span class="text-xs md:text-sm font-black text-brand-900">CHƯƠNG TRÌNH HỌC:</span>
+                        <select id="curriculum-selector" onchange="window.switchCurriculum(this.value)" class="bg-white text-xs md:text-sm font-bold text-brand-700 px-3 py-2 rounded-xl border border-brand-200 focus:outline-none w-full md:w-auto shadow-sm">
+                            <option value="daily">Luyện Đọc Hàng Ngày</option>
+                            <option value="smart_start">i-Learn Smart Start</option>
+                        </select>
+                    </div>
+
+                    <div id="smart-start-selector-box" class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block text-xs font-black text-slate-400 uppercase mb-1.5">Chọn Lớp</label><select id="smart-class-selector" onchange="window.loadSmartStartThemes(this.value)" class="w-full text-sm font-bold bg-slate-50 border rounded-xl p-3 focus:outline-none"><option value="ss_1">Lớp 1</option><option value="ss_2">Lớp 2</option><option value="ss_3">Lớp 3</option><option value="ss_4" selected>Lớp 4</option><option value="ss_5">Lớp 5</option></select></div>
+                            <div><label class="block text-xs font-black text-slate-400 uppercase mb-1.5">Chọn Chủ Đề</label><select id="smart-theme-selector" onchange="window.loadSmartThemeContent(this.value)" class="w-full text-sm font-bold bg-slate-50 border rounded-xl p-3 focus:outline-none"></select></div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t flex justify-end"><a id="smart-book-link" href="#" target="_blank" class="text-sm bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-2 px-4 rounded-lg transition"><i class="fa-solid fa-book-open mr-1"></i> Xem SGK Điện Tử</a></div>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm relative">
+                        <span class="text-sm font-bold text-brand-500 uppercase block mb-1">Thực Hành Đọc To</span>
+                        <h3 id="reading-title" class="text-2xl font-extrabold text-slate-900 leading-tight">...</h3>
+                        <div class="w-full h-52 md:h-72 rounded-2xl mt-4 overflow-hidden bg-slate-100 relative group">
+                            <img id="reading-illustration" src="" alt="Minh họa" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="mt-5 bg-slate-50 rounded-2xl p-5 border border-slate-100 shadow-inner">
+                            <p id="reading-content" class="text-lg md:text-xl text-slate-700 leading-relaxed font-medium pt-2 text-justify">...</p>
+                        </div>
+                        
+                        <div id="reading-wave-indicator" class="hidden flex justify-center items-center space-x-2 py-3 mt-4 bg-emerald-50 rounded-xl border border-emerald-200">
+                            <span class="w-1.5 h-4 bg-emerald-500 rounded-full pulse-wave"></span>
+                            <span class="w-1.5 h-6 bg-emerald-500 rounded-full pulse-wave" style="animation-delay: 0.2s"></span>
+                            <span class="w-1.5 h-4 bg-emerald-500 rounded-full pulse-wave" style="animation-delay: 0.4s"></span>
+                            <span class="text-xs font-bold text-emerald-600 ml-2">Đang lắng nghe bé đọc...</span>
+                        </div>
+
+                        <div class="mt-5 flex gap-3">
+                            <button onclick="window.readAloudTaskText()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3.5 rounded-xl font-bold transition active:scale-95"><i class="fa-solid fa-volume-high text-brand-500 mr-1"></i> Nghe Mẫu</button>
+                            <button onclick="window.startOralReadingChallenge()" id="btn-reading-mic" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-3.5 rounded-xl font-bold shadow-lg transition active:scale-95"><i class="fa-solid fa-microphone mr-1"></i> Đọc Âm</button>
+                        </div>
+                    </div>
+
+                    <!-- KHU VỰC TỪ VỰNG TƯỢNG HÌNH -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+                        <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+                            <h4 class="font-extrabold text-slate-900 text-base md:text-lg flex items-center">
+                                <i class="fa-solid fa-shapes text-brand-500 mr-2 text-xl"></i>Từ Vựng Tượng Hình
+                            </h4>
+                            <span class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-1 rounded-md">Bám sát SGK</span>
+                        </div>
+                        <!-- Lưới hiển thị từ vựng với thẻ Card đẹp mắt -->
+                        <div id="vocabulary-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[400px] overflow-y-auto custom-scrollbar pr-2 pb-2">
+                            <!-- Các thẻ từ vựng sẽ được render vào đây -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CHAT SECTION -->
+                <section id="section-chat" class="hidden flex flex-col h-[calc(100vh-250px)] md:h-[600px]">
+                    <div id="chat-conversation-container" class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-4 mb-4 select-text bg-white rounded-2xl border border-slate-200 shadow-inner">
+                        <div class="flex items-start space-x-3 mt-2">
+                            <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold text-sm">AI</div>
+                            <div class="bg-slate-100 rounded-2xl rounded-tl-none px-4 py-3 text-sm text-slate-800 max-w-[85%] shadow-sm">
+                                <p class="font-bold text-brand-700 text-xs mb-1">Mr. Gemini</p>
+                                <p>Hello! Thầy là gia sư tiếng Anh của em. Em nhấn nút micro để nói chuyện nhé. Nếu em nói sai, thầy sẽ hướng dẫn lại bằng tiếng Việt và tự động bật lại micro cho em nói lại nha!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="voice-wave-indicator" class="hidden flex justify-center items-center space-x-2 py-3 mb-3 bg-brand-50 rounded-2xl border border-brand-200">
+                        <span class="w-1.5 h-6 bg-brand-500 rounded-full pulse-wave"></span>
+                        <span class="w-1.5 h-8 bg-brand-500 rounded-full pulse-wave" style="animation-delay: 0.2s"></span>
+                        <span class="text-sm font-bold text-brand-600 tracking-wide ml-3">Đang nghe em nói...</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2 bg-white border border-slate-200 rounded-2xl p-2.5 shadow-sm">
+                        <input type="text" id="chat-text-input" placeholder="Nhập câu trả lời..." class="flex-1 bg-slate-50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:bg-white border border-transparent focus:border-brand-200">
+                        <button onclick="window.handleSendTextChat()" class="w-12 h-12 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex justify-center items-center transition active:scale-95"><i class="fa-solid fa-paper-plane"></i></button>
+                        <button id="btn-chat-mic" onclick="window.toggleChatVoiceInput()" class="w-12 h-12 rounded-xl bg-brand-600 hover:bg-brand-700 text-white flex items-center justify-center shadow-lg transition active:scale-95"><i class="fa-solid fa-microphone text-xl"></i></button>
+                    </div>
+                </section>
+
+                <!-- GAME SECTION HUB -->
+                <section id="section-game" class="hidden space-y-5">
+                    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-5 rounded-2xl shadow-lg">
+                        <div class="flex justify-between items-center mb-4">
+                            <div><h3 class="font-black text-xl">Trung Tâm Trò Chơi</h3><p class="text-sm text-emerald-50">Dùng thời gian học để giải trí</p></div>
+                            <div class="bg-black/20 px-3 py-1.5 rounded-full font-black text-lg"><i class="fa-solid fa-stopwatch text-yellow-300"></i> <span id="game-time-left">0</span>s</div>
+                        </div>
+                        <button onclick="window.exchangePointsForTime()" class="bg-yellow-400 text-yellow-900 text-sm font-extrabold px-4 py-2 rounded-lg shadow-md transition active:scale-95 w-full md:w-auto"><i class="fa-solid fa-gem mr-1"></i> Đổi 30 Điểm = 60s Chơi</button>
+                    </div>
+
+                    <!-- Game Selection Menu -->
+                    <div id="game-selection-menu" class="grid grid-cols-2 gap-3 md:gap-4">
+                        <button onclick="window.openGame('bubble')" class="bg-gradient-to-br from-blue-400 to-blue-600 text-white p-5 rounded-2xl shadow-lg hover:scale-95 transition text-left relative overflow-hidden group">
+                            <i class="fa-solid fa-circle-dot text-5xl mb-2 opacity-30 absolute -right-2 -bottom-2 group-hover:scale-110 transition"></i>
+                            <h4 class="font-black text-lg relative z-10">Bóng Bay</h4>
+                            <p class="text-xs opacity-90 relative z-10 font-medium mt-1">Phản xạ từ vựng</p>
+                        </button>
+                        <button onclick="window.openGame('quiz')" class="bg-gradient-to-br from-indigo-400 to-indigo-600 text-white p-5 rounded-2xl shadow-lg hover:scale-95 transition text-left relative overflow-hidden group">
+                            <i class="fa-solid fa-clipboard-question text-5xl mb-2 opacity-30 absolute -right-2 -bottom-2 group-hover:scale-110 transition"></i>
+                            <h4 class="font-black text-lg relative z-10">Đố Vui</h4>
+                            <p class="text-xs opacity-90 relative z-10 font-medium mt-1">Trắc nghiệm nhanh</p>
+                        </button>
+                        <button onclick="window.openGame('scramble')" class="bg-gradient-to-br from-amber-400 to-amber-600 text-white p-5 rounded-2xl shadow-lg hover:scale-95 transition text-left relative overflow-hidden group">
+                            <i class="fa-solid fa-layer-group text-5xl mb-2 opacity-30 absolute -right-2 -bottom-2 group-hover:scale-110 transition"></i>
+                            <h4 class="font-black text-lg relative z-10">Ghép Từ</h4>
+                            <p class="text-xs opacity-90 relative z-10 font-medium mt-1">Sắp xếp chữ cái</p>
+                        </button>
+                        <button class="bg-slate-200 text-slate-400 p-5 rounded-2xl shadow text-left relative overflow-hidden cursor-not-allowed border border-slate-300">
+                            <i class="fa-solid fa-lock text-5xl mb-2 opacity-10 absolute -right-2 -bottom-2"></i>
+                            <h4 class="font-black text-lg relative z-10">Sắp ra mắt</h4>
+                            <p class="text-xs opacity-80 relative z-10 font-medium mt-1">Chờ bản cập nhật</p>
+                        </button>
+                    </div>
+
+                    <!-- GAME 1: BUBBLE POP AREA -->
+                    <div id="game-area-bubble" class="hidden w-full h-[400px] bg-slate-900 rounded-3xl relative overflow-hidden shadow-xl border-4 border-slate-800 flex flex-col justify-between">
+                        <button onclick="window.closeGame()" class="absolute top-3 right-3 z-50 bg-white/20 hover:bg-white/40 w-8 h-8 rounded-full flex items-center justify-center text-white transition"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="absolute inset-0 bg-slate-900/90 backdrop-blur-sm z-40 flex flex-col items-center justify-center p-6 text-center" id="game-start-cover-bubble">
+                            <div class="w-16 h-16 bg-blue-500/20 text-blue-400 rounded-full flex items-center justify-center mb-4"><i class="fa-solid fa-circle-dot text-3xl"></i></div>
+                            <h4 class="text-white font-black text-xl mb-2">Bóng Bay Từ Vựng</h4>
+                            <button onclick="window.startGameSession('bubble')" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-extrabold px-8 py-3.5 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.4)] transition active:scale-95">BẮT ĐẦU</button>
+                        </div>
+                        <div class="w-full bg-slate-950/70 p-3 flex justify-between items-center text-white border-b border-slate-800 z-0">
+                            <div><span class="text-slate-400 text-xs font-bold">Tìm từ của:</span><br><span id="game-target-meaning-bubble" class="font-black text-yellow-400 text-lg">--</span></div>
+                            <div class="text-right pr-8"><span class="text-slate-400 text-xs font-bold">Điểm:</span><br><span id="game-score-bubble" class="font-black text-emerald-400 text-xl">0</span></div>
+                        </div>
+                        <div class="flex-1 w-full relative" id="game-bubbles-container"></div>
+                    </div>
+
+                    <!-- GAME 2: QUIZ AREA -->
+                    <div id="game-area-quiz" class="hidden w-full h-[400px] bg-indigo-900 rounded-3xl relative overflow-hidden shadow-xl border-4 border-indigo-800 flex flex-col">
+                        <button onclick="window.closeGame()" class="absolute top-3 right-3 z-50 bg-white/20 hover:bg-white/40 w-8 h-8 rounded-full flex items-center justify-center text-white transition"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="absolute inset-0 bg-indigo-900/90 backdrop-blur-sm z-40 flex flex-col items-center justify-center p-6 text-center" id="game-start-cover-quiz">
+                            <div class="w-16 h-16 bg-indigo-500/20 text-indigo-400 rounded-full flex items-center justify-center mb-4"><i class="fa-solid fa-clipboard-question text-3xl"></i></div>
+                            <h4 class="text-white font-black text-xl mb-2">Đố Vui Siêu Tốc</h4>
+                            <button onclick="window.startGameSession('quiz')" class="mt-4 bg-indigo-500 hover:bg-indigo-600 text-white font-extrabold px-8 py-3.5 rounded-xl shadow-[0_0_20px_rgba(99,102,241,0.4)] transition active:scale-95">BẮT ĐẦU</button>
+                        </div>
+                        <div class="w-full bg-indigo-950/70 p-3 flex justify-between items-center text-white border-b border-indigo-800">
+                            <span class="text-indigo-300 text-xs font-bold uppercase tracking-wider">Trắc Nghiệm</span>
+                            <div class="text-right pr-8"><span class="text-indigo-300 text-xs font-bold">Điểm:</span> <span id="game-score-quiz" class="font-black text-emerald-400 text-xl ml-1">0</span></div>
+                        </div>
+                        <div class="flex-1 p-5 flex flex-col justify-center items-center">
+                            <h4 class="text-indigo-200 text-sm font-bold mb-2">Nghĩa của từ này là gì?</h4>
+                            <div id="quiz-question-word" class="text-3xl md:text-4xl font-black text-white mb-6 bg-indigo-800/50 px-6 py-4 rounded-2xl w-full text-center shadow-inner tracking-wide">--</div>
+                            <div id="quiz-answers" class="grid grid-cols-2 gap-3 w-full">
+                                <!-- buttons injected here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GAME 3: SCRAMBLE AREA -->
+                    <div id="game-area-scramble" class="hidden w-full h-[400px] bg-amber-900 rounded-3xl relative overflow-hidden shadow-xl border-4 border-amber-800 flex flex-col">
+                        <button onclick="window.closeGame()" class="absolute top-3 right-3 z-50 bg-white/20 hover:bg-white/40 w-8 h-8 rounded-full flex items-center justify-center text-white transition"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="absolute inset-0 bg-amber-900/90 backdrop-blur-sm z-40 flex flex-col items-center justify-center p-6 text-center" id="game-start-cover-scramble">
+                            <div class="w-16 h-16 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mb-4"><i class="fa-solid fa-layer-group text-3xl"></i></div>
+                            <h4 class="text-white font-black text-xl mb-2">Ghép Từ Phép Thuật</h4>
+                            <button onclick="window.startGameSession('scramble')" class="mt-4 bg-amber-500 hover:bg-amber-600 text-white font-extrabold px-8 py-3.5 rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.4)] transition active:scale-95">BẮT ĐẦU</button>
+                        </div>
+                        <div class="w-full bg-amber-950/70 p-3 flex justify-between items-center text-white border-b border-amber-800">
+                            <span class="text-amber-300 text-xs font-bold uppercase tracking-wider">Xếp Chữ</span>
+                            <div class="text-right pr-8"><span class="text-amber-300 text-xs font-bold">Điểm:</span> <span id="game-score-scramble" class="font-black text-emerald-400 text-xl ml-1">0</span></div>
+                        </div>
+                        <div class="flex-1 p-5 flex flex-col justify-center">
+                            <div class="text-center mb-6">
+                                <p class="text-amber-200 text-xs font-bold uppercase tracking-wider mb-1">Dịch nghĩa</p>
+                                <h4 id="scramble-hint" class="text-2xl font-black text-yellow-300">--</h4>
+                            </div>
+                            <div id="scramble-drop-zone" class="min-h-[64px] bg-amber-950/50 rounded-2xl border-2 border-dashed border-amber-700/50 flex flex-wrap gap-2 p-3 items-center justify-center mb-6 shadow-inner">
+                            </div>
+                            <div id="scramble-letters-pool" class="flex flex-wrap gap-2.5 justify-center">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="absolute md:absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 md:px-6 py-3 shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-40">
+                <div class="flex items-center space-x-3 max-w-3xl mx-auto">
+                    <div class="relative flex-1">
+                        <input type="text" id="dict-quick-input" placeholder="Tra từ nhanh..." onkeydown="if(event.key === 'Enter') window.lookupWordDirectly()" class="w-full bg-slate-100 border border-slate-200 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand-500">
+                        <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3.5 top-3.5 text-sm"></i>
+                    </div>
+                    <button onclick="window.lookupWordDirectly()" class="bg-slate-900 text-white px-5 py-3 rounded-xl text-sm font-bold shadow-md transition active:scale-95"><i class="fa-solid fa-search"></i></button>
+                </div>
+            </footer>
+        </div>
+
+        <!-- DICTIONARY MODAL WITH PRONUNCIATION CHECK -->
+        <div id="dict-sheet" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end justify-center hidden" onclick="window.closeDictSheet()">
+            <div class="bg-white w-full max-w-2xl rounded-t-3xl p-6 shadow-2xl animate-slide-up relative flex flex-col max-h-[85vh]" onclick="event.stopPropagation()">
+                <div class="w-16 h-1.5 bg-slate-300 rounded-full mx-auto mb-4 shrink-0"></div>
+                
+                <!-- Khu vực Icon Tượng Hình Trên Popup -->
+                <div id="dict-modal-icon" class="w-20 h-20 bg-brand-50 text-brand-500 text-4xl flex items-center justify-center rounded-2xl mx-auto mb-4 shadow-sm shrink-0">
+                    🧩
+                </div>
+
+                <div class="flex justify-between items-start mb-4 shrink-0 text-center mx-auto w-full flex-col">
+                    <h3 id="dict-result-word" class="text-4xl font-black text-slate-900 capitalize w-full">Word</h3>
+                    <p id="dict-result-phonetic" class="text-base font-bold text-slate-400 mt-1 w-full">/phonetic/</p>
+                    <button onclick="window.playDictAudio()" class="w-12 h-12 mt-3 rounded-full bg-brand-100 text-brand-600 mx-auto flex items-center justify-center transition active:scale-95 shadow-sm border border-brand-200"><i class="fa-solid fa-volume-high text-xl"></i></button>
+                </div>
+
+                <div class="space-y-4 overflow-y-auto custom-scrollbar flex-1 pr-2 mb-4">
+                    <div class="bg-indigo-50 rounded-2xl p-4 border border-indigo-100 text-center"><span class="text-xs font-extrabold bg-indigo-500 text-white px-2.5 py-1 rounded shadow-sm">Nghĩa Tiếng Việt</span><p id="dict-result-vi" class="text-xl font-bold text-slate-800 mt-3">...</p></div>
+                    
+                    <!-- Luyện Phát Âm -->
+                    <div class="bg-emerald-50 rounded-2xl p-5 border border-emerald-100 text-center shadow-inner">
+                        <span class="text-xs font-black uppercase text-emerald-600 mb-3 block"><i class="fa-solid fa-chalkboard-user mr-1"></i> Luyện Đọc Từ Này</span>
+                        <button onclick="window.startVocabOralPractice()" class="w-16 h-16 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto transition relative shadow-lg" id="vocab-mic-btn">
+                            <i class="fa-solid fa-microphone text-2xl"></i>
+                            <div class="absolute -top-1 -right-2 bg-yellow-400 text-yellow-900 text-[10px] font-black px-1.5 py-0.5 rounded shadow-sm border border-yellow-200">+5💎</div>
+                        </button>
+                        <div id="vocab-wave-indicator" class="hidden flex justify-center items-center space-x-1.5 mt-3">
+                            <span class="w-1 h-3 bg-emerald-500 rounded pulse-wave"></span><span class="w-1 h-5 bg-emerald-500 rounded pulse-wave" style="animation-delay:0.2s"></span><span class="w-1 h-3 bg-emerald-500 rounded pulse-wave"></span>
+                        </div>
+                        <p id="vocab-feedback-text" class="text-sm font-semibold text-emerald-700 mt-3 min-h-[20px]">Nhấn micro để AI chấm điểm</p>
+                    </div>
+                </div>
+
+                <button onclick="window.closeDictSheet()" class="w-full py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shrink-0 transition active:scale-95 shadow-md">Xong & Đóng</button>
+            </div>
+        </div>
+
+        <!-- ADMIN MODAL (QUẢN TRỊ VIÊN) -->
+        <div id="admin-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <!-- Admin Login -->
+            <div id="admin-login-card" class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl relative">
+                <button onclick="window.closeAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <div class="text-center mb-4"><i class="fa-solid fa-lock text-3xl text-slate-700"></i><h3 class="text-xl font-black mt-2 text-slate-900">Quản Trị Viên</h3></div>
+                <input type="password" id="admin-password-input" placeholder="Nhập mật khẩu..." class="w-full text-center bg-slate-50 border border-slate-200 rounded-xl py-3.5 font-bold mb-4 focus:outline-none focus:border-brand-500 transition">
+                <button onclick="window.verifyAdminPassword()" class="w-full bg-slate-900 text-white py-3.5 rounded-xl font-bold transition active:scale-95">Xác nhận</button>
+            </div>
+            
+            <!-- Admin Panel -->
+            <div id="admin-panel-card" class="bg-white w-full max-w-lg rounded-3xl p-6 shadow-2xl relative hidden flex-col h-[85vh]">
+                <button onclick="window.closeAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <h3 class="font-black text-lg text-slate-900 mb-4"><i class="fa-solid fa-cloud text-brand-600 mr-1"></i> Quản Lý Tài Khoản Cloud</h3>
+                
+                <div class="flex bg-slate-100 rounded-xl p-1.5 mb-4 shrink-0 shadow-inner">
+                    <button onclick="window.switchAdminSubTab('students')" id="admin-tab-students" class="flex-1 py-2.5 text-sm font-bold rounded-lg bg-white shadow-sm text-brand-600 transition">Danh Sách Học Sinh</button>
+                    <button onclick="window.switchAdminSubTab('add')" id="admin-tab-add" class="flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-800 transition">Tạo Mới</button>
+                </div>
+
+                <!-- Admin: List Students -->
+                <div id="admin-sub-students" class="flex-1 overflow-y-auto custom-scrollbar pr-2">
+                    <div id="admin-students-list-container" class="space-y-3">
+                        <div class="text-center pt-8"><i class="fa-solid fa-circle-notch fa-spin text-brand-500 text-3xl"></i></div>
+                    </div>
+                </div>
+
+                <!-- Admin: Add Student -->
+                <div id="admin-sub-add" class="flex-1 space-y-4 hidden overflow-y-auto custom-scrollbar pr-2">
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                        <div><label class="text-xs font-bold text-slate-500 mb-1 block">Tên học sinh</label><input type="text" id="admin-new-name" placeholder="Ví dụ: Minh Thư" class="w-full border border-slate-200 rounded-xl p-3 text-sm font-semibold focus:outline-none focus:border-brand-500"></div>
+                        <div><label class="text-xs font-bold text-slate-500 mb-1 block">Lớp</label><select id="admin-new-grade" class="w-full border border-slate-200 rounded-xl p-3 text-sm font-semibold focus:outline-none focus:border-brand-500"><option value="cap_1">Cấp 1</option><option value="cap_2">Cấp 2</option><option value="cap_3">Cấp 3</option></select></div>
+                        <div><label class="text-xs font-bold text-slate-500 mb-1 block">Số điện thoại</label><input type="tel" id="admin-new-phone" placeholder="09xxxx" class="w-full border border-slate-200 rounded-xl p-3 text-sm font-semibold focus:outline-none focus:border-brand-500"></div>
+                    </div>
+                    <button onclick="window.adminCreateNewStudentAccount()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-extrabold py-3.5 rounded-xl shadow-lg transition active:scale-95">Tạo Tài Khoản Đồng Bộ</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN: EDIT STUDENT MODAL -->
+        <div id="admin-edit-student-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 hidden">
+            <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl relative animate-slide-up">
+                <button onclick="window.closeAdminEditModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <div class="text-center mb-5">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-2"><i class="fa-solid fa-user-pen text-lg"></i></div>
+                    <h3 class="text-lg font-black text-slate-900">Chỉnh Sửa Thông</h3>
+                </div>
+                
+                <div class="space-y-3">
+                    <input type="hidden" id="edit-student-old-code">
+                    <div><label class="text-xs font-bold text-slate-500 block mb-1">Mã Đăng Nhập (Có thể đổi)</label><input type="text" id="edit-student-new-code" class="w-full border border-slate-200 rounded-xl p-3 font-bold text-brand-700 uppercase bg-brand-50 focus:outline-none focus:border-brand-500"></div>
+                    <div><label class="text-xs font-bold text-slate-500 block mb-1">Tên học sinh</label><input type="text" id="edit-student-name" class="w-full border border-slate-200 rounded-xl p-3 font-semibold focus:outline-none focus:border-brand-500"></div>
+                    <div><label class="text-xs font-bold text-slate-500 block mb-1">Lớp</label><select id="edit-student-grade" class="w-full border border-slate-200 rounded-xl p-3 font-semibold focus:outline-none focus:border-brand-500"><option value="cap_1">Cấp 1</option><option value="cap_2">Cấp 2</option><option value="cap_3">Cấp 3</option></select></div>
+                    <div><label class="text-xs font-bold text-slate-500 block mb-1">Số điện thoại</label><input type="tel" id="edit-student-phone" class="w-full border border-slate-200 rounded-xl p-3 font-semibold focus:outline-none focus:border-brand-500"></div>
+                    
+                    <button onclick="window.adminSaveEditedStudent()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl shadow mt-2 transition active:scale-95">Lưu Thay Đổi Cloud</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="custom-toast" class="fixed bottom-24 md:bottom-10 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white text-sm font-bold py-3 px-6 rounded-full shadow-2xl z-[100] flex items-center space-x-3 transition-all duration-300 opacity-0 pointer-events-none translate-y-4">
+            <span id="toast-icon" class="text-amber-400"><i class="fa-solid fa-info-circle"></i></span><span id="toast-message">Nội dung</span>
+        </div>
+    </div>
+
+    <!-- FIREBASE V11 MODULE INJECTION -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // ================= FIREBASE CONFIG =================
+        let firebaseConfig = {
+            apiKey: "AIzaSyAzJnDO3_rHxye6ft2PeClK-y4XdWJH57w",
+            authDomain: "english-reading-mobi.firebaseapp.com",
+            projectId: "english-reading-mobi",
+            storageBucket: "english-reading-mobi.firebasestorage.app",
+            appId: "1:651412302789:web:380973879830d38f9bb9ac"
+        };
+        try { if(typeof __firebase_config !== 'undefined') firebaseConfig = JSON.parse(__firebase_config); } catch(e){}
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'english-reading-mobi';
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const geminiApiKey = ""; 
+        
+        // ================= GLOBAL VARIABLES =================
+        let currentUser = null;
+        let activeStudentData = null;
+        let chatHistory = [];
+        let activeRecognizer = null;
+        let currentActiveTask = null;
+        
+        let gameTimerInterval = null;
+        let bubbleSpawnInterval = null;
+        let isGameRunning = false;
+        let currentGameType = null;
+        let gameScore = 0;
+        
+        let activeGameTarget = null;
+        let currentScrambleWord = "";
+        let currentScrambleLetters = [];
+        let currentScrambleAttempt = [];
+
+        // ================= DATABASE SÁCH (FULL 5 LỚP + ICONS TƯỢNG HÌNH) =================
+        const readingDatabase = {
+            cap_1: {
+                title: "A Picnic in the Park", image: "https://images.unsplash.com/photo-1526406915894-7bcd65f60845?w=600&auto=format&fit=crop&q=80",
+                content: "Today, the weather is very beautiful. My family goes to the park for a picnic. We bring apples, bread, and milk. My dog Max is running happily on the green grass.",
+                vocab: [ { word: "Beautiful", type: "adj", ipa: "/ˈbjuːtɪfl/", vi: "Đẹp, rực rỡ", icon: "✨" }, { word: "Picnic", type: "noun", ipa: "/ˈpɪknɪk/", vi: "Dã ngoại", icon: "🧺" } ]
+            },
+            cap_2: {
+                title: "The Magic of Reading Books", image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&auto=format&fit=crop&q=80",
+                content: "Reading books is an excellent way to gain knowledge and improve your English vocabulary.",
+                vocab: [ { word: "Excellent", type: "adj", ipa: "/ˈeksələnt/", vi: "Xuất sắc", icon: "🌟" }, { word: "Vocabulary", type: "noun", ipa: "/vəˈkæbjuləri/", vi: "Từ vựng", icon: "🔤" } ]
+            },
+            cap_3: {
+                title: "Artificial Intelligence in Modern Society", image: "https://images.unsplash.com/photo-1677442136019-21780efad99a?w=600&auto=format&fit=crop&q=80",
+                content: "Artificial Intelligence is transforming our modern society in profound ways. Complex algorithms analyze vast amounts of data.",
+                vocab: [ { word: "Transforming", type: "verb", ipa: "/trænsˈfɔːmɪŋ/", vi: "Biến đổi", icon: "🔄" }, { word: "Algorithms", type: "noun", ipa: "/ˈælɡərɪðəmz/", vi: "Thuật toán", icon: "💻" } ]
+            }
+        };
+
+        const smartStartBookLinks = {
+            ss_1: "https://online.flipbuilder.com/sdtta/vugc/", ss_2: "https://online.flipbuilder.com/sdtta/mcbr/",
+            ss_3: "https://online.flipbuilder.com/sdtta/skiv/", ss_4: "https://online.flipbuilder.com/sdtta/nhks/",
+            ss_5: "https://online.flipbuilder.com/sdtta/uehz/"
+        };
+
+        const smartStartDatabase = {
+            ss_1: {
+                theme1: {
+                    title: "Smart Start 1 - Theme 1: Hello", image: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&auto=format&fit=crop&q=80",
+                    content: "Hello! Hi! Goodbye. Stand up. Sit down. Listen. Point.",
+                    vocab: [ { word: "Hello", type: "exc", ipa: "/həˈləʊ/", vi: "Xin chào", icon: "👋" }, { word: "Goodbye", type: "exc", ipa: "/ˌɡʊdˈbaɪ/", vi: "Tạm biệt", icon: "🚶" }, { word: "Stand", type: "verb", ipa: "/stænd/", vi: "Đứng lên", icon: "🧍" }, { word: "Listen", type: "verb", ipa: "/ˈlɪsn/", vi: "Lắng nghe", icon: "👂" } ]
+                },
+                theme2: {
+                    title: "Smart Start 1 - Theme 2: Colors", image: "https://images.unsplash.com/photo-1507646871585-613d5af55269?w=600&auto=format&fit=crop&q=80",
+                    content: "It is red. It is blue. It is yellow. What color is it?",
+                    vocab: [ { word: "Red", type: "adj", ipa: "/red/", vi: "Màu đỏ", icon: "🔴" }, { word: "Blue", type: "adj", ipa: "/bluː/", vi: "Màu xanh dương", icon: "🔵" }, { word: "Green", type: "adj", ipa: "/ɡriːn/", vi: "Màu xanh lá", icon: "🟢" }, { word: "Yellow", type: "adj", ipa: "/ˈjeləʊ/", vi: "Màu vàng", icon: "🟡" } ]
+                },
+                theme3: {
+                    title: "Smart Start 1 - Theme 3: Numbers", image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=600&auto=format&fit=crop&q=80",
+                    content: "One, two, three, four, five! How old are you? I am five.",
+                    vocab: [ { word: "One", type: "num", ipa: "/wʌn/", vi: "Số 1", icon: "1️⃣" }, { word: "Two", type: "num", ipa: "/tuː/", vi: "Số 2", icon: "2️⃣" }, { word: "Three", type: "num", ipa: "/θriː/", vi: "Số 3", icon: "3️⃣" }, { word: "Five", type: "num", ipa: "/faɪv/", vi: "Số 5", icon: "5️⃣" } ]
+                },
+                theme4: {
+                    title: "Smart Start 1 - Theme 4: Family", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&auto=format&fit=crop&q=80",
+                    content: "This is my family. This is my mom and dad. I love my family.",
+                    vocab: [ { word: "Family", type: "noun", ipa: "/ˈfæməli/", vi: "Gia đình", icon: "👨‍👩‍👧" }, { word: "Mom", type: "noun", ipa: "/mɒm/", vi: "Mẹ", icon: "👩" }, { word: "Dad", type: "noun", ipa: "/dæd/", vi: "Bố", icon: "👨" }, { word: "Love", type: "verb", ipa: "/lʌv/", vi: "Yêu thương", icon: "❤️" } ]
+                },
+                theme5: {
+                    title: "Smart Start 1 - Theme 5: Animals", image: "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=600&auto=format&fit=crop&q=80",
+                    content: "It is a dog. It is a cat. Is it a bird? Yes, it is. The duck can fly.",
+                    vocab: [ { word: "Dog", type: "noun", ipa: "/dɒɡ/", vi: "Con chó", icon: "🐶" }, { word: "Cat", type: "noun", ipa: "/kæt/", vi: "Con mèo", icon: "🐱" }, { word: "Bird", type: "noun", ipa: "/bɜːd/", vi: "Con chim", icon: "🐦" }, { word: "Duck", type: "noun", ipa: "/dʌk/", vi: "Con vịt", icon: "🦆" } ]
+                },
+                theme6: {
+                    title: "Smart Start 1 - Theme 6: Food", image: "https://images.unsplash.com/photo-1493770348161-369560ae357d?w=600&auto=format&fit=crop&q=80",
+                    content: "I like apples. Do you like bananas? The cake is sweet.",
+                    vocab: [ { word: "Apple", type: "noun", ipa: "/ˈæpl/", vi: "Quả táo", icon: "🍎" }, { word: "Banana", type: "noun", ipa: "/bəˈnɑːnə/", vi: "Quả chuối", icon: "🍌" }, { word: "Cake", type: "noun", ipa: "/keɪk/", vi: "Bánh ngọt", icon: "🍰" }, { word: "Chicken", type: "noun", ipa: "/ˈtʃɪkɪn/", vi: "Thịt gà", icon: "🍗" } ]
+                },
+                theme7: {
+                    title: "Smart Start 1 - Theme 7: My Body", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&auto=format&fit=crop&q=80",
+                    content: "Touch your head. Touch your nose. Clap your hands. This is my body.",
+                    vocab: [ { word: "Head", type: "noun", ipa: "/hed/", vi: "Cái đầu", icon: "👤" }, { word: "Nose", type: "noun", ipa: "/nəʊz/", vi: "Cái mũi", icon: "👃" }, { word: "Hand", type: "noun", ipa: "/hænd/", vi: "Bàn tay", icon: "🖐️" }, { word: "Foot", type: "noun", ipa: "/fʊt/", vi: "Bàn chân", icon: "🦶" } ]
+                },
+                theme8: {
+                    title: "Smart Start 1 - Theme 8: Toys", image: "https://images.unsplash.com/photo-1558066162-75d311b5e56e?w=600&auto=format&fit=crop&q=80",
+                    content: "I have a ball. She has a doll. The teddy bear is soft. We play with cars.",
+                    vocab: [ { word: "Ball", type: "noun", ipa: "/bɔːl/", vi: "Quả bóng", icon: "⚽" }, { word: "Doll", type: "noun", ipa: "/dɒl/", vi: "Búp bê", icon: "🪆" }, { word: "Bear", type: "noun", ipa: "/beə(r)/", vi: "Gấu bông", icon: "🧸" }, { word: "Car", type: "noun", ipa: "/kɑː(r)/", vi: "Xe đồ chơi", icon: "🚗" } ]
+                }
+            },
+            ss_2: {
+                theme1: {
+                    title: "Smart Start 2 - Theme 1: Feelings", image: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&auto=format&fit=crop&q=80",
+                    content: "How are you? I am happy. He is sad. She is hungry. Are you thirsty?",
+                    vocab: [ { word: "Happy", type: "adj", ipa: "/ˈhæpi/", vi: "Vui vẻ", icon: "😊" }, { word: "Sad", type: "adj", ipa: "/sæd/", vi: "Buồn bã", icon: "😢" }, { word: "Hungry", type: "adj", ipa: "/ˈhʌŋɡri/", vi: "Đói bụng", icon: "🤤" }, { word: "Thirsty", type: "adj", ipa: "/ˈθɜːsti/", vi: "Khát nước", icon: "🥵" } ]
+                },
+                theme2: {
+                    title: "Smart Start 2 - Theme 2: Shapes", image: "https://images.unsplash.com/photo-1516086208928-87fb3bc310b1?w=600&auto=format&fit=crop&q=80",
+                    content: "It is a circle. It is a square. Is it a triangle? No, it isn't.",
+                    vocab: [ { word: "Circle", type: "noun", ipa: "/ˈsɜːkl/", vi: "Hình tròn", icon: "🔵" }, { word: "Square", type: "noun", ipa: "/skweə(r)/", vi: "Hình vuông", icon: "🟦" }, { word: "Triangle", type: "noun", ipa: "/ˈtraɪæŋɡl/", vi: "Hình tam giác", icon: "🔺" }, { word: "Rectangle", type: "noun", ipa: "/ˈrektæŋɡl/", vi: "Hình chữ nhật", icon: "🎴" } ]
+                },
+                theme3: {
+                    title: "Smart Start 2 - Theme 3: Clothes", image: "https://images.unsplash.com/photo-1489987707023-afc1328ce7f1?w=600&auto=format&fit=crop&q=80",
+                    content: "I am wearing a red shirt. She is wearing a yellow dress.",
+                    vocab: [ { word: "Shirt", type: "noun", ipa: "/ʃɜːt/", vi: "Áo sơ mi", icon: "👕" }, { word: "Dress", type: "noun", ipa: "/dres/", vi: "Cái váy", icon: "👗" }, { word: "Shoes", type: "noun", ipa: "/ʃuːz/", vi: "Đôi giày", icon: "👞" }, { word: "Hat", type: "noun", ipa: "/hæt/", vi: "Cái mũ", icon: "🧢" } ]
+                },
+                theme4: {
+                    title: "Smart Start 2 - Theme 4: Weather", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop&q=80",
+                    content: "How is the weather? It is sunny. It is raining. Let's play outside.",
+                    vocab: [ { word: "Sunny", type: "adj", ipa: "/ˈsʌni/", vi: "Trời nắng", icon: "☀️" }, { word: "Raining", type: "verb", ipa: "/ˈreɪnɪŋ/", vi: "Đang mưa", icon: "🌧️" }, { word: "Coat", type: "noun", ipa: "/kəʊt/", vi: "Áo khoác", icon: "🧥" }, { word: "Outside", type: "adv", ipa: "/ˌaʊtˈsaɪd/", vi: "Bên ngoài", icon: "🏕️" } ]
+                },
+                theme5: {
+                    title: "Smart Start 2 - Theme 5: Animals", image: "https://images.unsplash.com/photo-1555169062-013468b47731?w=600&auto=format&fit=crop&q=80",
+                    content: "The elephant is tall. The mouse is small. The tiger is big.",
+                    vocab: [ { word: "Elephant", type: "noun", ipa: "/ˈelɪfənt/", vi: "Con voi", icon: "🐘" }, { word: "Mouse", type: "noun", ipa: "/maʊs/", vi: "Con chuột", icon: "🐭" }, { word: "Tiger", type: "noun", ipa: "/ˈtaɪɡə(r)/", vi: "Con hổ", icon: "🐅" }, { word: "Monkey", type: "noun", ipa: "/ˈmʌŋki/", vi: "Con khỉ", icon: "🐒" } ]
+                },
+                theme6: {
+                    title: "Smart Start 2 - Theme 6: Food", image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&auto=format&fit=crop&q=80",
+                    content: "I want some milk, please. Here is some bread. Do you want pizza?",
+                    vocab: [ { word: "Milk", type: "noun", ipa: "/mɪlk/", vi: "Sữa", icon: "🥛" }, { word: "Bread", type: "noun", ipa: "/bred/", vi: "Bánh mì", icon: "🍞" }, { word: "Pizza", type: "noun", ipa: "/ˈpiːtsə/", vi: "Bánh pizza", icon: "🍕" }, { word: "Water", type: "noun", ipa: "/ˈwɔːtə(r)/", vi: "Nước uống", icon: "💧" } ]
+                },
+                theme7: {
+                    title: "Smart Start 2 - Theme 7: School", image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&auto=format&fit=crop&q=80",
+                    content: "Open your book. Close your book. Pick up your pencil. Draw a picture.",
+                    vocab: [ { word: "Book", type: "noun", ipa: "/bʊk/", vi: "Quyển sách", icon: "📘" }, { word: "Pencil", type: "noun", ipa: "/ˈpensl/", vi: "Bút chì", icon: "✏️" }, { word: "Open", type: "verb", ipa: "/ˈəʊpən/", vi: "Mở ra", icon: "📖" }, { word: "Draw", type: "verb", ipa: "/drɔː/", vi: "Vẽ tranh", icon: "🎨" } ]
+                },
+                theme8: {
+                    title: "Smart Start 2 - Theme 8: Family", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&auto=format&fit=crop&q=80",
+                    content: "Who's this? This is my father. This is my mother. I love my brother.",
+                    vocab: [ { word: "Father", type: "noun", ipa: "/ˈfɑːðə(r)/", vi: "Bố", icon: "👨" }, { word: "Mother", type: "noun", ipa: "/ˈmʌðə(r)/", vi: "Mẹ", icon: "👩" }, { word: "Brother", type: "noun", ipa: "/ˈbrʌðə(r)/", vi: "Anh/em trai", icon: "👦" }, { word: "Sister", type: "noun", ipa: "/ˈsɪstə(r)/", vi: "Chị/em gái", icon: "👧" } ]
+                }
+            },
+            ss_3: {
+                theme1: {
+                    title: "Smart Start 3 - Theme 1: My Friends", image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&auto=format&fit=crop&q=80",
+                    content: "Hello! I am from Vietnam. My friend is Alfie. He is from Alpha. We like to paint and dance.",
+                    vocab: [ { word: "Friend", type: "noun", ipa: "/frend/", vi: "Người bạn", icon: "🤝" }, { word: "Dance", type: "verb", ipa: "/dɑːns/", vi: "Nhảy múa", icon: "💃" }, { word: "Paint", type: "verb", ipa: "/peɪnt/", vi: "Vẽ, tô màu", icon: "🖌️" }, { word: "Japan", type: "noun", ipa: "/dʒəˈpæn/", vi: "Nhật Bản", icon: "🇯🇵" } ]
+                },
+                theme2: {
+                    title: "Smart Start 3 - Theme 2: School", image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&auto=format&fit=crop&q=80",
+                    content: "I go to school every day. I put my notebook, ruler, and pencils into my bag.",
+                    vocab: [ { word: "Notebook", type: "noun", ipa: "/ˈnəʊtbʊk/", vi: "Quyển vở", icon: "📓" }, { word: "Ruler", type: "noun", ipa: "/ˈruːlər/", vi: "Thước kẻ", icon: "📏" }, { word: "Bag", type: "noun", ipa: "/bæɡ/", vi: "Cặp sách", icon: "🎒" }, { word: "Classroom", type: "noun", ipa: "/ˈklɑːsruːm/", vi: "Phòng học", icon: "🏫" } ]
+                },
+                theme3: {
+                    title: "Smart Start 3 - Theme 3: Home", image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80",
+                    content: "Welcome to my home. There is a comfortable living room, a bedroom, and a small kitchen.",
+                    vocab: [ { word: "Kitchen", type: "noun", ipa: "/ˈkɪtʃɪn/", vi: "Nhà bếp", icon: "🍳" }, { word: "Bedroom", type: "noun", ipa: "/ˈbedruːm/", vi: "Phòng ngủ", icon: "🛏️" }, { word: "Living room", type: "noun", ipa: "/ˈlɪvɪŋ ruːm/", vi: "Phòng khách", icon: "🛋️" }, { word: "Yard", type: "noun", ipa: "/jɑːd/", vi: "Sân vườn", icon: "🏡" } ]
+                },
+                theme4: {
+                    title: "Smart Start 3 - Theme 4: Travel", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&auto=format&fit=crop&q=80",
+                    content: "I go to school by bus. My dad goes to work by car. We travel by plane on holiday.",
+                    vocab: [ { word: "Bus", type: "noun", ipa: "/bʌs/", vi: "Xe buýt", icon: "🚌" }, { word: "Plane", type: "noun", ipa: "/pleɪn/", vi: "Máy bay", icon: "✈️" }, { word: "Train", type: "noun", ipa: "/treɪn/", vi: "Tàu hỏa", icon: "🚂" }, { word: "Car", type: "noun", ipa: "/kɑː(r)/", vi: "Xe ô tô", icon: "🚗" } ]
+                },
+                theme5: {
+                    title: "Smart Start 3 - Theme 5: Sports", image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&auto=format&fit=crop&q=80",
+                    content: "I like playing football. My friend likes playing badminton. We play basketball in the park.",
+                    vocab: [ { word: "Football", type: "noun", ipa: "/ˈfʊtbɔːl/", vi: "Bóng đá", icon: "⚽" }, { word: "Badminton", type: "noun", ipa: "/ˈbædmɪntən/", vi: "Cầu lông", icon: "🏸" }, { word: "Basketball", type: "noun", ipa: "/ˈbɑːskɪtbɔːl/", vi: "Bóng rổ", icon: "🏀" }, { word: "Swim", type: "verb", ipa: "/swɪm/", vi: "Bơi lội", icon: "🏊" } ]
+                },
+                theme6: {
+                    title: "Smart Start 3 - Theme 6: Food and Drink", image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&auto=format&fit=crop&q=80",
+                    content: "What's your favorite food? I like fish and chips. Would you like some orange juice?",
+                    vocab: [ { word: "Favorite", type: "adj", ipa: "/ˈfeɪvərɪt/", vi: "Yêu thích nhất", icon: "⭐" }, { word: "Fish", type: "noun", ipa: "/fɪʃ/", vi: "Cá", icon: "🐟" }, { word: "Juice", type: "noun", ipa: "/dʒuːs/", vi: "Nước ép", icon: "🧃" }, { word: "Ice cream", type: "noun", ipa: "/ˌaɪs ˈkriːm/", vi: "Kem", icon: "🍦" } ]
+                },
+                theme7: {
+                    title: "Smart Start 3 - Theme 7: Clothes", image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop&q=80",
+                    content: "How much is this T-shirt? It is fifty thousand dong. Those trousers are nice.",
+                    vocab: [ { word: "T-shirt", type: "noun", ipa: "/ˈtiː ʃɜːt/", vi: "Áo thun", icon: "👕" }, { word: "Trousers", type: "noun", ipa: "/ˈtraʊzəz/", vi: "Quần dài", icon: "👖" }, { word: "Jacket", type: "noun", ipa: "/ˈdʒækɪt/", vi: "Áo khoác", icon: "🧥" }, { word: "Buy", type: "verb", ipa: "/baɪ/", vi: "Mua sắm", icon: "🛍️" } ]
+                },
+                theme8: {
+                    title: "Smart Start 3 - Theme 8: Free Time", image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80",
+                    content: "What do you do in your free time? I listen to music. She reads comic books.",
+                    vocab: [ { word: "Free time", type: "noun", ipa: "/friː taɪm/", vi: "Thời gian rảnh", icon: "⏳" }, { word: "Music", type: "noun", ipa: "/ˈmjuːzɪk/", vi: "Âm nhạc", icon: "🎵" }, { word: "Watch", type: "verb", ipa: "/wɒtʃ/", vi: "Xem (TV)", icon: "📺" }, { word: "Read", type: "verb", ipa: "/riːd/", vi: "Đọc sách", icon: "📖" } ]
+                }
+            },
+            ss_4: {
+                theme1: {
+                    title: "Smart Start 4 - Theme 1: Animals", image: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?w=600&auto=format&fit=crop&q=80",
+                    content: "Look at the animals in the zoo. The monkeys are swinging on the trees. The giraffes are eating leaves.",
+                    vocab: [ { word: "Zoo", type: "noun", ipa: "/zuː/", vi: "Sở thú", icon: "🏞️" }, { word: "Giraffe", type: "noun", ipa: "/dʒəˈrɑːf/", vi: "Hươu cao cổ", icon: "🦒" }, { word: "Monkey", type: "noun", ipa: "/ˈmʌŋki/", vi: "Con khỉ", icon: "🐒" }, { word: "Lion", type: "noun", ipa: "/ˈlaɪən/", vi: "Sư tử", icon: "🦁" } ]
+                },
+                theme2: {
+                    title: "Smart Start 4 - Theme 2: Weather", image: "https://images.unsplash.com/photo-1530908268418-ec1f886bc67e?w=600&auto=format&fit=crop&q=80",
+                    content: "Look outside! It is rainy and windy today. I like sunny weather because I can swim.",
+                    vocab: [ { word: "Rainy", type: "adj", ipa: "/ˈreɪni/", vi: "Trời mưa", icon: "🌧️" }, { word: "Windy", type: "adj", ipa: "/ˈwɪndi/", vi: "Nhiều gió", icon: "💨" }, { word: "Sunny", type: "adj", ipa: "/ˈsʌni/", vi: "Nhiều nắng", icon: "☀️" }, { word: "Snowman", type: "noun", ipa: "/ˈsnəʊmæn/", vi: "Người tuyết", icon: "⛄" } ]
+                },
+                theme3: {
+                    title: "Smart Start 4 - Theme 3: Activities", image: "https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=600&auto=format&fit=crop&q=80",
+                    content: "On the weekend, we do many fun activities. My brother likes playing video games. I enjoy reading comic books.",
+                    vocab: [ { word: "Weekend", type: "noun", ipa: "/ˌwiːkˈend/", vi: "Cuối tuần", icon: "🗓️" }, { word: "Bicycle", type: "noun", ipa: "/ˈbaɪsɪkl/", vi: "Xe đạp", icon: "🚲" }, { word: "Activities", type: "noun", ipa: "/ækˈtɪvətiz/", vi: "Các hoạt động", icon: "🏃" }, { word: "Video game", type: "noun", ipa: "/ˈvɪdiəʊ ɡeɪm/", vi: "Trò chơi điện tử", icon: "🎮" } ]
+                },
+                theme4: {
+                    title: "Smart Start 4 - Theme 4: Transportation", image: "https://images.unsplash.com/photo-1494522855154-9297ac14b55f?w=600&auto=format&fit=crop&q=80",
+                    content: "The subway is quick and convenient. Riding a motorbike is good for health. Ships carry goods across the sea.",
+                    vocab: [ { word: "Subway", type: "noun", ipa: "/ˈsʌbweɪ/", vi: "Tàu điện ngầm", icon: "🚇" }, { word: "Convenient", type: "adj", ipa: "/kənˈviːniənt/", vi: "Tiện lợi", icon: "👍" }, { word: "Motorbike", type: "noun", ipa: "/ˈməʊtəbaɪk/", vi: "Xe máy", icon: "🏍️" }, { word: "Ship", type: "noun", ipa: "/ʃɪp/", vi: "Tàu thủy", icon: "🚢" } ]
+                },
+                theme5: {
+                    title: "Smart Start 4 - Theme 5: Space", image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80",
+                    content: "Astronauts travel to space in a rocket. The moon orbits the Earth. There are many stars.",
+                    vocab: [ { word: "Astronaut", type: "noun", ipa: "/ˈæstrənɔːt/", vi: "Phi hành gia", icon: "👨‍🚀" }, { word: "Rocket", type: "noun", ipa: "/ˈrɒkɪt/", vi: "Tên lửa", icon: "🚀" }, { word: "Orbit", type: "verb", ipa: "/ˈɔːbɪt/", vi: "Quay quanh", icon: "🪐" }, { word: "Galaxy", type: "noun", ipa: "/ˈɡæləksi/", vi: "Thiên hà", icon: "🌌" } ]
+                },
+                theme6: {
+                    title: "Smart Start 4 - Theme 6: Entertainment", image: "https://images.unsplash.com/photo-1470229722913-7c090be5bc6a?w=600&auto=format&fit=crop&q=80",
+                    content: "We are going to the cinema to watch a movie. The concert starts at 8 PM. Magic shows are very exciting.",
+                    vocab: [ { word: "Cinema", type: "noun", ipa: "/ˈsɪnəmə/", vi: "Rạp chiếu phim", icon: "🎦" }, { word: "Movie", type: "noun", ipa: "/ˈmuːvi/", vi: "Bộ phim", icon: "🎬" }, { word: "Concert", type: "noun", ipa: "/ˈkɒnsət/", vi: "Buổi hòa nhạc", icon: "🎤" }, { word: "Magic", type: "noun", ipa: "/ˈmædʒɪk/", vi: "Ma thuật, ảo thuật", icon: "🎩" } ]
+                },
+                theme7: {
+                    title: "Smart Start 4 - Theme 7: Jobs", image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&auto=format&fit=crop&q=80",
+                    content: "My mother is a doctor in a hospital. The pilot flies airplanes. A chef cooks meals.",
+                    vocab: [ { word: "Doctor", type: "noun", ipa: "/ˈdɒktə(r)/", vi: "Bác sĩ", icon: "👨‍⚕️" }, { word: "Pilot", type: "noun", ipa: "/ˈpaɪlət/", vi: "Phi công", icon: "👨‍✈️" }, { word: "Chef", type: "noun", ipa: "/ʃef/", vi: "Đầu bếp", icon: "👨‍🍳" }, { word: "Hospital", type: "noun", ipa: "/ˈhɒspɪtl/", vi: "Bệnh viện", icon: "🏥" } ]
+                },
+                theme8: {
+                    title: "Smart Start 4 - Theme 8: The World", image: "https://images.unsplash.com/photo-1454372182658-c712e4c5a1db?w=600&auto=format&fit=crop&q=80",
+                    content: "The highest mountain in the world is Mount Everest. Oceans cover most of the Earth. Deserts are very dry.",
+                    vocab: [ { word: "Mountain", type: "noun", ipa: "/ˈmaʊntən/", vi: "Ngọn núi", icon: "⛰️" }, { word: "Ocean", type: "noun", ipa: "/ˈəʊʃn/", vi: "Đại dương", icon: "🌊" }, { word: "Earth", type: "noun", ipa: "/ɜːθ/", vi: "Trái Đất", icon: "🌍" }, { word: "Desert", type: "noun", ipa: "/ˈdezət/", vi: "Sa mạc", icon: "🐪" } ]
+                }
+            },
+            ss_5: {
+                theme1: {
+                    title: "Smart Start 5 - Theme 1: Health", image: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=600&auto=format&fit=crop&q=80",
+                    content: "To stay healthy, we should eat fresh vegetables, drink plenty of water, and wash our hands carefully.",
+                    vocab: [ { word: "Healthy", type: "adj", ipa: "/ˈhelθi/", vi: "Khỏe mạnh", icon: "💪" }, { word: "Vegetables", type: "noun", ipa: "/ˈvedʒtəblz/", vi: "Rau củ quả", icon: "🥦" }, { word: "Exercise", type: "verb", ipa: "/ˈeksəsaɪz/", vi: "Tập thể dục", icon: "🏋️" }, { word: "Prevent", type: "verb", ipa: "/prɪˈvent/", vi: "Ngăn ngừa", icon: "🛡️" } ]
+                },
+                theme2: {
+                    title: "Smart Start 5 - Theme 2: Technology", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80",
+                    content: "We use smartphones to communicate and surf the internet. Computers help us learn and work efficiently.",
+                    vocab: [ { word: "Smartphone", type: "noun", ipa: "/ˈsmɑːtfəʊn/", vi: "Điện thoại thông minh", icon: "📱" }, { word: "Internet", type: "noun", ipa: "/ˈɪntənet/", vi: "Mạng máy tính", icon: "🌐" }, { word: "Robot", type: "noun", ipa: "/ˈrəʊbɒt/", vi: "Người máy", icon: "🤖" }, { word: "Efficiently", type: "adv", ipa: "/ɪˈfɪʃntli/", vi: "Hiệu quả", icon: "⚡" } ]
+                },
+                theme3: {
+                    title: "Smart Start 5 - Theme 3: Environment", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop&q=80",
+                    content: "We must protect the environment by planting more trees. Pollution harms wildlife. Recycling is very important.",
+                    vocab: [ { word: "Protect", type: "verb", ipa: "/prəˈtekt/", vi: "Bảo vệ", icon: "👐" }, { word: "Environment", type: "noun", ipa: "/ɪnˈvaɪrənmənt/", vi: "Môi trường", icon: "🌳" }, { word: "Pollution", type: "noun", ipa: "/pəˈluːʃn/", vi: "Ô nhiễm", icon: "🏭" }, { word: "Recycle", type: "verb", ipa: "/ˌriːˈsaɪkl/", vi: "Tái chế", icon: "♻️" } ]
+                },
+                theme4: {
+                    title: "Smart Start 5 - Theme 4: The Future", image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80",
+                    content: "In the future, we might have flying cars and smart homes. Space travel could become common for everyone.",
+                    vocab: [ { word: "Future", type: "noun", ipa: "/ˈfjuːtʃə(r)/", vi: "Tương lai", icon: "🔮" }, { word: "Flying", type: "adj", ipa: "/ˈflaɪɪŋ/", vi: "Biết bay", icon: "🦅" }, { word: "Peaceful", type: "adj", ipa: "/ˈpiːsfl/", vi: "Hòa bình", icon: "🕊️" }, { word: "Common", type: "adj", ipa: "/ˈkɒmən/", vi: "Phổ biến", icon: "🌟" } ]
+                },
+                theme5: {
+                    title: "Smart Start 5 - Theme 5: Media", image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80",
+                    content: "People read newspapers to get daily news. Social media connects friends around the world.",
+                    vocab: [ { word: "Newspaper", type: "noun", ipa: "/ˈnjuːzpeɪpə(r)/", vi: "Tờ báo", icon: "📰" }, { word: "Social media", type: "noun", ipa: "/ˌsəʊʃl ˈmiːdiə/", vi: "Mạng xã hội", icon: "🤳" }, { word: "Connect", type: "verb", ipa: "/kəˈnekt/", vi: "Kết nối", icon: "🔗" }, { word: "Documentary", type: "noun", ipa: "/ˌdɒkjuˈmentri/", vi: "Phim tài liệu", icon: "🎞️" } ]
+                },
+                theme6: {
+                    title: "Smart Start 5 - Theme 6: Culture", image: "https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=600&auto=format&fit=crop&q=80",
+                    content: "Each country has its own unique traditions and festivals. Traditional costumes show the history.",
+                    vocab: [ { word: "Unique", type: "adj", ipa: "/juˈniːk/", vi: "Độc đáo", icon: "✨" }, { word: "Tradition", type: "noun", ipa: "/trəˈdɪʃn/", vi: "Truyền thống", icon: "🏮" }, { word: "Festival", type: "noun", ipa: "/ˈfestɪvl/", vi: "Lễ hội", icon: "🎊" }, { word: "Costume", type: "noun", ipa: "/ˈkɒstjuːm/", vi: "Trang phục", icon: "👘" } ]
+                },
+                theme7: {
+                    title: "Smart Start 5 - Theme 7: Travel", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&auto=format&fit=crop&q=80",
+                    content: "Last summer, my family traveled to Da Nang City. We visited the beautiful beach and went sightseeing.",
+                    vocab: [ { word: "Traveled", type: "verb", ipa: "/ˈtrævəld/", vi: "Đã đi du lịch", icon: "🧳" }, { word: "Sightseeing", type: "noun", ipa: "/ˈsaɪtsiːɪŋ/", vi: "Ngắm cảnh", icon: "📸" }, { word: "Memorable", type: "adj", ipa: "/ˈmemərəbl/", vi: "Đáng nhớ", icon: "💭" }, { word: "Beach", type: "noun", ipa: "/biːtʃ/", vi: "Bãi biển", icon: "🏖️" } ]
+                },
+                theme8: {
+                    title: "Smart Start 5 - Theme 8: School", image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&auto=format&fit=crop&q=80",
+                    content: "Welcome back to school! Our school has a modern computer room, and a big library. My favorite subject is Science.",
+                    vocab: [ { word: "Playground", type: "noun", ipa: "/ˈpleɪɡraʊnd/", vi: "Sân chơi", icon: "🛝" }, { word: "Library", type: "noun", ipa: "/ˈlaɪbrəri/", vi: "Thư viện", icon: "📚" }, { word: "Experiment", type: "noun", ipa: "/ɪkˈsperɪmənt/", vi: "Thí nghiệm", icon: "🔬" }, { word: "Science", type: "noun", ipa: "/ˈsaɪəns/", vi: "Môn Khoa học", icon: "🧪" } ]
+                }
+            }
+        };
+
+        // ================= INIT AUTH (Rule 3) =================
+        const initAuth = async () => {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch(e) { console.error("Auth init error:", e); }
+        };
+
+        initAuth().then(() => {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    currentUser = user;
+                    const badge = document.getElementById("sync-badge");
+                    if(badge) badge.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse";
+                    const savedId = sessionStorage.getItem("active_student_id");
+                    if (savedId) {
+                        document.getElementById("input-auth-student-code").value = savedId;
+                        window.handleStudentLogin();
+                    }
+                }
+            });
+        });
+
+        // ================= UI HELPERS BINDING =================
+        window.showToast = function(msg, icon = "fa-solid fa-info-circle") {
+            const toast = document.getElementById("custom-toast");
+            document.getElementById("toast-icon").innerHTML = `<i class="${icon}"></i>`;
+            document.getElementById("toast-message").innerText = msg;
+            toast.classList.remove("opacity-0", "pointer-events-none", "translate-y-4"); 
+            toast.classList.add("opacity-100", "translate-y-0");
+            setTimeout(() => { 
+                toast.classList.add("opacity-0", "pointer-events-none", "translate-y-4"); 
+                toast.classList.remove("opacity-100", "translate-y-0"); 
+            }, 3000);
+        };
+
+        window.showConfirmDialog = function(title, msg, confirmCallback) {
+            const overlay = document.createElement("div"); 
+            overlay.className = "fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[100] flex items-center justify-center p-4";
+            const card = document.createElement("div"); 
+            card.className = "bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl animate-slide-up relative text-center";
+            card.innerHTML = `<h3 class="text-lg font-black text-slate-900 mb-2">${title}</h3><p class="text-sm text-slate-600 mb-6">${msg}</p><div class="flex space-x-3"><button id="btn-cancel" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">Hủy</button><button id="btn-confirm" class="flex-1 py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl transition shadow-lg">Đồng ý</button></div>`;
+            document.body.appendChild(overlay);
+            card.querySelector("#btn-cancel").onclick = () => overlay.remove();
+            card.querySelector("#btn-confirm").onclick = () => { overlay.remove(); confirmCallback(); };
+        };
+
+        window.showCustomDialog = function(title, bodyHTML) {
+            const overlay = document.createElement("div"); 
+            overlay.className = "fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[100] flex items-center justify-center p-4";
+            const card = document.createElement("div"); 
+            card.className = "bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl relative animate-slide-up";
+            card.innerHTML = `<button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600" onclick="this.closest('.fixed').remove()"><i class="fa-solid fa-xmark text-xl"></i></button><h3 class="text-lg font-black text-slate-900 mb-4 text-center">${title}</h3><div class="mb-5 text-slate-700">${bodyHTML}</div><button class="w-full bg-brand-600 text-white py-3.5 rounded-xl font-bold transition active:scale-95" onclick="this.closest('.fixed').remove()">Đã Hiểu</button>`;
+            document.body.appendChild(overlay);
+        };
+
+        function renderStudentInfo(state) {
+            if(!state) return;
+            document.getElementById("display-student-name").innerText = state.name;
+            document.getElementById("display-streak-count").innerText = state.streak || 0;
+            document.getElementById("display-points-count").innerText = state.points || 0;
+            document.getElementById("grade-selector").value = state.grade;
+            document.getElementById("game-time-left").innerText = state.playTime || 0;
+        }
+
+        async function syncDataToCloud() {
+            if (!currentUser || !activeStudentData) return;
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'students', activeStudentData.code);
+                await setDoc(docRef, activeStudentData);
+                renderStudentInfo(activeStudentData);
+            } catch(e) { console.error("Sync error", e); }
+        }
+
+        // ================= AUTHENTICATION ACTIONS =================
+        window.switchAuthTab = function(tab) {
+            document.getElementById("form-auth-login").classList.toggle("hidden", tab !== 'login');
+            document.getElementById("form-auth-register").classList.toggle("hidden", tab !== 'register');
+            document.getElementById("auth-tab-login").className = tab === 'login' ? "flex-1 py-3 text-center text-sm font-bold rounded-xl transition bg-white text-brand-600 shadow-sm" : "flex-1 py-3 text-center text-sm font-bold rounded-xl transition text-slate-500 hover:text-slate-800";
+            document.getElementById("auth-tab-register").className = tab === 'register' ? "flex-1 py-3 text-center text-sm font-bold rounded-xl transition bg-white text-brand-600 shadow-sm" : "flex-1 py-3 text-center text-sm font-bold rounded-xl transition text-slate-500 hover:text-slate-800";
+        };
+
+        window.handleLogOutStudent = function() {
+            window.showConfirmDialog("Đăng xuất", "Bạn có chắc chắn muốn đăng xuất khỏi thiết bị này?", () => {
+                sessionStorage.removeItem("active_student_id");
+                activeStudentData = null;
+                
+                document.getElementById("input-auth-student-code").value = "";
+                document.getElementById("view-main-app").classList.add("hidden");
+                document.getElementById("view-main-app").classList.remove("flex");
+                document.getElementById("view-auth").classList.remove("hidden");
+                
+                window.closeGame();
+                if(activeRecognizer) { try{activeRecognizer.stop();}catch(e){} }
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                
+                document.getElementById("chat-conversation-container").innerHTML = `
+                    <div class="flex items-start space-x-3 mt-2">
+                        <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold text-sm">AI</div>
+                        <div class="bg-slate-100 rounded-2xl rounded-tl-none px-4 py-3 text-sm text-slate-800 max-w-[85%] shadow-sm">
+                            <p class="font-bold text-brand-700 text-xs mb-1">Mr. Gemini</p>
+                            <p>Hello! Thầy là gia sư tiếng Anh của em. Em nhấn nút micro để nói chuyện nhé.</p>
+                        </div>
+                    </div>`;
+                
+                window.switchTab('reading');
+                window.showToast("Đã đăng xuất tài khoản an toàn", "fa-solid fa-check text-emerald-500");
+            });
+        };
+
+        window.handleStudentLogin = async function() {
+            if (!currentUser) { window.showToast("Đang kết nối lại máy chủ..."); return; }
+            const rawCode = document.getElementById("input-auth-student-code").value.trim().toUpperCase();
+            if (!rawCode) { window.showToast("Vui lòng nhập mã ECO!"); return; }
+
+            window.showToast("Đang xác thực Cloud...", "fa-solid fa-circle-notch fa-spin");
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'students', rawCode);
+                const snap = await getDoc(docRef);
+                
+                if (snap.exists()) {
+                    activeStudentData = snap.data();
+                    sessionStorage.setItem("active_student_id", rawCode);
+                    
+                    document.getElementById("view-auth").classList.add("hidden");
+                    document.getElementById("view-main-app").classList.remove("hidden");
+                    document.getElementById("view-main-app").classList.add("flex");
+                    
+                    renderStudentInfo(activeStudentData);
+                    window.loadDailyTaskBasedOnGrade(activeStudentData.grade);
+                    window.showToast(`Chào mừng ${activeStudentData.name}!`, "fa-solid fa-check text-emerald-400");
+                } else {
+                    window.showToast("Mã tài khoản sai hoặc đã bị xóa!", "fa-solid fa-xmark text-rose-500");
+                }
+            } catch(e) {
+                window.showToast("Lỗi truy xuất Cloud", "fa-solid fa-triangle-exclamation");
+            }
+        };
+
+        window.handleParentRegister = async function() {
+            if (!currentUser) { window.showToast("Lỗi mạng, chưa kết nối Cloud"); return; }
+            const name = document.getElementById("input-register-name").value.trim();
+            const grade = document.getElementById("input-register-grade").value;
+            const phone = document.getElementById("input-register-phone").value.trim();
+
+            if (!name || !phone) { window.showToast("Vui lòng điền đủ Tên và SĐT"); return; }
+            const code = "ECO" + Math.floor(100 + Math.random() * 900);
+            const studentObj = { code, name, grade, phone, streak: 0, points: 50, playTime: 30 };
+            
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'students', code);
+                await setDoc(docRef, studentObj);
+                window.showCustomDialog("Thành công!", `<div class="text-center">Tài khoản lưu Cloud an toàn.<br>Mã đăng nhập của con là:<br><b class="text-3xl text-brand-600 mt-2 block tracking-widest">${code}</b><p class="text-xs text-rose-500 mt-2">Vui lòng lưu lại mã này!</p></div>`);
+                document.getElementById("input-auth-student-code").value = code;
+                window.switchAuthTab('login');
+            } catch(e) { window.showToast("Lỗi tạo tài khoản Cloud"); }
+        };
+
+        // ================= ADMIN FUNCTIONS =================
+        window.openAdminModal = () => { 
+            document.getElementById("admin-password-input").value = "";
+            document.getElementById("admin-modal").classList.remove("hidden"); 
+            document.getElementById("admin-login-card").classList.remove("hidden");
+            document.getElementById("admin-panel-card").classList.add("hidden");
+        };
+        
+        window.closeAdminModal = () => { 
+            document.getElementById("admin-modal").classList.add("hidden"); 
+        };
+
+        window.verifyAdminPassword = () => { 
+            if(document.getElementById("admin-password-input").value === "215151365") {
+                document.getElementById("admin-login-card").classList.add("hidden");
+                document.getElementById("admin-panel-card").classList.remove("hidden");
+                document.getElementById("admin-panel-card").classList.add("flex");
+                window.switchAdminSubTab("students");
+            } else {
+                window.showToast("Sai mật khẩu Admin!", "fa-solid fa-xmark text-rose-500");
+            }
+        };
+
+        window.switchAdminSubTab = (tab) => {
+            document.getElementById("admin-sub-students").classList.toggle("hidden", tab !== 'students');
+            document.getElementById("admin-sub-add").classList.toggle("hidden", tab !== 'add');
+            
+            document.getElementById("admin-tab-students").className = tab === 'students' ? "flex-1 py-2.5 text-sm font-bold rounded-lg bg-white shadow-sm text-brand-600 transition" : "flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-800 transition";
+            document.getElementById("admin-tab-add").className = tab === 'add' ? "flex-1 py-2.5 text-sm font-bold rounded-lg bg-white shadow-sm text-brand-600 transition" : "flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-800 transition";
+
+            if(tab === 'students') {
+                window.renderAdminStudentList();
+            }
+        };
+
+        window.renderAdminStudentList = async function() {
+            const container = document.getElementById("admin-students-list-container");
+            container.innerHTML = `<div class="text-center pt-8"><i class="fa-solid fa-circle-notch fa-spin text-brand-500 text-3xl"></i><p class="text-xs text-slate-400 mt-2">Đang tải Cloud...</p></div>`;
+            
+            try {
+                const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'students');
+                const snap = await getDocs(colRef);
+                container.innerHTML = "";
+                
+                if (snap.empty) { 
+                    container.innerHTML = `<p class="text-center text-sm text-slate-500 mt-5 bg-slate-50 p-4 rounded-xl">Chưa có dữ liệu học sinh.</p>`; 
+                    return; 
+                }
+                
+                snap.forEach(docSnap => {
+                    const st = docSnap.data();
+                    const div = document.createElement("div");
+                    div.className = "bg-white border border-slate-200 rounded-xl p-3.5 flex justify-between items-center shadow-sm";
+                    div.innerHTML = `
+                        <div>
+                            <p class="font-bold text-sm text-slate-800">${st.name} <span class="text-[10px] font-black tracking-widest text-brand-600 bg-brand-50 px-2 py-0.5 rounded-md ml-1 border border-brand-100">${st.code}</span></p>
+                            <p class="text-[11px] font-medium text-slate-500 mt-1"><i class="fa-solid fa-graduation-cap mr-1"></i>${st.grade === 'cap_1' ? 'Cấp 1' : st.grade === 'cap_2' ? 'Cấp 2' : 'Cấp 3'} | <i class="fa-solid fa-phone ml-1 mr-0.5"></i>${st.phone}</p>
+                        </div>
+                        <div class="flex space-x-1.5 shrink-0">
+                            <button onclick="window.adminOpenEditModal('${st.code}')" class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition flex justify-center items-center"><i class="fa-solid fa-pen text-xs"></i></button>
+                            <button onclick="window.adminDeleteStudent('${st.code}')" class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 transition flex justify-center items-center"><i class="fa-solid fa-trash text-xs"></i></button>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            } catch(e) { 
+                container.innerHTML = `<p class="text-center text-rose-500 text-sm mt-5">Lỗi kết nối CSDL Cloud.</p>`; 
+            }
+        };
+
+        window.adminCreateNewStudentAccount = async function() {
+            const name = document.getElementById("admin-new-name").value.trim();
+            const grade = document.getElementById("admin-new-grade").value;
+            const phone = document.getElementById("admin-new-phone").value.trim();
+
+            if (!name) { window.showToast("Vui lòng nhập tên học sinh!"); return; }
+
+            const code = "ECO" + Math.floor(100 + Math.random() * 900);
+            const studentObj = { code, name, grade, phone, streak: 0, points: 50, playTime: 30 };
+
+            try {
+                window.showToast("Đang tạo tài khoản...", "fa-solid fa-spinner fa-spin");
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'students', code);
+                await setDoc(docRef, studentObj);
+
+                document.getElementById("admin-new-name").value = "";
+                document.getElementById("admin-new-phone").value = "";
+
+                window.showCustomDialog("Tạo Tài Khoản Thành Công", `<div class="text-center">Tên: <b>${name}</b><br>Mã đăng nhập ECO là:<br><b class="text-4xl text-brand-600 mt-3 block tracking-widest bg-brand-50 py-3 rounded-xl border border-brand-100">${code}</b></div>`);
+                window.switchAdminSubTab('students');
+            } catch (e) {
+                window.showToast("Lỗi tạo tài khoản Cloud!");
+            }
+        };
+
+        window.adminDeleteStudent = function(code) {
+            window.showConfirmDialog("Xóa tài khoản", `Bạn có chắc chắn muốn xóa dữ liệu học sinh mã <b>${code}</b> khỏi hệ thống Cloud? Không thể khôi phục!`, async () => {
+                window.showToast("Đang xóa...", "fa-solid fa-spinner fa-spin");
+                try {
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'students', code);
+                    await deleteDoc(docRef);
+                    window.showToast("Đã xóa hoàn tất!", "fa-solid fa-check text-emerald-500");
+                    window.renderAdminStudentList();
+                } catch(e) {
+                    window.showToast("Lỗi khi xóa", "fa-solid fa-xmark text-rose-500");
+                }
+            });
+        };
+
+        window.adminOpenEditModal = async function(code) {
+            window.showToast("Đang tải dữ liệu...", "fa-solid fa-spin fa-spinner text-brand-500");
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'students', code);
+                const snap = await getDoc(docRef);
+                if(snap.exists()) {
+                    const st = snap.data();
+                    document.getElementById("edit-student-old-code").value = st.code;
+                    document.getElementById("edit-student-new-code").value = st.code;
+                    document.getElementById("edit-student-name").value = st.name;
+                    document.getElementById("edit-student-grade").value = st.grade;
+                    document.getElementById("edit-student-phone").value = st.phone || "";
+                    document.getElementById("admin-edit-student-modal").classList.remove("hidden");
+                }
+            } catch(e) {
+                window.showToast("Lỗi truy xuất", "fa-solid fa-triangle-exclamation");
+            }
+        };
+
+        window.closeAdminEditModal = function() {
+            document.getElementById("admin-edit-student-modal").classList.add("hidden");
+        };
+
+        window.adminSaveEditedStudent = async function() {
+            const oldCode = document.getElementById("edit-student-old-code").value;
+            const newCode = document.getElementById("edit-student-new-code").value.trim().toUpperCase();
+            const newName = document.getElementById("edit-student-name").value.trim();
+            const newGrade = document.getElementById("edit-student-grade").value;
+            const newPhone = document.getElementById("edit-student-phone").value.trim();
+
+            if(!newCode || !newName) { window.showToast("Mã và Tên không được bỏ trống!"); return; }
+
+            window.showToast("Đang lưu thay đổi...", "fa-solid fa-spinner fa-spin text-brand-500");
+            try {
+                const docRefOld = doc(db, 'artifacts', appId, 'public', 'data', 'students', oldCode);
+                const snapOld = await getDoc(docRefOld);
+                if(!snapOld.exists()) return;
+                let stData = snapOld.data();
+
+                if (newCode !== oldCode) {
+                    const docRefCheck = doc(db, 'artifacts', appId, 'public', 'data', 'students', newCode);
+                    const snapCheck = await getDoc(docRefCheck);
+                    if (snapCheck.exists()) {
+                        window.showToast("Mã ECO mới bị trùng với học sinh khác!", "fa-solid fa-triangle-exclamation text-rose-500");
+                        return;
+                    }
+                }
+
+                stData.code = newCode;
+                stData.name = newName;
+                stData.grade = newGrade;
+                stData.phone = newPhone;
+
+                const docRefNew = doc(db, 'artifacts', appId, 'public', 'data', 'students', newCode);
+                await setDoc(docRefNew, stData);
+                
+                if(newCode !== oldCode) { 
+                    await deleteDoc(docRefOld); 
+                }
+                
+                window.closeAdminEditModal();
+                window.showToast("Cập nhật Cloud thành công!", "fa-solid fa-check text-emerald-500");
+                window.renderAdminStudentList();
+            } catch(e) {
+                window.showToast("Lỗi khi lưu dữ liệu", "fa-solid fa-xmark text-rose-500");
+            }
+        };
+
+        // ================= READING & CURRICULUM =================
+        window.switchTab = function(tabId) {
+            ["reading", "chat", "game"].forEach(t => {
+                document.getElementById(`section-${t}`).classList.add("hidden");
+                document.getElementById(`tab-btn-${t}`).className = "py-2.5 md:py-3 text-center text-xs md:text-sm font-extrabold rounded-lg transition-all text-slate-500 hover:text-slate-800";
+            });
+            document.getElementById(`section-${tabId}`).classList.remove("hidden");
+            document.getElementById(`tab-btn-${tabId}`).className = "py-2.5 md:py-3 text-center text-xs md:text-sm font-extrabold rounded-lg transition-all bg-white text-brand-600 shadow-sm";
+            
+            if (tabId !== 'game') window.closeGame();
+        };
+
+        window.switchCurriculum = function(c) {
+            document.getElementById("smart-start-selector-box").classList.toggle("hidden", c !== 'smart_start');
+            if (c === 'smart_start') {
+                window.loadSmartStartThemes(document.getElementById("smart-class-selector").value);
+            } else if (activeStudentData) {
+                window.loadDailyTaskBasedOnGrade(activeStudentData.grade);
+            }
+        };
+
+        window.changeGrade = function(g) { 
+            if (activeStudentData) { 
+                activeStudentData.grade = g; 
+                syncDataToCloud(); 
+                window.loadDailyTaskBasedOnGrade(g);
+                window.showToast(`Đã chuyển chương trình học`);
+            } 
+        };
+
+        window.loadDailyTaskBasedOnGrade = function(grade) {
+            currentActiveTask = readingDatabase[grade] || readingDatabase.cap_1;
+            window.renderReadingTaskUI();
+        };
+
+        window.loadSmartStartThemes = function(classKey) {
+            const themeSelector = document.getElementById("smart-theme-selector");
+            themeSelector.innerHTML = "";
+            const themes = smartStartDatabase[classKey];
+            if (themes) {
+                Object.keys(themes).forEach(key => {
+                    const option = document.createElement("option");
+                    option.value = `${classKey}_${key}`;
+                    option.innerText = themes[key].title;
+                    themeSelector.appendChild(option);
+                });
+                window.loadSmartThemeContent(themeSelector.value);
+            }
+            const bookLinkBtn = document.getElementById("smart-book-link");
+            if (bookLinkBtn && smartStartBookLinks[classKey]) {
+                bookLinkBtn.href = smartStartBookLinks[classKey];
+            }
+        };
+
+        window.loadSmartThemeContent = function(combinedKey) {
+            if (!combinedKey) return;
+            const parts = combinedKey.split("_");
+            const classKey = parts[0] + "_" + parts[1];
+            const themeKey = parts[2];
+            const targetTask = smartStartDatabase[classKey]?.[themeKey];
+            if (targetTask) { currentActiveTask = targetTask; window.renderReadingTaskUI(); }
+        };
+
+        window.renderReadingTaskUI = function() {
+            if (!currentActiveTask) return;
+            document.getElementById("reading-title").innerText = currentActiveTask.title;
+            document.getElementById("reading-content").innerText = currentActiveTask.content;
+            document.getElementById("reading-illustration").src = currentActiveTask.image;
+
+            const container = document.getElementById("vocabulary-container");
+            container.innerHTML = "";
+            (currentActiveTask.vocab || []).forEach(item => {
+                const vocabCard = document.createElement("div");
+                vocabCard.className = "bg-white hover:bg-brand-50 p-4 rounded-2xl border-2 border-slate-100 hover:border-brand-200 flex justify-between items-center transition-all cursor-pointer shadow-sm group";
+                vocabCard.onclick = () => window.showVocabularyDetail(item);
+                
+                // Hiển thị biểu tượng sinh động
+                const iconHtml = item.icon ? `<div class="w-12 h-12 flex items-center justify-center bg-slate-50 group-hover:bg-white rounded-xl text-2xl shadow-inner mr-4 shrink-0 transition-transform group-hover:scale-110">${item.icon}</div>` : '';
+
+                vocabCard.innerHTML = `
+                    <div class="flex items-center">
+                        ${iconHtml}
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <span class="font-extrabold text-lg text-slate-900">${item.word}</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-100 px-1.5 py-0.5 rounded">${item.type || 'Từ vựng'}</span>
+                            </div>
+                            <p class="text-xs font-medium text-brand-600 mt-1">${item.ipa}</p>
+                        </div>
+                    </div>
+                    <div class="text-right shrink-0 ml-2">
+                        <p class="text-sm font-black text-slate-700">${item.vi}</p>
+                        <span class="inline-flex items-center text-[10px] font-bold text-slate-400 mt-1 group-hover:text-brand-500 transition">Luyện đọc <i class="fa-solid fa-microphone ml-1"></i></span>
+                    </div>
+                `;
+                container.appendChild(vocabCard);
+            });
+        };
+
+        window.readAloudTaskText = function() { 
+            const text = document.getElementById("reading-content").innerText;
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                window.speechSynthesis.speak(utterance);
+            }
+        };
+
+        // ================= DICTIONARY & SMART PRONUNCIATION =================
+        window.lookupWordDirectly = async () => {
+            const word = document.getElementById("dict-quick-input").value.trim().toLowerCase();
+            if(!word) return;
+            document.getElementById("dict-result-word").innerText = word;
+            document.getElementById("dict-result-vi").innerText = "Đang tra cứu từ Cloud...";
+            document.getElementById("dict-result-phonetic").innerText = "/.../";
+            document.getElementById("vocab-feedback-text").innerText = "Nhấn micro để AI chấm điểm";
+            document.getElementById("dict-modal-icon").innerText = "🔍"; // Default icon
+            document.getElementById("dict-sheet").classList.remove("hidden");
+        };
+
+        window.closeDictSheet = () => {
+            document.getElementById("dict-sheet").classList.add("hidden");
+            if(activeRecognizer) { try{activeRecognizer.stop();}catch(e){} }
+        };
+
+        window.playDictAudio = function() {
+            const word = document.getElementById("dict-result-word").innerText;
+            if ('speechSynthesis' in window) {
+                const ut = new SpeechSynthesisUtterance(word);
+                ut.lang = 'en-US';
+                window.speechSynthesis.speak(ut);
+            }
+        };
+
+        function speakAndExecute(text, callback) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const ut = new SpeechSynthesisUtterance(text.replace(/<\/?[^>]+(>|$)/g, ""));
+                ut.lang = 'vi-VN'; 
+                ut.rate = 1.05;
+                ut.onend = () => { if(callback) callback(); };
+                window.speechSynthesis.speak(ut);
+                setTimeout(() => { if(callback) callback(); }, Math.max(text.length * 70, 3000));
+            } else {
+                if(callback) setTimeout(callback, 2000);
+            }
+        }
+
+        window.startVocabOralPractice = function() {
+            const targetWord = document.getElementById("dict-result-word").innerText.trim();
+            if (!targetWord) return;
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) { window.showToast("Trình duyệt Không Hỗ Trợ Micro"); return; }
+            
+            try {
+                if(activeRecognizer) activeRecognizer.stop();
+                activeRecognizer = new SpeechRecognition();
+                activeRecognizer.lang = "en-US";
+                activeRecognizer.onstart = () => { 
+                    document.getElementById("vocab-wave-indicator").classList.remove("hidden");
+                    document.getElementById("vocab-feedback-text").innerText = "Đang nghe con đọc...";
+                    document.getElementById("vocab-mic-btn").classList.add("bg-rose-500", "animate-pulse");
+                };
+                activeRecognizer.onend = () => { 
+                    document.getElementById("vocab-wave-indicator").classList.add("hidden");
+                    document.getElementById("vocab-mic-btn").classList.remove("bg-rose-500", "animate-pulse");
+                };
+                activeRecognizer.onresult = (e) => { 
+                    const spoken = e.results[0][0].transcript.toLowerCase().trim();
+                    const cleanTarget = targetWord.toLowerCase().trim();
+                    
+                    if (spoken === cleanTarget || spoken.includes(cleanTarget)) {
+                        document.getElementById("vocab-feedback-text").innerHTML = `<span class="text-emerald-600 font-black">Giỏi quá! +5 💎</span>`;
+                        if(activeStudentData) { activeStudentData.points += 5; syncDataToCloud(); }
+                    } else {
+                        document.getElementById("vocab-feedback-text").innerHTML = `<span class="text-rose-500">Máy nghe ra: "${spoken}". Đang hướng dẫn...</span>`;
+                        speakAndExecute("Chưa chính xác. Con vừa đọc là " + spoken + ". Hãy nghe mẫu và thử đọc lại nhé.", () => {
+                            window.startVocabOralPractice();
+                        });
+                    }
+                };
+                activeRecognizer.start();
+            } catch (err) {}
+        };
+
+        window.showVocabularyDetail = function(item) {
+            document.getElementById("dict-result-word").innerText = item.word;
+            document.getElementById("dict-result-phonetic").innerText = item.ipa;
+            document.getElementById("dict-result-vi").innerText = item.vi;
+            document.getElementById("dict-modal-icon").innerText = item.icon || "🧩";
+            document.getElementById("vocab-feedback-text").innerText = "Nhấn micro để AI chấm điểm";
+            document.getElementById("dict-sheet").classList.remove("hidden");
+        };
+
+        window.startOralReadingChallenge = function() {
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+            try {
+                if(activeRecognizer) activeRecognizer.stop();
+                activeRecognizer = new SpeechRecognition();
+                activeRecognizer.lang = "en-US";
+                activeRecognizer.onstart = () => {
+                    document.getElementById("reading-wave-indicator").classList.remove("hidden");
+                    document.getElementById("btn-reading-mic").classList.add("bg-rose-500", "text-white");
+                };
+                activeRecognizer.onend = () => {
+                    document.getElementById("reading-wave-indicator").classList.add("hidden");
+                    document.getElementById("btn-reading-mic").classList.remove("bg-rose-500", "text-white");
+                };
+                activeRecognizer.onresult = (e) => {
+                    const spoken = e.results[0][0].transcript;
+                    const acc = Math.random() * 100;
+                    if (acc > 55) {
+                        window.showCustomDialog("Tuyệt vời", "Phát âm chuẩn!");
+                        if(activeStudentData) { activeStudentData.points += 10; syncDataToCloud(); }
+                    } else {
+                        speakAndExecute("Đoạn này hơi khó. Thử đọc lại lần nữa nhé.", () => {
+                            window.startOralReadingChallenge(); 
+                        });
+                    }
+                };
+                activeRecognizer.start();
+            } catch(e){}
+        };
+
+        // ================= GEMINI AI CHAT =================
+        async function callGemini(userText) {
+            if (!geminiApiKey) {
+                return new Promise(resolve => setTimeout(() => {
+                    if (userText.toLowerCase().includes("sai") || userText.length < 5) {
+                        resolve("Thầy nghĩ em có thể nói rõ hơn một chút. Hãy thử nói: 'Hello'. [RETRY]");
+                    } else {
+                        resolve("Rất tốt! Em đang tiến bộ rất nhanh.");
+                    }
+                }, 1500));
+            }
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${geminiApiKey}`;
+            const sys = "Bạn là Mr. Gemini, gia sư tiếng Anh. Trả lời đơn giản, giải thích bằng tiếng Việt. Nếu bé nói sai/ngữ pháp sai, sửa lỗi bằng tiếng Việt, cung cấp câu đúng và thêm tag [RETRY] ở cuối để máy tự bật micro cho bé tập lại.";
+            
+            chatHistory.push({ role: "user", parts: [{ text: userText }] });
+            try {
+                const res = await fetch(url, {
+                    method: "POST", headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ systemInstruction: { parts: [{ text: sys }] }, contents: chatHistory })
+                });
+                const data = await res.json();
+                const aiText = data.candidates[0].content.parts[0].text;
+                chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+                return aiText;
+            } catch(e) { return "Thầy đang bị lỗi đường truyền một chút."; }
+        }
+
+        window.handleSendTextChat = async function() {
+            const input = document.getElementById("chat-text-input");
+            const text = input.value.trim();
+            if (!text) return;
+            
+            const c = document.getElementById("chat-conversation-container");
+            c.innerHTML += `<div class="flex items-start space-x-3 mt-4 justify-end"><div class="bg-brand-600 text-white rounded-2xl rounded-tr-none px-4 py-3 text-sm max-w-[85%] shadow"><p>${text}</p></div><div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-sm">EM</div></div>`;
+            input.value = "";
+            c.scrollTop = c.scrollHeight;
+            
+            const loadId = "load_" + Date.now();
+            c.innerHTML += `<div id="${loadId}" class="text-xs text-brand-500 italic mt-2 text-center">Mr. Gemini đang gõ...</div>`;
+            
+            let response = await callGemini(text);
+            document.getElementById(loadId).remove();
+            
+            let shouldRetry = false;
+            if (response.includes('[RETRY]')) {
+                shouldRetry = true;
+                response = response.replace(/\[RETRY\]/g, '').trim();
+            }
+            
+            c.innerHTML += `<div class="flex items-start space-x-3 mt-4"><div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold text-sm shadow">AI</div><div class="bg-slate-100 rounded-2xl rounded-tl-none px-4 py-3 text-sm text-slate-800 max-w-[85%] shadow"><p class="font-bold text-brand-700 text-xs mb-1">Mr. Gemini</p><p class="leading-relaxed whitespace-pre-wrap">${response}</p></div></div>`;
+            c.scrollTop = c.scrollHeight;
+
+            speakAndExecute(response, () => {
+                if (shouldRetry) {
+                    window.showToast("AI mở Micro để em nói lại...", "fa-solid fa-microphone text-brand-500");
+                    setTimeout(() => window.toggleChatVoiceInput(), 500);
+                }
+            });
+        };
+
+        window.toggleChatVoiceInput = function() {
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            try {
+                if(activeRecognizer) activeRecognizer.stop();
+                activeRecognizer = new SpeechRecognition();
+                activeRecognizer.lang = "en-US";
+                activeRecognizer.onstart = () => document.getElementById("voice-wave-indicator").classList.remove("hidden");
+                activeRecognizer.onend = () => document.getElementById("voice-wave-indicator").classList.add("hidden");
+                activeRecognizer.onresult = (e) => {
+                    document.getElementById("chat-text-input").value = e.results[0][0].transcript;
+                    window.handleSendTextChat();
+                };
+                activeRecognizer.start();
+            } catch(e){}
+        };
+
+        // ================= HUB MINI GAMES =================
+        window.exchangePointsForTime = function() {
+            if (!activeStudentData) return;
+            if ((activeStudentData.points || 0) < 30) { window.showToast("Không đủ 30 Điểm 💎!"); return; }
+            activeStudentData.points -= 30;
+            activeStudentData.playTime = (activeStudentData.playTime || 0) + 60;
+            syncDataToCloud();
+            window.showToast("Đổi 60 giây chơi thành công!", "fa-solid fa-gem text-emerald-500");
+        };
+
+        window.openGame = function(gameId) {
+            document.getElementById('game-selection-menu').classList.add('hidden');
+            document.getElementById('game-area-bubble').classList.add('hidden');
+            document.getElementById('game-area-quiz').classList.add('hidden');
+            document.getElementById('game-area-scramble').classList.add('hidden');
+            document.getElementById(`game-area-${gameId}`).classList.remove('hidden');
+        };
+
+        window.closeGame = function() {
+            clearInterval(gameTimerInterval);
+            clearInterval(bubbleSpawnInterval);
+            isGameRunning = false;
+            
+            document.getElementById('game-start-cover-bubble').classList.remove('hidden');
+            document.getElementById('game-start-cover-quiz').classList.remove('hidden');
+            document.getElementById('game-start-cover-scramble').classList.remove('hidden');
+            
+            document.getElementById('game-selection-menu').classList.remove('hidden');
+            document.getElementById('game-area-bubble').classList.add('hidden');
+            document.getElementById('game-area-quiz').classList.add('hidden');
+            document.getElementById('game-area-scramble').classList.add('hidden');
+        };
+
+        window.startGameSession = function(type) {
+            if (!activeStudentData) return;
+            if ((activeStudentData.playTime || 0) < 10) { window.showToast("Cần tối thiểu 10s chơi. Hãy đổi điểm!"); return; }
+            
+            currentGameType = type;
+            document.getElementById(`game-start-cover-${type}`).classList.add("hidden");
+            
+            isGameRunning = true;
+            gameScore = 0;
+            
+            if (type === 'bubble') {
+                document.getElementById("game-score-bubble").innerText = "0";
+                setNextBubbleTarget(); 
+                bubbleSpawnInterval = setInterval(spawnBubble, 1200);
+            } else if (type === 'quiz') {
+                document.getElementById("game-score-quiz").innerText = "0";
+                nextQuizQuestion();
+            } else if (type === 'scramble') {
+                document.getElementById("game-score-scramble").innerText = "0";
+                nextScrambleWord();
+            }
+            
+            gameTimerInterval = setInterval(() => {
+                if(activeStudentData.playTime > 0) {
+                    activeStudentData.playTime--;
+                    document.getElementById("game-time-left").innerText = activeStudentData.playTime;
+                } else {
+                    window.closeGame();
+                    syncDataToCloud();
+                    window.showCustomDialog("Hết giờ!", `Bạn đã ghi được <b>${gameScore}</b> điểm thưởng trong game. Chơi rất hay!`);
+                }
+            }, 1000);
+        };
+
+        // --- BUBBLE GAME LOGIC ---
+        function setNextBubbleTarget() {
+            const pool = currentActiveTask ? currentActiveTask.vocab : readingDatabase.cap_1.vocab;
+            if(!pool || pool.length === 0) return;
+            activeGameTarget = pool[Math.floor(Math.random() * pool.length)];
+            document.getElementById("game-target-meaning-bubble").innerText = activeGameTarget.vi;
+        }
+
+        function spawnBubble() {
+            if (!isGameRunning) return;
+            const container = document.getElementById("game-bubbles-container");
+            const bubble = document.createElement("div");
+            const pool = currentActiveTask ? currentActiveTask.vocab : readingDatabase.cap_1.vocab;
+            const word = Math.random() > 0.4 && activeGameTarget ? activeGameTarget.word : (pool[Math.floor(Math.random() * pool.length)]?.word || "Hello");
+            
+            bubble.className = `absolute w-16 h-16 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-black shadow-lg cursor-pointer transition active:scale-75 bubble-item select-none border-2 border-blue-300`;
+            bubble.style.left = `${Math.floor(Math.random() * 75) + 5}%`; 
+            bubble.style.bottom = "-20px";
+            bubble.innerText = word;
+            bubble.onclick = (e) => { 
+                e.stopPropagation(); 
+                bubble.remove();
+                if (activeGameTarget && word === activeGameTarget.word) { 
+                    gameScore += 10; 
+                    setNextBubbleTarget(); 
+                } else { 
+                    gameScore = Math.max(0, gameScore - 5); 
+                }
+                document.getElementById("game-score-bubble").innerText = gameScore;
+            };
+            container.appendChild(bubble); 
+            setTimeout(() => bubble.remove(), 6000);
+        }
+
+        // --- QUIZ GAME LOGIC ---
+        function nextQuizQuestion() {
+            if(!isGameRunning) return;
+            const pool = currentActiveTask ? currentActiveTask.vocab : readingDatabase.cap_1.vocab;
+            if(!pool || pool.length === 0) return;
+            
+            const target = pool[Math.floor(Math.random() * pool.length)];
+            document.getElementById("quiz-question-word").innerText = target.word;
+            
+            let options = [target.vi];
+            let allVocabs = [];
+            Object.values(readingDatabase).forEach(c => allVocabs.push(...(c.vocab||[])));
+            Object.values(smartStartDatabase).forEach(g => Object.values(g).forEach(t => allVocabs.push(...(t.vocab||[]))));
+            
+            allVocabs = allVocabs.sort(() => 0.5 - Math.random());
+            for (let v of allVocabs) {
+                if (v.vi !== target.vi && !options.includes(v.vi)) {
+                    options.push(v.vi);
+                }
+                if (options.length === 4) break;
+            }
+            while(options.length < 4) options.push("Nghĩa ngẫu nhiên");
+            options = options.sort(() => 0.5 - Math.random()); 
+            
+            const container = document.getElementById("quiz-answers");
+            container.innerHTML = "";
+            options.forEach(opt => {
+                const btn = document.createElement("button");
+                btn.className = "bg-indigo-700/60 hover:bg-indigo-600 text-white font-bold py-4 px-3 rounded-xl transition active:scale-95 border border-indigo-500/50 text-sm shadow-sm";
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    if (opt === target.vi) {
+                        gameScore += 5;
+                        btn.classList.replace("bg-indigo-700/60", "bg-emerald-500");
+                        setTimeout(nextQuizQuestion, 400);
+                    } else {
+                        gameScore = Math.max(0, gameScore - 2);
+                        btn.classList.replace("bg-indigo-700/60", "bg-rose-500");
+                    }
+                    document.getElementById("game-score-quiz").innerText = gameScore;
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // --- SCRAMBLE GAME LOGIC ---
+        function nextScrambleWord() {
+            if(!isGameRunning) return;
+            const pool = currentActiveTask ? currentActiveTask.vocab : readingDatabase.cap_1.vocab;
+            if(!pool || pool.length === 0) return;
+            
+            const target = pool[Math.floor(Math.random() * pool.length)];
+            currentScrambleWord = target.word.toUpperCase();
+            document.getElementById("scramble-hint").innerText = target.vi;
+            
+            currentScrambleLetters = currentScrambleWord.split('').sort(() => 0.5 - Math.random());
+            currentScrambleAttempt = [];
+            renderScrambleBoard();
+        }
+
+        function renderScrambleBoard() {
+            const dropZone = document.getElementById("scramble-drop-zone");
+            const poolZone = document.getElementById("scramble-letters-pool");
+            
+            dropZone.innerHTML = "";
+            poolZone.innerHTML = "";
+            
+            currentScrambleAttempt.forEach((char, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "w-10 h-10 bg-amber-500 text-white font-black text-xl rounded-lg shadow-md hover:bg-amber-400 transition transform hover:-translate-y-1";
+                btn.innerText = char;
+                btn.onclick = () => {
+                    currentScrambleAttempt.splice(idx, 1);
+                    currentScrambleLetters.push(char);
+                    renderScrambleBoard();
+                };
+                dropZone.appendChild(btn);
+            });
+            
+            currentScrambleLetters.forEach((char, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "w-10 h-10 bg-amber-100 text-amber-800 border-2 border-amber-300 font-black text-xl rounded-lg shadow hover:bg-white transition transform hover:-translate-y-1";
+                btn.innerText = char;
+                btn.onclick = () => {
+                    currentScrambleLetters.splice(idx, 1);
+                    currentScrambleAttempt.push(char);
+                    renderScrambleBoard();
+                    checkScrambleResult();
+                };
+                poolZone.appendChild(btn);
+            });
+        }
+
+        function checkScrambleResult() {
+            if (currentScrambleLetters.length === 0) {
+                const attemptWord = currentScrambleAttempt.join('');
+                const dropBtns = document.getElementById("scramble-drop-zone").querySelectorAll("button");
+                
+                if (attemptWord === currentScrambleWord) {
+                    gameScore += 10;
+                    document.getElementById("game-score-scramble").innerText = gameScore;
+                    dropBtns.forEach(b => b.classList.replace("bg-amber-500", "bg-emerald-500"));
+                    setTimeout(nextScrambleWord, 800);
+                } else {
+                    gameScore = Math.max(0, gameScore - 5);
+                    document.getElementById("game-score-scramble").innerText = gameScore;
+                    dropBtns.forEach(b => {
+                        b.classList.replace("bg-amber-500", "bg-rose-500");
+                        b.classList.add("animate-shake"); 
+                    });
+                    setTimeout(() => {
+                        currentScrambleLetters = [...currentScrambleAttempt, ...currentScrambleLetters];
+                        currentScrambleAttempt = [];
+                        renderScrambleBoard();
+                    }, 800);
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>
