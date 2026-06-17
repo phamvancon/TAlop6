@@ -94,7 +94,7 @@
     <!-- KHU VỰC THÔNG BÁO TOAST -->
     <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
-    <!-- KHU VỰC ĐÀI HOA PHÁO BĂNG (Khi hoàn thành xuất sắc) -->
+    <!-- KHU VỰC ĐÀI HOA PHÁO BĂNG -->
     <div id="confettiOverlay" class="fixed inset-0 pointer-events-none z-50 hidden transition-opacity duration-500 bg-black/5"></div>
 
     <!-- GIAO DIỆN CHÍNH: CHƯA ĐĂNG NHẬP -->
@@ -315,7 +315,12 @@
                     <div class="space-y-4">
                         <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase tracking-widest">
                             <span>Bấm vào thẻ để xem chi tiết và luyện nói</span>
-                            <span id="speakingProgressBadge">0/4 Đã lưu</span>
+                            <div class="flex items-center gap-2">
+                                <span id="speakingProgressBadge" class="mr-1">0/4 Đã lưu</span>
+                                <button onclick="preDownloadUnitVoices()" class="px-2.5 py-1 bg-brand-100 hover:bg-brand-200 text-brand-700 text-[10px] font-extrabold rounded-md flex items-center gap-1 transition-all active:scale-95" title="Tải tất cả âm thanh của Unit này để dùng ổn định">
+                                    <i class="fa-solid fa-circle-down"></i> Tải toàn bộ Unit
+                                </button>
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="speakingPhrasesGrid"></div>
@@ -334,19 +339,21 @@
                             <!-- BẢNG ĐIỀU KHIỂN GIỌNG NÓI & TỐC ĐỘ -->
                             <div class="mt-5 pt-4 border-t border-slate-200/60 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
                                 <div>
-                                    <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 flex items-center gap-1">
-                                        <i class="fa-solid fa-microphone-lines text-brand-500"></i> Giọng phát âm / Accent
+                                    <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 flex justify-between items-center">
+                                        <span class="flex items-center gap-1"><i class="fa-solid fa-microphone-lines text-brand-500"></i> Giọng phát âm / Accent</span>
+                                        <button onclick="openApiKeyModal()" class="text-brand-600 hover:text-brand-800 text-[9px] underline font-extrabold flex items-center gap-0.5" title="Nhập API Key cá nhân để đảm bảo giọng Leda hoạt động ổn định">
+                                            <i class="fa-solid fa-key"></i> Sửa API Key
+                                        </button>
                                     </label>
                                     <select id="voiceSelector" onchange="onVoicePreferenceChange()" class="w-full text-xs font-bold text-slate-700 bg-white border border-slate-200 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer">
                                         <option value="native-us-f">👩 Giọng Mỹ Nữ (Hệ thống)</option>
                                         <option value="native-us-m">👨 Giọng Mỹ Nam (Hệ thống)</option>
                                         <option value="native-uk-f">👩 Giọng Anh Nữ (Hệ thống)</option>
                                         <option value="native-uk-m">👨 Giọng Anh Nam (Hệ thống)</option>
-                                        <option value="ai-Zephyr">✨ Giọng AI - Zephyr (Sáng sủa - Cloud)</option>
+                                        <option value="ai-Zephyr" selected>✨ Giọng AI - Zephyr (Mặc định - Cloud)</option>
                                         <option value="ai-Puck">✨ Giọng AI - Puck (Năng động - Cloud)</option>
                                         <option value="ai-Kore">✨ Giọng AI - Kore (Vững chãi - Cloud)</option>
                                         <option value="ai-Fenrir">✨ Giọng AI - Fenrir (Hào hứng - Cloud)</option>
-                                        <option value="ai-Leda" selected>✨ Giọng AI - Leda (Trẻ trung - Cloud)</option>
                                         <option value="ai-Callirrhoe">✨ Giọng AI - Callirrhoe (Thư thái - Cloud)</option>
                                     </select>
                                 </div>
@@ -392,7 +399,7 @@
                                 <div class="flex-1">
                                     <div class="flex items-center justify-between">
                                         <h5 class="font-extrabold text-base" id="resultTitle">Phát âm xuất sắc!</h5>
-                                        <span class="text-xs font-extrabold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full" id="resultScore">100%</span>
+                                        <span class="text-xs font-extrabold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full" id="resultScore">100%</span>
                                     </div>
                                     <div class="mt-2 text-sm text-slate-600">
                                         <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Từ nghe được:</p>
@@ -501,6 +508,37 @@
                     Đóng bảng xếp hạng
                 </button>
             </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL: CẤU HÌNH API KEY -->
+    <div id="apiKeyModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl p-6 border border-slate-100">
+            <div class="text-center mb-5">
+                <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl mb-3">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h4 class="text-lg font-extrabold text-slate-800">Cấu hình Gemini API Key</h4>
+                <p class="text-slate-400 text-xs mt-1">Dành cho giọng đọc AI đám mây. Giúp tăng tốc độ xử lý và sự ổn định cho Giọng Leda.</p>
+            </div>
+            <form onsubmit="handleSaveApiKey(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Nhập Gemini API Key của con</label>
+                    <input type="text" id="geminiApiKeyInput" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white text-sm font-semibold" placeholder="AIzaSy...">
+                    <p class="text-[10px] text-slate-400 mt-1.5 leading-relaxed">
+                        * Con có thể tạo API Key hoàn toàn miễn phí tại Google AI Studio. Nếu để trống, hệ thống sẽ sử dụng khóa dự phòng của lớp học.
+                    </p>
+                </div>
+                <div class="flex gap-2">
+                    <button type="button" onclick="closeApiKeyModal()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl text-xs transition-all">
+                        Đóng lại
+                    </button>
+                    <button type="submit" class="flex-1 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs transition-all shadow-md">
+                        Lưu cấu hình
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -729,6 +767,9 @@
 
         // Khai báo apiKey trống theo hướng dẫn bắt buộc
         const apiKey = "";
+        
+        // Quản lý khóa kết nối cá nhân lưu cục bộ
+        let customApiKey = localStorage.getItem("custom_gemini_api_key") || "";
 
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
             apiKey: "AIzaSyBWCNOQaX3lSs1xAPrINk48lmJKFR5rYXg",
@@ -740,6 +781,12 @@
             measurementId: "G-ECRSMESCKQ"
         };
         
+        function getEffectiveApiKey() {
+            // Thứ tự ưu tiên: 1. API Key của cá nhân nhập (customApiKey), 2. Trả về rỗng "" để môi trường tự tiêm key của hệ thống
+            // Tuyệt đối không tự động dùng khóa Firebase làm cấu hình dự phòng vì nó bị chặn gọi Gemini API
+            return customApiKey || "";
+        }
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -748,28 +795,66 @@
         let fbUser = null;
         let cachedAdminPassword = "215151365";
 
-        const initAuth = async () => {
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
+        // CẤU HÌNH INDEXEDDB ĐỂ LƯU TRỮ GIỌNG ĐỌC NGOẠI TUYẾN
+        const DB_NAME = "EnglishAudioCacheDB";
+        const DB_VERSION = 1;
+        const STORE_NAME = "audio_cache";
+        let isIndexedDBSuspended = false;
+
+        function initIndexedDB() {
+            if (isIndexedDBSuspended) return Promise.reject("IndexedDB is disabled");
+            return new Promise((resolve, reject) => {
+                try {
+                    const request = indexedDB.open(DB_NAME, DB_VERSION);
+                    request.onupgradeneeded = (e) => {
+                        const database = e.target.result;
+                        if (!database.objectStoreNames.contains(STORE_NAME)) {
+                            database.createObjectStore(STORE_NAME);
+                        }
+                    };
+                    request.onsuccess = (e) => resolve(e.target.result);
+                    request.onerror = (e) => {
+                        isIndexedDBSuspended = true;
+                        reject(e.target.error);
+                    };
+                } catch (err) {
+                    isIndexedDBSuspended = true;
+                    reject(err);
                 }
-            } catch (error) {
-                console.error("Lỗi xác thực Firebase Auth:", error);
-                showToast("Lỗi kết nối máy chủ xác thực!", "fa-circle-xmark", "rose");
-            }
-        };
-        initAuth();
+            });
+        }
 
-        onAuthStateChanged(auth, (user) => {
-            fbUser = user;
-            if (user) {
-                startFirestoreSync();
+        async function getCachedAudio(key) {
+            try {
+                const database = await initIndexedDB();
+                return new Promise((resolve, reject) => {
+                    const transaction = database.transaction(STORE_NAME, "readonly");
+                    const store = transaction.objectStore(STORE_NAME);
+                    const request = store.get(key);
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = () => reject(request.error);
+                });
+            } catch (e) {
+                return null; // Bỏ qua mượt mà nếu IndexedDB bị chặn trong sandbox
             }
-        });
+        }
 
-        // ================= CHƯƠNG TRÌNH TIẾNG ANH 6 =================
+        async function saveAudioToCache(key, audioBase64) {
+            try {
+                const database = await initIndexedDB();
+                return new Promise((resolve, reject) => {
+                    const transaction = database.transaction(STORE_NAME, "readwrite");
+                    const store = transaction.objectStore(STORE_NAME);
+                    const request = store.put(audioBase64, key);
+                    request.onsuccess = () => resolve();
+                    request.onerror = () => reject(request.error);
+                });
+            } catch (e) {
+                console.warn("Không thể lưu cache âm thanh:", e);
+            }
+        }
+
+        // CHƯƠNG TRÌNH TIẾNG ANH 6
         const grade6Curriculum = {
             semester1: [
                 {
@@ -820,7 +905,7 @@
                     unitNum: "Unit 2",
                     title: "My House",
                     speaking: [
-                        { text: "My family lives in a beautiful town house.", ipa: "/maɪ ˈfæmɪli lɪvz ɪn ə ˈbjuːtəfʊl taʊn haʊs/", translation: "Gia đình tôi sống ở một ngôi nhà phố xinh đẹp." },
+                        { text: "My family lives in a beautiful town house.", ipa: "/maɪ ˈfæmɪli lɪv z ɪn ə ˈbjuːtəfʊl taʊn haʊs/", translation: "Gia đình tôi sống ở một ngôi nhà phố xinh đẹp." },
                         { text: "The microwave is on the kitchen table.", ipa: "/ðə ˈmaɪkrəʊweɪv ɪz ɒn ðə ˈkɪʧɪn ˈteɪbl/", translation: "Lò vi sóng ở trên bàn bếp." },
                         { text: "There is a wardrobe in my bedroom.", ipa: "/ðeər ɪz ə ˈwɔːdrəʊb ɪn maɪ ˈbɛdruːm/", translation: "Có một tủ quần áo trong phòng ngủ của tôi." },
                         { text: "My desk is next to the window.", ipa: "/maɪ dɛsk ɪz nɛkst tuː ðə ˈwɪndəʊ/", translation: "Bàn học của tôi nằm cạnh cửa sổ." }
@@ -950,7 +1035,7 @@
                     title: "Natural Wonders of Viet Nam",
                     speaking: [
                         { text: "Ha Long Bay is a famous natural wonder.", ipa: "/hɑː lɒŋ beɪ ɪz ə ˈfeɪməs ˈnæʧrəl ˈwʌndə/", translation: "Vịnh Hạ Long là một kỳ quan thiên nhiên nổi tiếng." },
-                        { text: "You must bring a sleeping bag when camping.", ipa: "/juː mʌst brɪŋ ə ˈsliːpŋ bæɡ wɛn ˈkæmpɪŋ/", translation: "Bạn phải mang theo túi ngủ khi đi cắm trại." },
+                        { text: "You must bring a sleeping bag when camping.", ipa: "/juµ mʌst brɪŋ ə ˈsliːpŋ bæɡ wɛn ˈkæmpɪŋ/", translation: "Bạn phải mang theo túi ngủ khi đi cắm trại." },
                         { text: "Fansipan is the highest mountain in Vietnam.", ipa: "/fɑːnsɪpæn ɪz ðə ˈhaɪɪst ˈmaʊntɪn ɪn vɪɛtˈnæm/", translation: "Fansipan là ngọn núi cao nhất Việt Nam." },
                         { text: "Don't forget to pack a plaster in your backpack.", ipa: "/dəʊnt fəˈɡɛt tuː pæk ə ˈplɑːstər ɪn jɔː ˈbækpæk/", translation: "Đừng quên xếp băng cá nhân vào ba lô của bạn." }
                     ],
@@ -1253,7 +1338,7 @@
                     title: "Robots",
                     speaking: [
                         { text: "Robots can perform very complex tasks.", ipa: "/ˈrəʊbɒts kæn pəˈfɔːm ˈvɛri ˈkɒmplɛks tɑːsks/", translation: "Robot có thể thực hiện các nhiệm vụ rất phức tạp." },
-                        { text: "My robot will help me clean my bedroom.", ipa: "/maɪ ˈrəʊbɒt wɪl hɛlp miː kliːn maɪ ˈbɛdruːm/", translation: "Robot của tôi sẽ giúp tôi dọn dẹp phòng ngủ." },
+                        { text: "My robot will help me clean my bedroom.", ipa: "/maɪ ˈrəʊbɒt wɪl hɛlp miː liuːn maɪ ˈbɛdruːm/", translation: "Robot của tôi sẽ giúp tôi dọn dẹp phòng ngủ." },
                         { text: "Some robots can recognize human faces.", ipa: "/sʌm ˈrəʊbɒts kæn ˈrɛkəɡnaɪz ˈhjuːmən ˈfeɪsɪz/", translation: "Một số robot có thể nhận dạng khuôn mặt con người." },
                         { text: "They will be able to talk to humans soon.", ipa: "/ðeɪ wɪl biː ˈeɪbl tuː tɔːk tuː ˈhjuːmənz suːn/", translation: "Chúng sẽ sớm có thể trò chuyện với con người." }
                     ],
@@ -1302,7 +1387,7 @@
             avatarId: 1,
             completedSpeaking: [],
             completedTests: {},
-            selectedVoice: "ai-Leda",
+            selectedVoice: "ai-Zephyr",
             speechRate: 0.85
         };
 
@@ -1335,7 +1420,7 @@
             checkSession();
         });
 
-        // ================= DỒNG BỘ FIRESTORE THỜI GIAN THỰC =================
+        // DỒNG BỘ FIRESTORE THỜI GIAN THỰC
         function startFirestoreSync() {
             if (!fbUser) return;
 
@@ -1360,6 +1445,9 @@
                 if (appState.username) {
                     if (allAccounts[appState.username]) {
                         appState = allAccounts[appState.username];
+                        if (!appState.selectedVoice || appState.selectedVoice === "ai-Leda") {
+                            appState.selectedVoice = "ai-Zephyr";
+                        }
                         updateProfileBar();
                     } else if (appState.username !== "admin_session") {
                         handleLogoutDirectly();
@@ -1396,7 +1484,7 @@
                         avatarId: 3,
                         completedSpeaking: [],
                         completedTests: {},
-                        selectedVoice: "ai-Leda",
+                        selectedVoice: "ai-Zephyr",
                         speechRate: 0.85
                     };
                     allAccounts["admin_session"] = appState;
@@ -1409,6 +1497,7 @@
                         clearInterval(interval);
                         if (allAccounts[session.username]) {
                             appState = allAccounts[session.username];
+                            if (!appState.selectedVoice || appState.selectedVoice === "ai-Leda") appState.selectedVoice = "ai-Zephyr";
                             showMainDashboard();
                         } else {
                             showLoginScreen();
@@ -1447,14 +1536,15 @@
                 streak: 0,
                 avatarId: 1,
                 completedSpeaking: [],
-                completedTests: {}
+                completedTests: {},
+                selectedVoice: "ai-Leda",
+                speechRate: 0.85
             };
             showLoginScreen();
             showToast("Tài khoản đã được thay đổi hoặc bị xóa!", "fa-circle-info", "brand");
         }
 
-
-        // ================= TABS ĐĂNG NHẬP / ĐĂNG KÝ =================
+        // TABS ĐĂNG NHẬP / ĐĂNG KÝ
         function switchAuthTab(tab) {
             const btnLogin = document.getElementById("btnAuthTabLogin");
             const btnRegister = document.getElementById("btnAuthTabRegister");
@@ -1486,8 +1576,7 @@
             });
         }
 
-
-        // ================= XỬ LÝ AUTH =================
+        // XỬ LÝ AUTH
         async function handleLogin(e) {
             e.preventDefault();
             const usernameInput = document.getElementById("loginUsername").value.trim().toLowerCase();
@@ -1512,7 +1601,7 @@
                         avatarId: 3,
                         completedSpeaking: [],
                         completedTests: {},
-                        selectedVoice: "ai-Leda",
+                        selectedVoice: "ai-Zephyr",
                         speechRate: 0.85
                     };
                     localStorage.setItem("currentSession_grade6", JSON.stringify({ username: "admin_session" }));
@@ -1538,6 +1627,7 @@
                 }
 
                 appState = account;
+                if (!appState.selectedVoice || appState.selectedVoice === "ai-Leda") appState.selectedVoice = "ai-Zephyr";
                 appState.streak = (appState.streak || 0) + 1;
                 
                 localStorage.setItem("currentSession_grade6", JSON.stringify({ username: appState.username }));
@@ -1586,7 +1676,7 @@
                 avatarId: selectedRegAvatarId,
                 completedSpeaking: [],
                 completedTests: {},
-                selectedVoice: "ai-Leda",
+                selectedVoice: "ai-Zephyr",
                 speechRate: 0.85
             };
 
@@ -1619,7 +1709,9 @@
                         streak: 0,
                         avatarId: 1,
                         completedSpeaking: [],
-                        completedTests: {}
+                        completedTests: {},
+                        selectedVoice: "ai-Leda",
+                        speechRate: 0.85
                     };
                     showLoginScreen();
                     showToast("Đã đăng xuất tài khoản thành công!", "fa-circle-info", "brand");
@@ -1653,8 +1745,7 @@
             document.getElementById("userAvatarImg").src = avatarMap[appState.avatarId || 1];
         }
 
-
-        // ================= ĐIỀU HƯỚNG BÀI HỌC =================
+        // ĐIỀU HƯỚNG BÀI HỌC
         function switchSemester(sem) {
             currentSemester = sem;
             currentUnitIndex = 0;
@@ -1768,8 +1859,7 @@
             }
         }
 
-
-        // ================= LUYỆN NÓI AI (SPEAKING) =================
+        // LUYỆN NÓI AI (SPEAKING)
         function loadSpeakingContent() {
             const list = currentSemester === 1 ? grade6Curriculum.semester1 : grade6Curriculum.semester2;
             const unit = list[currentUnitIndex];
@@ -1797,7 +1887,7 @@
 
                 const card = document.createElement("button");
                 card.onclick = () => selectSpeakingPhrase(idx);
-                card.className = `p-4 rounded-2xl border-2 text-left transition-all ${borderClass} flex flex-col justify-between gap-2`;
+                card.className = `p-4 rounded-2xl border-2 text-left transition-all ${borderClass} flex flex-col justify-between gap-2 phrase-card-element`;
                 
                 card.innerHTML = `
                     <div>
@@ -1810,22 +1900,48 @@
                     </div>
                     <div class="flex items-center justify-between mt-1 text-[11px] text-slate-500">
                         <span class="truncate pr-2">${phrase.translation}</span>
-                        <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0 text-[10px]">
-                            <i class="fa-solid fa-play"></i>
-                        </span>
+                        <div class="flex items-center gap-1.5">
+                            <span id="cache-badge-${idx}"></span>
+                            <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center flex-shrink-0 text-[10px]">
+                                <i class="fa-solid fa-play"></i>
+                            </span>
+                        </div>
                     </div>
                 `;
 
                 phrasesGrid.appendChild(card);
             });
 
+            updateCacheBadges();
             selectSpeakingPhrase(selectedPhraseIndex >= unit.speaking.length ? 0 : selectedPhraseIndex);
+        }
+
+        async function updateCacheBadges() {
+            const list = currentSemester === 1 ? grade6Curriculum.semester1 : grade6Curriculum.semester2;
+            const unit = list[currentUnitIndex];
+            const voice = appState.selectedVoice || "ai-Zephyr";
+            const speed = appState.speechRate || 0.85;
+
+            const cards = document.querySelectorAll(".phrase-card-element");
+            for (let i = 0; i < cards.length; i++) {
+                const phrase = unit.speaking[i];
+                const key = `${phrase.text}_${voice}_${speed}`;
+                const cached = await getCachedAudio(key);
+                const badgeContainer = document.getElementById(`cache-badge-${i}`);
+                if (badgeContainer) {
+                    if (cached) {
+                        badgeContainer.innerHTML = `<span class="text-[9px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded flex items-center gap-0.5" title="Đã lưu ngoại tuyến"><i class="fa-solid fa-circle-check text-[8px]"></i> Đã tải</span>`;
+                    } else {
+                        badgeContainer.innerHTML = `<span class="text-[9px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded flex items-center gap-0.5" title="Chưa tải ngoại tuyến"><i class="fa-solid fa-cloud text-[8px]"></i> Cloud</span>`;
+                    }
+                }
+            }
         }
 
         function selectSpeakingPhrase(idx) {
             selectedPhraseIndex = idx;
             
-            const cards = document.querySelectorAll("#speakingPhrasesGrid button");
+            const cards = document.querySelectorAll("#speakingPhrasesGrid button.phrase-card-element");
             cards.forEach((card, cIdx) => {
                 if (cIdx === idx) {
                     card.classList.remove("border-slate-100", "hover:border-brand-200");
@@ -1844,10 +1960,11 @@
             document.getElementById("phraseCardIPA").innerText = phrase.ipa;
             document.getElementById("phraseCardVietnamese").innerText = phrase.translation;
 
-            if (appState.selectedVoice) {
+            if (appState.selectedVoice && appState.selectedVoice !== "ai-Leda") {
                 document.getElementById("voiceSelector").value = appState.selectedVoice;
             } else {
-                appState.selectedVoice = "ai-Leda";
+                appState.selectedVoice = "ai-Zephyr";
+                document.getElementById("voiceSelector").value = "ai-Zephyr";
             }
             if (appState.speechRate) {
                 document.getElementById("speechRateSlider").value = appState.speechRate;
@@ -1864,6 +1981,7 @@
             appState.selectedVoice = selector.value;
             saveProgress();
             showToast("Đã lưu tùy chọn giọng phát âm!", "fa-circle-check", "brand");
+            updateCacheBadges();
         }
 
         function onSpeedPreferenceChange() {
@@ -1872,11 +1990,13 @@
             document.getElementById("speechRateValue").innerText = `${rateVal.toFixed(2)}x`;
             appState.speechRate = rateVal;
             saveProgress();
+            updateCacheBadges();
         }
 
-        // ================= CÔNG NGHỆ CHUYỂN ĐỔI PCM-16 SANG WAV CHUẨN (LITTLE-ENDIAN) =================
+        // CÔNG NGHỆ CHUYỂN ĐỔI PCM-16 SANG WAV CHUẨN (LITTLE-ENDIAN)
         function pcmToWav(base64Data, sampleRate = 24000) {
-            const binaryString = atob(base64Data);
+            const cleanBase64 = base64Data.replace(/[^A-Za-z0-9+/=]/g, "");
+            const binaryString = atob(cleanBase64);
             const len = binaryString.length;
             const buffer = new ArrayBuffer(44 + len);
             const view = new DataView(buffer);
@@ -1887,33 +2007,29 @@
                 }
             };
 
-            // Ghi phần RIFF/WAVE Header chuẩn hóa
             writeString(0, 'RIFF');
             view.setUint32(4, 36 + len, true);
             writeString(8, 'WAVE');
             writeString(12, 'fmt ');
             view.setUint32(16, 16, true);
-            view.setUint16(20, 1, true); // PCM format
-            view.setUint16(22, 1, true); // Mono Channel
+            view.setUint16(20, 1, true);
+            view.setUint16(22, 1, true);
             view.setUint32(24, sampleRate, true);
-            view.setUint32(28, sampleRate * 2, true); // Byte rate (sampleRate * channel * bitDepth/8)
-            view.setUint16(32, 2, true); // Block align
-            view.setUint16(34, 16, true); // 16-bit
+            view.setUint32(28, sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true);
             writeString(36, 'data');
             view.setUint32(40, len, true);
 
-            // Chuyển đổi dữ liệu PCM Big-Endian từ API sang Little-Endian của file WAV
             let offset = 44;
             for (let i = 0; i < len; i += 2) {
                 if (i + 1 < len) {
                     const b1 = binaryString.charCodeAt(i);
                     const b2 = binaryString.charCodeAt(i + 1);
                     
-                    // Ghép hai byte thành số nguyên 16-bit có dấu (Big-Endian)
                     let val = (b1 << 8) | b2;
-                    if (val & 0x8000) val |= ~0xffff; // Xử lý số âm
+                    if (val & 0x8000) val |= ~0xffff;
                     
-                    // Ghi số nguyên vào DataView dạng Little-Endian
                     view.setInt16(offset, val, true);
                     offset += 2;
                 }
@@ -1922,17 +2038,31 @@
             return new Blob([buffer], { type: 'audio/wav' });
         }
 
-        // Hàm gọi fetch kèm thuật toán Exponential Backoff tự động khi quá tải hệ thống
-        async function fetchWithExponentialBackoff(url, options, retries = 5, delay = 1000) {
+        async function fetchWithExponentialBackoff(url, options, retries = 3, delay = 800) {
             try {
                 const response = await fetch(url, options);
                 if (!response.ok) {
-                    throw new Error(`Mã lỗi HTTP: ${response.status}`);
+                    let errorMsg = `Mã lỗi HTTP: ${response.status}`;
+                    let isPermanentError = [400, 401, 403, 404].includes(response.status);
+                    try {
+                        const errJson = await response.json();
+                        if (errJson.error && errJson.error.message) {
+                            errorMsg += ` - ${errJson.error.message}`;
+                        }
+                    } catch (e) {}
+                    
+                    if (isPermanentError) {
+                        throw new Error(errorMsg);
+                    }
+                    throw new Error(errorMsg);
                 }
                 return await response.json();
             } catch (error) {
-                if (retries > 0) {
-                    // Chờ đợi theo hàm mũ: 1s -> 2s -> 4s -> 8s -> 16s
+                const isAuthOrClientError = error.message.includes("400") || 
+                                             error.message.includes("401") || 
+                                             error.message.includes("403") || 
+                                             error.message.includes("404");
+                if (retries > 0 && !isAuthOrClientError) {
                     await new Promise(resolve => setTimeout(resolve, delay));
                     return fetchWithExponentialBackoff(url, options, retries - 1, delay * 2);
                 }
@@ -1940,82 +2070,160 @@
             }
         }
 
-        // PHÁT GIỌNG NÓI CHUẨN AI VỚI GIỌNG TÙY CHỌN HOẠT ĐỘNG HOÀN HẢO
+        async function fetchAndCacheTTS(text, voice, speed, cacheKey) {
+            const voiceModelName = voice.replace("ai-", "");
+            const activeKey = getEffectiveApiKey();
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${activeKey}`;
+
+            let speedGuidance = "at a perfectly normal pace";
+            if (speed < 0.65) speedGuidance = "extremely slowly and very clearly for a young student to follow";
+            else if (speed < 0.85) speedGuidance = "slowly and clearly";
+            else if (speed > 1.2) speedGuidance = "at a fast, native conversational pace";
+
+            const customPrompt = `Speak this phrase ${speedGuidance}, with absolutely perfect native pronunciation: "${text}"`;
+
+            const payload = {
+                contents: [{
+                    parts: [{ text: customPrompt }]
+                }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: voiceModelName }
+                        }
+                    }
+                },
+                model: "gemini-2.5-flash-preview-tts"
+            };
+
+            const result = await fetchWithExponentialBackoff(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const part = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+            const audioDataBase64 = part?.inlineData?.data;
+            if (audioDataBase64) {
+                await saveAudioToCache(cacheKey, audioDataBase64);
+                return audioDataBase64;
+            } else {
+                if (result?.error?.message) {
+                    throw new Error(result.error.message);
+                }
+                throw new Error("Không thể tìm thấy dữ liệu âm thanh nhị phân hợp lệ từ phản hồi máy chủ.");
+            }
+        }
+
+        async function preDownloadUnitVoices() {
+            const list = currentSemester === 1 ? grade6Curriculum.semester1 : grade6Curriculum.semester2;
+            const unit = list[currentUnitIndex];
+            const voice = appState.selectedVoice || "ai-Zephyr";
+            const speed = appState.speechRate || 0.85;
+
+            showToast("Bắt đầu tải trước giọng đọc AI cho toàn bộ bài học...", "fa-cloud-arrow-down", "brand");
+
+            let downloadedCount = 0;
+            let alreadyCachedCount = 0;
+
+            for (let i = 0; i < unit.speaking.length; i++) {
+                const phrase = unit.speaking[i];
+                const key = `${phrase.text}_${voice}_${speed}`;
+                
+                const cached = await getCachedAudio(key);
+                if (cached) {
+                    alreadyCachedCount++;
+                    continue;
+                }
+
+                try {
+                    await fetchAndCacheTTS(phrase.text, voice, speed, key);
+                    downloadedCount++;
+                } catch (e) {
+                    console.error("Lỗi khi tải trước câu " + (i + 1), e);
+                }
+            }
+
+            if (downloadedCount > 0) {
+                showToast(`Đã lưu thành công ${downloadedCount} giọng đọc vào bộ nhớ thiết bị!`, "fa-circle-check", "emerald");
+            } else {
+                showToast("Tất cả giọng đọc của Unit này đã được lưu trữ sẵn từ trước!", "fa-circle-check", "emerald");
+            }
+            updateCacheBadges();
+        }
+
         async function playTargetTTS() {
             const text = document.getElementById("phraseCardEnglish").innerText;
             if (!text) return;
 
-            const selectedVoiceType = appState.selectedVoice || "ai-Leda";
+            const selectedVoiceType = appState.selectedVoice || "ai-Zephyr";
             const speedRate = appState.speechRate || 0.85;
+            const cacheKey = `${text}_${selectedVoiceType}_${speedRate}`;
 
-            if (selectedVoiceType.startsWith("ai-")) {
-                const voiceModelName = selectedVoiceType.replace("ai-", "");
-                const playBtn = document.getElementById("playTtsBtn");
-                const loader = document.getElementById("ttsLoadingIndicator");
+            const playBtn = document.getElementById("playTtsBtn");
+            const loader = document.getElementById("ttsLoadingIndicator");
 
-                playBtn.disabled = true;
-                loader.classList.remove("hidden");
+            playBtn.disabled = true;
+            loader.classList.remove("hidden");
 
-                try {
-                    // API endpoint và API key tự động xử lý
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+            try {
+                if (selectedVoiceType.startsWith("ai-")) {
+                    let audioDataBase64 = await getCachedAudio(cacheKey);
+                    let isFromCache = !!audioDataBase64;
 
-                    let speedGuidance = "at a perfectly normal pace";
-                    if (speedRate < 0.65) speedGuidance = "extremely slowly and very clearly for a young student to follow";
-                    else if (speedRate < 0.85) speedGuidance = "slowly and clearly";
-                    else if (speedRate > 1.2) speedGuidance = "at a fast, native conversational pace";
-
-                    const customPrompt = `Speak this phrase ${speedGuidance}, with absolutely perfect native pronunciation: "${text}"`;
-
-                    // Gửi chính xác payload theo đúng chuẩn cấu hình mô hình TTS
-                    const payload = {
-                        contents: [{
-                            parts: [{ text: customPrompt }]
-                        }],
-                        generationConfig: {
-                            responseModalities: ["AUDIO"],
-                            speechConfig: {
-                                voiceConfig: {
-                                    prebuiltVoiceConfig: { voiceName: voiceModelName }
-                                }
+                    if (!audioDataBase64) {
+                        loader.innerText = "☁️ Đang tải trực tuyến...";
+                        try {
+                            audioDataBase64 = await fetchAndCacheTTS(text, selectedVoiceType, speedRate, cacheKey);
+                        } catch (primaryErr) {
+                            console.warn("Giọng đọc gặp sự cố, tự động kích hoạt chế độ dự phòng thông minh (Puck)...", primaryErr);
+                            
+                            const fallbackVoiceType = "ai-Puck";
+                            const fallbackCacheKey = `${text}_${fallbackVoiceType}_${speedRate}`;
+                            
+                            audioDataBase64 = await getCachedAudio(fallbackCacheKey);
+                            if (!audioDataBase64) {
+                                audioDataBase64 = await fetchAndCacheTTS(text, fallbackVoiceType, speedRate, fallbackCacheKey);
                             }
-                        },
-                        model: "gemini-2.5-flash-preview-tts"
+                            
+                            showToast("Giọng AI chính tạm bận, hệ thống đã chuyển sang giọng AI Puck mượt mà!", "fa-circle-info", "brand");
+                        }
+                    } else {
+                        loader.innerText = "💾 Phát từ bộ nhớ thiết bị...";
+                    }
+
+                    const wavBlob = pcmToWav(audioDataBase64, 24000);
+                    const audioUrl = URL.createObjectURL(wavBlob);
+                    const audio = new Audio(audioUrl);
+                    
+                    audio.onended = () => {
+                        playBtn.disabled = false;
+                        loader.classList.add("hidden");
                     };
 
-                    const result = await fetchWithExponentialBackoff(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
+                    await audio.play();
 
-                    const part = result?.candidates?.[0]?.content?.parts?.[0];
-                    const audioDataBase64 = part?.inlineData?.data;
-                    const mimeType = part?.inlineData?.mimeType;
-
-                    if (audioDataBase64 && mimeType && mimeType.startsWith("audio/")) {
-                        const sampleRateMatch = mimeType.match(/rate=(\d+)/);
-                        const sampleRate = sampleRateMatch ? parseInt(sampleRateMatch[1], 10) : 24000;
-                        
-                        // Chuyển đổi dữ liệu PCM Big-Endian thành tệp âm thanh WAV tương thích hoàn hảo
-                        const wavBlob = pcmToWav(audioDataBase64, sampleRate);
-                        const audioUrl = URL.createObjectURL(wavBlob);
-
-                        const audio = new Audio(audioUrl);
-                        audio.play();
-                    } else {
-                        throw new Error("Không thể trích xuất luồng dữ liệu âm thanh.");
+                    if (!isFromCache) {
+                        showToast("Đã tải và lưu trữ giọng đọc này ngoại tuyến!", "fa-cloud-arrow-down", "emerald");
+                        updateCacheBadges();
                     }
-                } catch (err) {
-                    console.error("Lỗi kết nối AI TTS Cloud:", err);
-                    showToast("Giọng AI đám mây đang bận, hệ thống chuyển sang giọng đọc mặc định thiết bị!", "fa-circle-info", "brand");
+                } else {
                     playLocalTTS(text, selectedVoiceType, speedRate);
-                } finally {
                     playBtn.disabled = false;
                     loader.classList.add("hidden");
                 }
-            } else {
+            } catch (err) {
+                console.error("Lỗi TTS toàn cục:", err);
+                let fallbackMsg = "Đang phát bằng giọng đọc dự phòng của thiết bị!";
+                if (err.message && (err.message.includes("HTTP") || err.message.includes("API Key") || err.message.includes("Mã lỗi"))) {
+                    fallbackMsg = `Lỗi kết nối AI: ${err.message.split(" - ")[0]}. Đã dùng giọng máy!`;
+                }
+                showToast(fallbackMsg, "fa-circle-info", "brand");
                 playLocalTTS(text, selectedVoiceType, speedRate);
+                playBtn.disabled = false;
+                loader.classList.add("hidden");
             }
         }
 
@@ -2047,7 +2255,7 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        // ================= THU ÂM NHẬN DIỆN GIỌNG NÓI =================
+        // THU ÂM NHẬN DIỆN GIỌNG NÓI
         function setupSpeechRecognition() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             
@@ -2157,7 +2365,7 @@
             }, 2500);
         }
 
-        // ================= CHẤM ĐIỂM & ĐÁNH GIÁ =================
+        // CHẤM ĐIỂM & ĐÁNH GIÁ
         function analyzeSpeakingResult(spokenText) {
             const list = currentSemester === 1 ? grade6Curriculum.semester1 : grade6Curriculum.semester2;
             const unit = list[currentUnitIndex];
@@ -2287,8 +2495,33 @@
             document.getElementById("pronunciationResultBox").classList.add("hidden");
         }
 
+        // CẤU HÌNH API KEY CÁ NHÂN
+        function openApiKeyModal() {
+            document.getElementById("apiKeyModal").classList.remove("hidden");
+            document.getElementById("geminiApiKeyInput").value = localStorage.getItem("custom_gemini_api_key") || "";
+        }
 
-        // ================= HỆ THỐNG BÀI THI (TEST) =================
+        function closeApiKeyModal() {
+            document.getElementById("apiKeyModal").classList.add("hidden");
+        }
+
+        function handleSaveApiKey(e) {
+            e.preventDefault();
+            const keyVal = document.getElementById("geminiApiKeyInput").value.trim();
+            if (keyVal) {
+                localStorage.setItem("custom_gemini_api_key", keyVal);
+                customApiKey = keyVal;
+                showToast("Đã lưu Gemini API Key cá nhân thành công!", "fa-circle-check", "emerald");
+            } else {
+                localStorage.removeItem("custom_gemini_api_key");
+                customApiKey = "";
+                showToast("Đã xóa API Key cá nhân, chuyển sang dùng khóa mặc định!", "fa-circle-info", "brand");
+            }
+            closeApiKeyModal();
+            updateCacheBadges();
+        }
+
+        // HỆ THỐNG BÀI THI (TEST)
         function loadTestContent() {
             document.getElementById("testStartView").classList.remove("hidden");
             document.getElementById("testQuestionView").classList.add("hidden");
@@ -2504,8 +2737,7 @@
             loadTestContent();
         }
 
-
-        // ================= BẢNG XẾP HẠNG (LEADERBOARD) =================
+        // BẢNG XẾP HẠNG (LEADERBOARD)
         function openLeaderboard() {
             document.getElementById("leaderboardModal").classList.remove("hidden");
             
@@ -2560,8 +2792,7 @@
             document.getElementById("leaderboardModal").classList.add("hidden");
         }
 
-
-        // ================= KHU VỰC QUẢN TRỊ VIÊN / GIÁO VIÊN =================
+        // KHU VỰC QUẢN TRỊ VIÊN / GIÁO VIÊN
         function openAdminGateway() {
             document.getElementById("adminAuthModal").classList.remove("hidden");
             document.getElementById("adminPasswordInput").value = "";
@@ -2738,7 +2969,7 @@
                         await Promise.all(deletePromises);
 
                         localStorage.removeItem("currentSession_grade6");
-                        showToast("Hệ thống đã reset sạch trực tuyến! Đang tải lại...", "fa-arrows-rotate", "brand");
+                        showToast("Hệ thống đã dọn dẹp sạch trực tuyến! Đang tải lại...", "fa-arrows-rotate", "brand");
                         setTimeout(() => {
                             window.location.reload();
                         }, 1200);
@@ -2848,7 +3079,9 @@
                     streak: streak,
                     avatarId: Math.floor(Math.random() * 5) + 1,
                     completedSpeaking: [],
-                    completedTests: {}
+                    completedTests: {},
+                    selectedVoice: "ai-Zephyr",
+                    speechRate: 0.85
                 };
 
                 try {
@@ -2899,8 +3132,7 @@
             );
         }
 
-
-        // ================= HIỆU ỨNG GIAO DIỆN (UI TOAST/CONFETTI/CONFIRM) =================
+        // HIỆU ỨNG GIAO DIỆN (UI TOAST/CONFETTI/CONFIRM)
         function showToast(message, iconClass, colorClass) {
             const container = document.getElementById("toastContainer");
             
@@ -2999,6 +3231,13 @@
             }, 2500);
         }
 
+        onAuthStateChanged(auth, (user) => {
+            fbUser = user;
+            if (user) {
+                startFirestoreSync();
+            }
+        });
+
         // ĐỒNG BỘ WINDOW SCOPE CHO CÁC HÀM TRÊN GIAO DIỆN HTML
         window.switchAuthTab = switchAuthTab;
         window.selectAvatar = selectAvatar;
@@ -3010,6 +3249,7 @@
         window.switchUnitActivity = switchUnitActivity;
         window.selectSpeakingPhrase = selectSpeakingPhrase;
         window.playTargetTTS = playTargetTTS;
+        window.preDownloadUnitVoices = preDownloadUnitVoices;
         window.onVoicePreferenceChange = onVoicePreferenceChange;
         window.onSpeedPreferenceChange = onSpeedPreferenceChange;
         window.toggleSpeechRecognition = toggleSpeechRecognition;
@@ -3034,6 +3274,10 @@
         window.deleteUserByAdmin = deleteUserByAdmin;
         window.cancelAdminEdit = cancelAdminEdit;
         window.handleAdminUserSave = handleAdminUserSave;
+        
+        window.openApiKeyModal = openApiKeyModal;
+        window.closeApiKeyModal = closeApiKeyModal;
+        window.handleSaveApiKey = handleSaveApiKey;
     </script>
 </body>
 </html>
