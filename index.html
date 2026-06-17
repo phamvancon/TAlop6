@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PVC-E-Learning Tiếng Anh 6 - Global Success (Tập 1 & Tập 2)</title>
+    <title>E-Learning Tiếng Anh 6 - Global Success (Tập 1 & Tập 2)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -108,6 +108,9 @@
                 </span>
                 <h1 class="text-3xl font-extrabold font-kids text-brand-800 tracking-tight">Tiếng Anh 6</h1>
                 <p class="text-slate-500 mt-2 text-sm font-medium">Luyện phát âm AI & Làm bài thi chuẩn học kỳ</p>
+                <p class="text-xs text-emerald-600 mt-2 font-bold flex items-center justify-center gap-1">
+                    <i class="fa-solid fa-cloud-sun animate-pulse"></i> Đồng bộ dữ liệu trực tuyến đám mây
+                </p>
                 <div class="mt-4 flex justify-center gap-2">
                     <a href="https://online.flipbuilder.com/sdtta/xyup/" target="_blank" class="text-xs text-brand-600 underline hover:text-brand-800 flex items-center gap-1">
                         <i class="fa-solid fa-book"></i> SGK Tập 1
@@ -129,13 +132,23 @@
                 </button>
             </div>
 
-            <!-- FORM ĐĂNG NHẬP (Chỉ cần tên đăng nhập) -->
+            <!-- FORM ĐĂNG NHẬP -->
             <form id="formLogin" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Tên tài khoản học sinh</label>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Tên tài khoản học sinh / Giáo viên</label>
                     <div class="relative">
                         <i class="fa-regular fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                        <input type="text" id="loginUsername" required class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all text-sm font-medium" placeholder="Viết liền không dấu, ví dụ: hung6a">
+                        <input type="text" id="loginUsername" required class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all text-sm font-medium" placeholder="Tên học sinh hoặc 'admin'">
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500">Mật khẩu (Nếu có)</label>
+                        <span class="text-[10px] text-slate-400 font-medium">(Học sinh để trống ô này)</span>
+                    </div>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="password" id="loginPassword" class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all text-sm font-medium" placeholder="Nhập mật khẩu Giáo viên để đăng nhập nhanh">
                     </div>
                 </div>
                 <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-sm">
@@ -194,7 +207,12 @@
                             <i class="fa-solid fa-graduation-cap text-white text-lg"></i>
                         </div>
                         <div>
-                            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block">Luyện Tiếng Anh 6</span>
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
+                                Luyện Tiếng Anh 6
+                                <span class="bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.2 rounded-full flex items-center gap-0.5">
+                                    <span class="w-1 h-1 rounded-full bg-emerald-500 animate-pulse"></span> Trực tuyến
+                                </span>
+                            </span>
                             <span class="text-lg font-extrabold font-kids text-brand-800 tracking-tight">GLOBAL SUCCESS</span>
                         </div>
                     </div>
@@ -536,7 +554,6 @@
                 </div>
                 <h4 class="text-lg font-extrabold text-slate-800">Xác minh quyền quản trị</h4>
                 <p class="text-slate-400 text-xs mt-1">Vui lòng nhập mật khẩu giáo viên để truy cập bảng điều khiển.</p>
-                <p class="text-slate-400 text-[10px] mt-0.5 italic">(Mật khẩu mặc định: <span id="adminHintPassword" class="font-bold text-brand-600">215151365</span>)</p>
             </div>
             <form onsubmit="handleAdminAuth(event)" class="space-y-4">
                 <div>
@@ -663,9 +680,9 @@
                             <div class="bg-brand-50 p-3 rounded-xl border border-brand-100 flex items-center justify-between">
                                 <div>
                                     <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Mật khẩu hiện tại</span>
-                                    <span id="settingsCurrentPasswordDisplay" class="font-mono text-sm font-bold text-brand-700">215151365</span>
+                                    <span id="settingsCurrentPasswordDisplay" class="font-mono text-sm font-bold text-brand-700">••••••••</span>
                                 </div>
-                                <div class="text-xs text-slate-400 italic">Mặc định: xxxxxx</div>
+                                <div class="text-xs text-slate-400 italic">Mật khẩu được lưu trực tuyến</div>
                             </div>
                             <form onsubmit="handleUpdateAdminPassword(event)" class="space-y-3">
                                 <div>
@@ -755,8 +772,54 @@
     </div>
 
 
-    <!-- JAVASCRIPT HỆ THỐNG XỬ LÝ TOÀN BỘ LOGIC -->
-    <script>
+    <!-- JAVASCRIPT HỆ THỐNG XỬ LÝ TOÀN BỘ LOGIC (Firebase Module) -->
+    <script type="module">
+        // Import Firebase SDK Modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, getDocs, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // ================= CẤU HÌNH FIREBASE CHUYÊN BIỆT =================
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "AIzaSyBWCNOQaX3lSs1xAPrINk48lmJKFR5rYXg",
+            authDomain: "tieng-anh-cap2.firebaseapp.com",
+            projectId: "tieng-anh-cap2",
+            storageBucket: "tieng-anh-cap2.firebasestorage.app",
+            messagingSenderId: "183214744118",
+            appId: "1:183214744118:web:9930d4501bd3f22d812e97",
+            measurementId: "G-ECRSMESCKQ"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        let fbUser = null;
+        let cachedAdminPassword = "215151365";
+
+        // Khởi chạy cơ chế xác thực ẩn danh theo Rule 3
+        const initAuth = async () => {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Lỗi xác thực Firebase Auth:", error);
+                showToast("Lỗi kết nối máy chủ xác thực!", "fa-circle-xmark", "rose");
+            }
+        };
+        initAuth();
+
+        onAuthStateChanged(auth, (user) => {
+            fbUser = user;
+            if (user) {
+                startFirestoreSync();
+            }
+        });
+
         // ================= DỮ LIỆU CHƯƠNG TRÌNH TIẾNG ANH 6 (GLOBAL SUCCESS TẬP 1 & 2) =================
         const grade6Curriculum = {
             semester1: [
@@ -1069,7 +1132,7 @@
                     title: "Sports and Games",
                     speaking: [
                         { text: "I play table tennis with my brother.", ipa: "/aɪ pleɪ ˈteɪbl ˈtɛnɪs wɪð maɪ ˈbrʌðə/", translation: "Tôi chơi bóng bàn với anh trai tôi." },
-                        { text: "You must wear sports shoes in the gym.", ipa: "/juː mʌst weə spɔːts ʃuːz ɪn ðə ʤɪm/", translation: "Bạn phải đi giày thể thao trong phòng tập." },
+                        { text: "You must wear sports shoes in the gym.", ipa: "/juː mʌst weə spɔµts ʃuːz ɪn ðə ʤɪm/", translation: "Bạn phải đi giày thể thao trong phòng tập." },
                         { text: "Congratulations! You won the first prize.", ipa: "/kənˌɡrætjʊˈleɪʃənz! juː wʌn ðə fɜːst praɪz/", translation: "Chúc mừng! Bạn đã giành được giải nhất." },
                         { text: "Keep fit by running every morning.", ipa: "/kiːp fɪt baɪ ˈrʌnɪŋ ˈɛvri ˈmɔːnɪŋ/", translation: "Giữ dáng bằng cách chạy bộ mỗi sáng." }
                     ],
@@ -1199,7 +1262,7 @@
                     speaking: [
                         { text: "We should reduce our use of plastic bag.", ipa: "/wiː ʃʊd rɪˈdjuːs ˈaʊə juːz ɒv ˈplæstɪk bæɡ/", translation: "Chúng ta nên giảm việc sử dụng túi ni lông." },
                         { text: "Recycle old bottles to protect environment.", ipa: "/ˌriːˈsaɪkl əʊld ˈbɒtlz tuː prəˈtɛkt ɪnˈvaɪərənmənt/", translation: "Tái chế chai cũ để bảo vệ môi trường." },
-                        { text: "If we plant more trees, the air is clean.", ipa: "/ɪf wiː plɑːnt mɔː triːz, ðiː eər ɪz kliːn/", translation: "Nếu chúng ta trồng nhiều cây hơn, không khí sẽ sạch." },
+                        { text: "If we plant more trees, the air is clean.", ipa: "/f we plant more trees, the air is clean/", translation: "Nếu chúng ta trồng nhiều cây hơn, không khí sẽ sạch." },
                         { text: "Turn off the lights when leaving the room.", ipa: "/tɜːn ɒf ðə laɪts wɛn ˈliːvɪŋ ðə ruːm/", translation: "Tắt đèn khi rời khỏi phòng." }
                     ],
                     questions: [
@@ -1326,75 +1389,140 @@
 
         // Khởi động khi tải xong trang
         window.addEventListener('DOMContentLoaded', () => {
-            initDatabase();
             setupSpeechRecognition();
             checkSession();
         });
 
-        // ================= CƠ SỞ DỮ LIỆU LOCALSTORAGE =================
-        function initDatabase() {
-            // Đọc dữ liệu tài khoản từ LocalStorage hoặc khởi tạo tài khoản mẫu
-            const savedAccounts = localStorage.getItem("allAccounts_grade6");
-            if (savedAccounts) {
-                allAccounts = JSON.parse(savedAccounts);
-            } else {
-                // Tạo một vài tài khoản mẫu để hệ thống không trống trải
-                allAccounts = {
-                    "lan6a": {
-                        username: "lan6a",
-                        password: "",
-                        fullName: "Nguyễn Mai Chi",
-                        points: 480,
-                        streak: 5,
-                        avatarId: 4,
-                        completedSpeaking: [],
-                        completedTests: {}
-                    },
-                    "minh6b": {
-                        username: "minh6b",
-                        password: "",
-                        fullName: "Vũ Hải Minh",
-                        points: 320,
-                        streak: 3,
-                        avatarId: 1,
-                        completedSpeaking: [],
-                        completedTests: {}
+        // ================= CƠ SỞ DỮ LIỆU ĐỒNG BỘ FIRESTORE (RULE 1 & 2 & 3) =================
+        
+        // Trình lắng nghe đồng bộ cơ sở dữ liệu thời gian thực
+        function startFirestoreSync() {
+            if (!fbUser) return;
+
+            // 1. Đồng bộ hóa cấu hình Admin trực tuyến
+            const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'config', 'admin');
+            onSnapshot(configDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    cachedAdminPassword = docSnap.data().password || "215151365";
+                } else {
+                    // Tạo tài liệu cấu hình mật khẩu mặc định nếu chưa tồn tại
+                    setDoc(configDocRef, { password: "215151365" });
+                }
+            }, (error) => {
+                console.error("Firestore Admin Config Sync Error:", error);
+            });
+
+            // 2. Đồng bộ hóa danh sách tài khoản học sinh
+            const accountsCol = collection(db, 'artifacts', appId, 'public', 'data', 'accounts');
+            onSnapshot(accountsCol, (snapshot) => {
+                allAccounts = {};
+                snapshot.forEach((docSnap) => {
+                    allAccounts[docSnap.id] = docSnap.data();
+                });
+
+                // Cập nhật thời gian thực vào trạng thái người dùng hiện tại nếu đang đăng nhập
+                if (appState.username) {
+                    if (allAccounts[appState.username]) {
+                        appState = allAccounts[appState.username];
+                        updateProfileBar();
+                    } else if (appState.username !== "admin_session") {
+                        // Trường hợp tài khoản bị Admin xóa trực tuyến (ngoại trừ tài khoản admin ảo)
+                        handleLogoutDirectly();
                     }
-                };
-                localStorage.setItem("allAccounts_grade6", JSON.stringify(allAccounts));
-            }
+                }
+
+                // Cập nhật tự động các View bổ trợ
+                if (!document.getElementById("leaderboardModal").classList.contains("hidden")) {
+                    openLeaderboard();
+                }
+                if (!document.getElementById("adminDashboardModal").classList.contains("hidden")) {
+                    renderAdminUserList();
+                }
+                renderUnitList();
+            }, (error) => {
+                console.error("Firestore Accounts Sync Error:", error);
+            });
         }
 
-        // Đọc mật khẩu Admin cấu hình từ bộ nhớ cục bộ
+        // Lấy mật khẩu Admin
         function getAdminPassword() {
-            return localStorage.getItem("admin_password_grade6") || "215151365";
+            return cachedAdminPassword;
         }
 
         function checkSession() {
             const savedSession = localStorage.getItem("currentSession_grade6");
             if (savedSession) {
                 const session = JSON.parse(savedSession);
-                if (allAccounts[session.username]) {
-                    // Đồng bộ lại dữ liệu mới nhất
-                    appState = allAccounts[session.username];
+                
+                // Trường hợp phiên lưu trữ là Giáo viên Admin
+                if (session.username === "admin_session") {
+                    appState = {
+                        username: "admin_session",
+                        fullName: "Giáo viên Admin",
+                        points: 999,
+                        streak: 99,
+                        avatarId: 3,
+                        completedSpeaking: [],
+                        completedTests: {},
+                        selectedVoice: "ai-Leda",
+                        speechRate: 0.85
+                    };
+                    allAccounts["admin_session"] = appState;
                     showMainDashboard();
                     return;
                 }
+
+                // Đợi Firestore đồng bộ rồi gán session sau
+                const interval = setInterval(() => {
+                    if (Object.keys(allAccounts).length > 0) {
+                        clearInterval(interval);
+                        if (allAccounts[session.username]) {
+                            appState = allAccounts[session.username];
+                            showMainDashboard();
+                        } else {
+                            showLoginScreen();
+                        }
+                    }
+                }, 200);
+
+                // Timeout bảo vệ nếu không có mạng
+                setTimeout(() => clearInterval(interval), 4000);
+            } else {
+                showLoginScreen();
             }
-            showLoginScreen();
         }
 
-        function saveAllAccounts() {
-            localStorage.setItem("allAccounts_grade6", JSON.stringify(allAccounts));
-        }
-
-        function saveProgress() {
+        async function saveProgress() {
+            if (!fbUser) return;
             if (appState.username) {
-                allAccounts[appState.username] = { ...appState };
-                saveAllAccounts();
-                localStorage.setItem("currentSession_grade6", JSON.stringify({ username: appState.username }));
-                updateProfileBar();
+                // Không lưu tài khoản giáo viên giả lập lên cơ sở dữ liệu học sinh
+                if (appState.username === "admin_session") return;
+
+                const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'accounts', appState.username);
+                try {
+                    await setDoc(userDocRef, appState, { merge: true });
+                    updateProfileBar();
+                } catch (error) {
+                    console.error("Error saving progress:", error);
+                    showToast("Không thể đồng bộ dữ liệu lên đám mây!", "fa-circle-exmark", "rose");
+                }
             }
+        }
+
+        // Đăng xuất ngay lập tức không cần Modal khi tài khoản bị Admin xóa
+        function handleLogoutDirectly() {
+            localStorage.removeItem("currentSession_grade6");
+            appState = {
+                username: "",
+                fullName: "",
+                points: 0,
+                streak: 0,
+                avatarId: 1,
+                completedSpeaking: [],
+                completedTests: {}
+            };
+            showLoginScreen();
+            showToast("Tài khoản của con đã bị thay đổi trên máy chủ!", "fa-circle-info", "brand");
         }
 
 
@@ -1432,32 +1560,87 @@
 
 
         // ================= XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ / ĐĂNG XUẤT =================
-        function handleLogin(e) {
+        async function handleLogin(e) {
             e.preventDefault();
             const usernameInput = document.getElementById("loginUsername").value.trim().toLowerCase();
+            const passwordInput = document.getElementById("loginPassword").value.trim();
 
             if (!usernameInput) {
                 showToast("Vui lòng điền tên tài khoản!", "fa-circle-xmark", "rose");
                 return;
             }
 
+            const adminPass = getAdminPassword();
+
+            // THƯỜNG HỢP 1: Đăng nhập trực tiếp bằng tài khoản "admin" và mật khẩu Admin
+            if (usernameInput === "admin") {
+                if (passwordInput === adminPass) {
+                    showToast("Đăng nhập Giáo viên thành công!", "fa-user-shield", "emerald");
+                    
+                    // Thiết lập trạng thái phiên cho Admin ảo
+                    appState = {
+                        username: "admin_session",
+                        fullName: "Giáo viên Admin",
+                        points: 999,
+                        streak: 99,
+                        avatarId: 3,
+                        completedSpeaking: [],
+                        completedTests: {},
+                        selectedVoice: "ai-Leda",
+                        speechRate: 0.85
+                    };
+                    localStorage.setItem("currentSession_grade6", JSON.stringify({ username: "admin_session" }));
+                    allAccounts["admin_session"] = appState;
+                    
+                    showMainDashboard();
+                    
+                    // Tự động kích hoạt mở panel quản lý
+                    setTimeout(() => {
+                        showAdminDashboard();
+                    }, 600);
+                    return;
+                } else {
+                    showToast("Mật khẩu Giáo viên không chính xác!", "fa-circle-xmark", "rose");
+                    return;
+                }
+            }
+
+            // TRƯỜNG HỢP 2: Đăng nhập tài khoản học sinh thông thường
             const account = allAccounts[usernameInput];
             if (account) {
+                // Kiểm tra xem có sử dụng mật khẩu Admin để Đăng nhập khẩn cấp (Master Key) hay không
+                if (passwordInput && passwordInput !== adminPass) {
+                    showToast("Mật khẩu Giáo viên không chính xác đối với tài khoản này!", "fa-circle-xmark", "rose");
+                    return;
+                }
+
                 appState = account;
                 // Cộng thêm streak tự động mỗi ngày đăng nhập
                 appState.streak = (appState.streak || 0) + 1;
+                
+                localStorage.setItem("currentSession_grade6", JSON.stringify({ username: appState.username }));
                 saveProgress();
 
-                showToast(`Chào mừng ${appState.fullName || appState.username} quay trở lại học tập!`, "fa-face-smile", "emerald");
+                if (passwordInput === adminPass) {
+                    showToast(`Đăng nhập học sinh ${appState.fullName} bằng quyền Giáo viên tối cao!`, "fa-user-shield", "emerald");
+                } else {
+                    showToast(`Chào mừng ${appState.fullName || appState.username} quay trở lại học tập!`, "fa-face-smile", "emerald");
+                }
+                
                 showMainDashboard();
             } else {
                 showToast("Tên tài khoản không tồn tại! Hãy chuyển qua tab Tạo tài khoản.", "fa-circle-exmark", "rose");
             }
         }
 
-        function handleRegister(e) {
+        async function handleRegister(e) {
             e.preventDefault();
             const username = document.getElementById("regUsername").value.trim().toLowerCase();
+
+            if (!fbUser) {
+                showToast("Chưa kết nối Cloud, vui lòng đợi giây lát!", "fa-arrows-rotate", "rose");
+                return;
+            }
 
             // Kiểm tra tên đăng nhập không dấu, viết liền
             const usernameRegex = /^[a-z0-9]+$/;
@@ -1467,13 +1650,14 @@
             }
 
             if (allAccounts[username]) {
-                showToast("Tên tài khoản này đã tồn tại trên thiết bị!", "fa-circle-exmark", "rose");
+                showToast("Tên tài khoản này đã tồn tại trên hệ thống!", "fa-circle-exmark", "rose");
                 return;
             }
 
             // Tạo tên hiển thị tự động từ tên đăng nhập (viết hoa chữ cái đầu)
             const autoFullName = username.charAt(0).toUpperCase() + username.slice(1);
 
+            // Tạo tài khoản mới
             const newAcc = {
                 username: username,
                 password: "",
@@ -1487,14 +1671,20 @@
                 speechRate: 0.85
             };
 
-            allAccounts[username] = newAcc;
-            saveAllAccounts();
+            try {
+                // Đẩy trực tiếp lên mây Firestore
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'accounts', username), newAcc);
+                
+                appState = newAcc;
+                localStorage.setItem("currentSession_grade6", JSON.stringify({ username: appState.username }));
+                updateProfileBar();
 
-            appState = newAcc;
-            saveProgress();
-
-            showToast("Tạo tài khoản và đăng nhập thành công!", "fa-circle-check", "emerald");
-            showMainDashboard();
+                showToast("Tạo tài khoản trực tuyến thành công!", "fa-circle-check", "emerald");
+                showMainDashboard();
+            } catch (error) {
+                console.error("Firebase write error on registration:", error);
+                showToast("Lỗi đăng ký dữ liệu lên Cloud!", "fa-circle-exmark", "rose");
+            }
         }
 
         function handleLogout() {
@@ -1515,6 +1705,7 @@
                     };
                     showLoginScreen();
                     showToast("Đã đăng xuất tài khoản thành công!", "fa-circle-info", "brand");
+                    document.getElementById("loginPassword").value = ""; // Xoá trường mật khẩu cũ
                 }
             );
         }
@@ -1571,6 +1762,7 @@
 
         function renderUnitList() {
             const container = document.getElementById("unitListContainer");
+            if (!container) return;
             container.innerHTML = "";
 
             const list = currentSemester === 1 ? grade6Curriculum.semester1 : grade6Curriculum.semester2;
@@ -2450,6 +2642,8 @@
             const sortedAccounts = Object.values(allAccounts).sort((a, b) => b.points - a.points);
 
             sortedAccounts.forEach((acc, index) => {
+                if (acc.username === "admin_session") return; // Bỏ qua giáo viên trong BXH
+
                 let badgeClass = "bg-slate-100 text-slate-600";
                 let rankIcon = index + 1;
 
@@ -2499,9 +2693,6 @@
             document.getElementById("adminAuthModal").classList.remove("hidden");
             document.getElementById("adminPasswordInput").value = "";
             document.getElementById("adminPasswordInput").focus();
-            
-            // Cập nhật nhãn mật khẩu gợi ý động tại form đăng nhập Admin
-            document.getElementById("adminHintPassword").innerText = getAdminPassword();
         }
 
         function closeAdminGateway() {
@@ -2530,7 +2721,7 @@
             document.getElementById("adminDashboardModal").classList.add("hidden");
             
             // Đồng bộ lại chỉ số ở header giao diện chính nếu người dùng hiện tại bị sửa điểm
-            if (appState.username) {
+            if (appState.username && appState.username !== "admin_session") {
                 appState = allAccounts[appState.username];
                 updateProfileBar();
             }
@@ -2562,16 +2753,14 @@
         }
 
         function loadAdminSettings() {
-            // Cập nhật hiển thị mật khẩu hiện tại trong tab cài đặt
-            document.getElementById("settingsCurrentPasswordDisplay").innerText = getAdminPassword();
             // Reset các ô nhập mật khẩu
             document.getElementById("settingsOldPassword").value = "";
             document.getElementById("settingsNewPassword").value = "";
             document.getElementById("settingsConfirmPassword").value = "";
         }
 
-        // XỬ LÝ ĐỔI MẬT KHẨU ADMIN
-        function handleUpdateAdminPassword(e) {
+        // XỬ LÝ ĐỔI MẬT KHẨU ADMIN TRỰC TUYẾN
+        async function handleUpdateAdminPassword(e) {
             e.preventDefault();
             const currentPass = document.getElementById("settingsOldPassword").value;
             const newPass = document.getElementById("settingsNewPassword").value.trim();
@@ -2592,18 +2781,25 @@
                 return;
             }
 
-            // Lưu trữ mật khẩu mới vào LocalStorage
-            localStorage.setItem("admin_password_grade6", newPass);
-            showToast("Đã đổi mật khẩu Admin thành công!", "fa-circle-check", "emerald");
-            
-            // Cập nhật lại nhãn hiển thị
-            loadAdminSettings();
+            try {
+                // Đẩy cấu hình mật khẩu mới lên đám mây Firestore
+                const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'config', 'admin');
+                await setDoc(configDocRef, { password: newPass }, { merge: true });
+                showToast("Đã đổi mật khẩu Admin thành công trực tuyến!", "fa-circle-check", "emerald");
+                loadAdminSettings();
+            } catch (error) {
+                showToast("Lỗi cập nhật mật khẩu trực tuyến!", "fa-circle-xmark", "rose");
+            }
         }
 
         // XUẤT SAO LƯU DỮ LIỆU JSON
         function exportClassData() {
             try {
-                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allAccounts));
+                // Lọc bỏ tài khoản admin ảo ra khỏi file backup
+                const backupAccounts = { ...allAccounts };
+                delete backupAccounts["admin_session"];
+
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupAccounts));
                 const downloadAnchor = document.createElement('a');
                 downloadAnchor.setAttribute("href", dataStr);
                 downloadAnchor.setAttribute("download", "Du_Lieu_Tieng_Anh_6_Global_Success.json");
@@ -2616,29 +2812,36 @@
             }
         }
 
-        // NHẬP KHÔI PHỤC DỮ LIỆU JSON
-        function importClassData(e) {
+        // NHẬP KHÔI PHỤC DỮ LIỆU JSON (ĐỒNG BỘ TRỰC TIẾP LÊN MÂY)
+        async function importClassData(e) {
             const file = e.target.files[0];
             if (!file) return;
 
             const reader = new FileReader();
-            reader.onload = function(evt) {
+            reader.onload = async function(evt) {
                 try {
                     const parsed = JSON.parse(evt.target.result);
                     // Kiểm tra sơ bộ định dạng dữ liệu lớp học
                     if (typeof parsed === 'object' && parsed !== null) {
-                        allAccounts = parsed;
-                        saveAllAccounts();
+                        showToast("Đang đồng bộ dữ liệu phục hồi lên máy chủ...", "fa-arrows-rotate", "brand");
+
+                        const uploadPromises = Object.keys(parsed).map((username) => {
+                            if (username === "admin_session") return Promise.resolve(); // Bỏ qua giáo viên
+                            const studentDoc = doc(db, 'artifacts', appId, 'public', 'data', 'accounts', username);
+                            return setDoc(studentDoc, parsed[username]);
+                        });
+
+                        await Promise.all(uploadPromises);
                         showToast("Đã nhập khôi phục dữ liệu học tập thành công!", "fa-file-import", "emerald");
                         
                         // Đưa về tab Học sinh
                         switchAdminTab('students');
 
                         // Đồng bộ lại tài khoản học sinh hiện tại nếu bị ảnh hưởng
-                        if (appState.username && !allAccounts[appState.username]) {
-                            handleLogout();
-                        } else if (appState.username) {
-                            appState = allAccounts[appState.username];
+                        if (appState.username && appState.username !== "admin_session" && !parsed[appState.username]) {
+                            handleLogoutDirectly();
+                        } else if (appState.username && appState.username !== "admin_session") {
+                            appState = parsed[appState.username];
                             updateProfileBar();
                         }
                     } else {
@@ -2653,29 +2856,46 @@
             document.getElementById("importFileInput").value = "";
         }
 
-        // RESET TOÀN BỘ DỮ LIỆU VỀ MẶC ĐỊNH
+        // RESET TOÀN BỘ DỮ LIỆU VỀ MẶC ĐỊNH (XÓA TRỰC TIẾP TRÊN MÂY)
         function resetAllClassData() {
             showCustomConfirm(
                 "Xác nhận RESET toàn bộ hệ thống",
-                "Hành động này sẽ xóa vĩnh viễn toàn bộ tài khoản học sinh, sao vàng tích lũy và đặt mật khẩu Admin về mặc định (215151365). Bạn có chắc chắn muốn thực hiện?",
+                "Hành động này sẽ xóa vĩnh viễn toàn bộ tài khoản học sinh trực tuyến, sao vàng tích lũy và đặt mật khẩu Admin về mặc định (215151365). Bạn có chắc chắn muốn thực hiện?",
                 "⚠️",
-                () => {
-                    localStorage.removeItem("allAccounts_grade6");
-                    localStorage.removeItem("currentSession_grade6");
-                    localStorage.removeItem("admin_password_grade6");
-                    showToast("Hệ thống đã reset sạch! Đang tải lại...", "fa-arrows-rotate", "brand");
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1200);
+                async () => {
+                    try {
+                        showToast("Đang dọn sạch cơ sở dữ liệu Cloud...", "fa-arrows-rotate", "brand");
+
+                        const accountsCol = collection(db, 'artifacts', appId, 'public', 'data', 'accounts');
+                        const snapshot = await getDocs(accountsCol);
+                        const deletePromises = [];
+                        snapshot.forEach((docSnap) => {
+                            deletePromises.push(deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'accounts', docSnap.id)));
+                        });
+
+                        const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'config', 'admin');
+                        deletePromises.push(deleteDoc(configDocRef));
+
+                        await Promise.all(deletePromises);
+
+                        localStorage.removeItem("currentSession_grade6");
+                        showToast("Hệ thống đã reset sạch trực tuyến! Đang tải lại...", "fa-arrows-rotate", "brand");
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1200);
+                    } catch (error) {
+                        showToast("Lỗi khi xóa dữ liệu máy chủ!", "fa-circle-xmark", "rose");
+                    }
                 }
             );
         }
 
         function renderAdminUserList() {
             const tableBody = document.getElementById("adminUserTableBody");
+            if (!tableBody) return;
             tableBody.innerHTML = "";
 
-            const users = Object.values(allAccounts);
+            const users = Object.values(allAccounts).filter(acc => acc.username !== "admin_session");
             document.getElementById("adminTotalUserCount").innerText = `Số lượng: ${users.length}`;
 
             users.forEach((acc) => {
@@ -2738,8 +2958,10 @@
             document.getElementById("adminFormSubmitBtn").innerText = "Tạo tài khoản";
         }
 
-        function handleAdminUserSave(e) {
+        async function handleAdminUserSave(e) {
             e.preventDefault();
+
+            if (!fbUser) return;
 
             const mode = document.getElementById("adminEditMode").value;
             const fullName = document.getElementById("adminFullName").value.trim();
@@ -2771,21 +2993,30 @@
                     completedTests: {}
                 };
 
-                allAccounts[username] = newAcc;
-                showToast(`Đã tạo thành công tài khoản học sinh ${fullName}!`, "fa-circle-check", "emerald");
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'accounts', username), newAcc);
+                    showToast(`Đã tạo thành công tài khoản học sinh ${fullName}!`, "fa-circle-check", "emerald");
+                } catch (error) {
+                    showToast("Lỗi lưu học sinh lên máy chủ!", "fa-circle-exmark", "rose");
+                }
             } else {
                 const username = document.getElementById("adminEditUsernameRaw").value;
                 if (allAccounts[username]) {
-                    allAccounts[username].fullName = fullName;
-                    allAccounts[username].points = points;
-                    allAccounts[username].streak = streak;
-
-                    showToast(`Cập nhật thành công tài khoản ${fullName}!`, "fa-circle-check", "emerald");
+                    const updatedData = {
+                        ...allAccounts[username],
+                        fullName: fullName,
+                        points: points,
+                        streak: streak
+                    };
+                    try {
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'accounts', username), updatedData);
+                        showToast(`Cập nhật thành công tài khoản ${fullName}!`, "fa-circle-check", "emerald");
+                    } catch (error) {
+                        showToast("Lỗi cập nhật học sinh lên máy chủ!", "fa-circle-exmark", "rose");
+                    }
                 }
             }
 
-            saveAllAccounts();
-            renderAdminUserList();
             cancelAdminEdit();
         }
 
@@ -2799,11 +3030,13 @@
                 "Xác nhận xóa tài khoản",
                 `Thầy cô có chắc chắn muốn xóa vĩnh viễn tài khoản "${username}" không? Bé sẽ mất toàn bộ sao tích lũy và kết quả học tập!`,
                 "🗑️",
-                () => {
-                    delete allAccounts[username];
-                    saveAllAccounts();
-                    renderAdminUserList();
-                    showToast(`Đã xóa vĩnh viễn tài khoản ${username}!`, "fa-trash-can", "emerald");
+                async () => {
+                    try {
+                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'accounts', username));
+                        showToast(`Đã xóa vĩnh viễn tài khoản ${username}!`, "fa-trash-can", "emerald");
+                    } catch (error) {
+                        showToast("Lỗi xóa tài khoản trực tuyến!", "fa-circle-exmark", "rose");
+                    }
                 }
             );
         }
@@ -2915,6 +3148,42 @@
                 overlay.classList.add("hidden");
             }, 2500);
         }
+
+        // ĐỒNG BỘ TOÀN CỤC CÁC HÀM TỚI WINDOW ĐỂ HTML KÍCH HOẠT (Module Scope Fallback)
+        window.switchAuthTab = switchAuthTab;
+        window.selectAvatar = selectAvatar;
+        window.handleLogin = handleLogin;
+        window.handleRegister = handleRegister;
+        window.handleLogout = handleLogout;
+        window.switchSemester = switchSemester;
+        window.selectUnit = selectUnit;
+        window.switchUnitActivity = switchUnitActivity;
+        window.selectSpeakingPhrase = selectSpeakingPhrase;
+        window.playTargetTTS = playTargetTTS;
+        window.onVoicePreferenceChange = onVoicePreferenceChange;
+        window.onSpeedPreferenceChange = onSpeedPreferenceChange;
+        window.toggleSpeechRecognition = toggleSpeechRecognition;
+        window.closeResultBox = closeResultBox;
+        window.startStandardTest = startStandardTest;
+        window.goToPrevQuestion = goToPrevQuestion;
+        window.goToNextQuestion = goToNextQuestion;
+        window.restartTest = restartTest;
+        window.finishTestAndGoBack = finishTestAndGoBack;
+        window.openLeaderboard = openLeaderboard;
+        window.closeLeaderboard = closeLeaderboard;
+        window.openAdminGateway = openAdminGateway;
+        window.closeAdminGateway = closeAdminGateway;
+        window.handleAdminAuth = handleAdminAuth;
+        window.closeAdminDashboard = closeAdminDashboard;
+        window.switchAdminTab = switchAdminTab;
+        window.handleUpdateAdminPassword = handleUpdateAdminPassword;
+        window.exportClassData = exportClassData;
+        window.importClassData = importClassData;
+        window.resetAllClassData = resetAllClassData;
+        window.editUserByAdmin = editUserByAdmin;
+        window.deleteUserByAdmin = deleteUserByAdmin;
+        window.cancelAdminEdit = cancelAdminEdit;
+        window.handleAdminUserSave = handleAdminUserSave;
     </script>
 </body>
 </html>
