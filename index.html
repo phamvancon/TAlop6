@@ -95,9 +95,7 @@
     <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
     <!-- KHU VỰC ĐÀI HOA PHÁO BĂNG (Khi hoàn thành xuất sắc) -->
-    <div id="confettiOverlay" class="fixed inset-0 pointer-events-none z-50 hidden transition-opacity duration-500 bg-black/5">
-        <!-- Các ngôi sao lấp lánh sẽ được tạo tự động bằng JS -->
-    </div>
+    <div id="confettiOverlay" class="fixed inset-0 pointer-events-none z-50 hidden transition-opacity duration-500 bg-black/5"></div>
 
     <!-- GIAO DIỆN CHÍNH: CHƯA ĐĂNG NHẬP -->
     <div id="loginScreen" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 via-white to-brand-100/30 p-4">
@@ -156,7 +154,7 @@
                 </button>
             </form>
 
-            <!-- FORM ĐĂNG KÝ (Chỉ cần tên đăng nhập) -->
+            <!-- FORM ĐĂNG KÝ -->
             <form id="formRegister" onsubmit="handleRegister(event)" class="space-y-4 hidden">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Tên đăng nhập tự chọn</label>
@@ -196,12 +194,12 @@
     <!-- GIAO DIỆN CHÍNH: ĐÃ ĐĂNG NHẬP -->
     <div id="mainDashboard" class="min-h-screen flex flex-col hidden bg-slate-50">
         
-        <!-- HEADER CAO CẤP -->
+        <!-- HEADER -->
         <header class="bg-white border-b border-slate-100 shadow-sm sticky top-0 z-40">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     
-                    <!-- Logo / Brand -->
+                    <!-- Logo -->
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 bg-gradient-to-tr from-brand-600 to-violet-500 rounded-xl flex items-center justify-center shadow-md shadow-brand-200">
                             <i class="fa-solid fa-graduation-cap text-white text-lg"></i>
@@ -217,15 +215,15 @@
                         </div>
                     </div>
 
-                    <!-- Chỉ số học tập & Người dùng -->
+                    <!-- Chỉ số -->
                     <div class="flex items-center gap-4 sm:gap-6">
-                        <!-- Chuỗi học tập (Streak) -->
+                        <!-- Streak -->
                         <div class="flex items-center gap-2 bg-amber-50 text-amber-700 px-3 py-1.5 rounded-xl border border-amber-100 shadow-sm" title="Chuỗi ngày học liên tục!">
                             <i class="fa-solid fa-fire text-amber-500 text-base animate-pulse"></i>
                             <span class="text-sm font-extrabold" id="userStreakVal">0 ngày</span>
                         </div>
 
-                        <!-- Điểm số / Sao vàng (XP) -->
+                        <!-- Điểm số -->
                         <div class="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-xl border border-emerald-100 shadow-sm" title="Số điểm thưởng tích lũy!">
                             <i class="fa-solid fa-star text-emerald-500 text-base bounce-gentle"></i>
                             <span class="text-sm font-extrabold" id="userPointsVal">0 Sao</span>
@@ -242,7 +240,7 @@
                             <span class="text-xs font-bold hidden sm:inline">Giáo viên</span>
                         </button>
 
-                        <!-- Profile Dropdown đơn giản -->
+                        <!-- Profile Dropdown -->
                         <div class="flex items-center gap-2.5 pl-2 border-l border-slate-200">
                             <img id="userAvatarImg" src="https://api.dicebear.com/7.x/bottts/svg?seed=Felix" class="w-9 h-9 rounded-full bg-slate-100 border border-brand-200" alt="Avatar">
                             <div class="hidden md:block text-left">
@@ -258,7 +256,7 @@
             </div>
         </header>
 
-        <!-- BANNER CHỌN HỌC KỲ / SÁCH -->
+        <!-- BANNER CHỌN HỌC KỲ -->
         <div class="bg-gradient-to-r from-brand-700 to-indigo-800 text-white shadow-inner">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div>
@@ -266,7 +264,6 @@
                     <p class="text-indigo-200 text-xs sm:text-sm font-medium mt-1">Con hãy chọn sách theo học kỳ để bắt đầu tự học luyện nói phát âm chuẩn AI.</p>
                 </div>
                 
-                <!-- Bộ chọn học kỳ cực đẹp -->
                 <div class="flex bg-brand-900/40 p-1 rounded-2xl border border-brand-500/30">
                     <button onclick="switchSemester(1)" id="btnSem1" class="px-5 py-2 rounded-xl text-sm font-extrabold transition-all duration-200 bg-white text-brand-800 shadow-sm flex items-center gap-2">
                         <i class="fa-solid fa-book"></i> Học kỳ I (Tập 1)
@@ -278,26 +275,22 @@
             </div>
         </div>
 
-        <!-- BỐ CỤC HOẠT ĐỘNG CHÍNH -->
+        <!-- BỐ CỤC CHÍNH -->
         <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6">
             
-            <!-- CỘT TRÁI: DANH SÁCH 6 UNIT THEO TỪNG HỌC KỲ -->
+            <!-- CỘT TRÁI: DANH SÁCH UNIT -->
             <div class="w-full lg:w-80 flex-shrink-0 flex flex-col gap-3">
                 <div class="flex items-center justify-between px-2 mb-1">
                     <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Danh sách bài học</span>
                     <span class="text-xs font-bold bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full" id="semesterBadge">Học kỳ I</span>
                 </div>
                 
-                <!-- Container chứa danh sách các Unit -->
-                <div id="unitListContainer" class="flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible pb-3 lg:pb-0 gap-3 scroll-smooth">
-                    <!-- Unit Cards sẽ được tạo tự động bởi JS -->
-                </div>
+                <div id="unitListContainer" class="flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible pb-3 lg:pb-0 gap-3 scroll-smooth"></div>
             </div>
 
-            <!-- CỘT PHẢI: CHI TIẾT BÀI HỌC & LUYỆN TẬP / BÀI KIỂM TRA -->
+            <!-- CỘT PHẢI: CHI TIẾT BÀI HỌC -->
             <div class="flex-1 bg-white rounded-3xl border border-slate-100 shadow-premium overflow-hidden flex flex-col min-h-[500px]">
                 
-                <!-- HEADER CỦA CHI TIẾT UNIT -->
                 <div class="bg-gradient-to-r from-slate-50 to-brand-50/20 p-6 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <div class="flex items-center gap-2">
@@ -307,7 +300,6 @@
                         <h3 class="text-xl sm:text-2xl font-extrabold text-slate-800 mt-1" id="curUnitTitle">My New School</h3>
                     </div>
 
-                    <!-- TABS HOẠT ĐỘNG: Luyện nói / Làm bài thi -->
                     <div class="flex bg-slate-100 p-1 rounded-xl w-full sm:w-auto">
                         <button onclick="switchUnitActivity('speaking')" id="btnTabSpeaking" class="flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs sm:text-sm font-bold bg-white text-brand-800 shadow-sm transition-all duration-200 flex items-center justify-center gap-1.5">
                             🗣️ <span class="hidden xs:inline">Luyện Nói AI</span>
@@ -318,7 +310,7 @@
                     </div>
                 </div>
 
-                <!-- HOẠT ĐỘNG 1: LUYỆN PHÁT ÂM (SPEAKING) -->
+                <!-- LUYỆN PHÁT ÂM (SPEAKING) -->
                 <div id="speakingActivity" class="p-6 flex-1 flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase tracking-widest">
@@ -326,24 +318,20 @@
                             <span id="speakingProgressBadge">0/4 Đã lưu</span>
                         </div>
 
-                        <!-- Danh sách câu mẫu nói -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="speakingPhrasesGrid">
-                            <!-- Các thẻ luyện nói sẽ được hiển thị bằng JS -->
-                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="speakingPhrasesGrid"></div>
                     </div>
 
-                    <!-- KHU VỰC THỬ THÁCH NÓI ĐƯỢC CHỌN -->
+                    <!-- THỬ THÁCH NÓI -->
                     <div id="speakingInteractionZone" class="mt-8 pt-8 border-t border-slate-100 flex flex-col items-center text-center">
                         <span class="text-[10px] bg-brand-100 text-brand-700 font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2">Thử thách nói chính xác</span>
                         
                         <div id="selectedPhraseCard" class="max-w-2xl w-full bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-inner relative overflow-hidden">
-                            <!-- Câu nói đang chọn -->
                             <p class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1" id="phraseCardIndex">Mẫu số 1</p>
                             <h4 class="text-xl sm:text-2xl font-extrabold text-brand-800" id="phraseCardEnglish">I study English and math at school.</h4>
                             <p class="text-slate-500 text-xs sm:text-sm font-semibold italic mt-1.5" id="phraseCardIPA">/aɪ ˈstʌdi ˈɪŋɡlɪʃ ænd mæθ æt skuːl/</p>
                             <p class="text-slate-500 text-sm mt-2" id="phraseCardVietnamese">Tôi học tiếng Anh và toán ở trường.</p>
 
-                            <!-- BẢNG ĐIỀU KHIỂN GIỌNG NÓI & TỐC ĐỘ TÙY CHỌN -->
+                            <!-- BẢNG ĐIỀU KHIỂN GIỌNG NÓI & TỐC ĐỘ -->
                             <div class="mt-5 pt-4 border-t border-slate-200/60 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
                                 <div>
                                     <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 flex items-center gap-1">
@@ -373,7 +361,7 @@
                                 </div>
                             </div>
 
-                            <!-- Nút nghe phát âm chuẩn -->
+                            <!-- Nút nghe chuẩn phát âm -->
                             <div class="mt-5 flex items-center justify-between">
                                 <button id="playTtsBtn" onclick="playTargetTTS()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl transition-all inline-flex items-center gap-1.5 shadow-md active:scale-95">
                                     <i class="fa-solid fa-volume-high text-white"></i> Nghe phát âm chuẩn
@@ -391,20 +379,16 @@
                                 <i id="micIcon" class="fa-solid fa-microphone text-2xl sm:text-3xl"></i>
                             </button>
                             <p id="micStatusText" class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-4">Nhấn vào mic để nói mẫu câu</p>
-                            
-                            <!-- Transcript tạm thời -->
                             <p id="speechInterimResult" class="text-slate-400 italic text-sm mt-2 hidden">Đang nhận diện giọng nói...</p>
                         </div>
 
-                        <!-- KHU VỰC KẾT QUẢ PHÁT ÂM AI -->
+                        <!-- KẾT QUẢ PHÁT ÂM -->
                         <div id="pronunciationResultBox" class="mt-6 w-full max-w-xl bg-white rounded-2xl p-5 border border-slate-200 shadow-premium text-left relative hidden animate-fade-in">
                             <button onclick="closeResultBox()" class="absolute top-3 right-3 text-slate-400 hover:text-slate-600">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
                             <div class="flex items-start gap-4">
-                                <div id="resultRatingIconBox" class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-xl font-bold">
-                                    🌟
-                                </div>
+                                <div id="resultRatingIconBox" class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-xl font-bold">🌟</div>
                                 <div class="flex-1">
                                     <div class="flex items-center justify-between">
                                         <h5 class="font-extrabold text-base" id="resultTitle">Phát âm xuất sắc!</h5>
@@ -414,24 +398,17 @@
                                         <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Từ nghe được:</p>
                                         <p class="text-base font-bold text-brand-900 mt-0.5" id="resultSpokenText">I study English and math at school</p>
                                     </div>
-                                    <div id="resultComparison" class="mt-3 p-2 bg-slate-50 rounded-lg text-xs space-y-1 border border-slate-100">
-                                        <!-- Điểm mấu chốt so sánh từng từ sẽ điền ở đây -->
-                                    </div>
+                                    <div id="resultComparison" class="mt-3 p-2 bg-slate-50 rounded-lg text-xs space-y-1 border border-slate-100"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
-                <!-- HOẠT ĐỘNG 2: BÀI KIỂM TRA CHUẨN HOÁ (TEST) -->
+                <!-- BÀI KIỂM TRA (TEST) -->
                 <div id="testActivity" class="p-6 flex-1 flex flex-col justify-between hidden">
-                    
-                    <!-- Khởi động test -->
                     <div id="testStartView" class="flex-1 flex flex-col items-center justify-center py-10 text-center">
-                        <div class="w-16 h-16 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center text-2xl mb-4">
-                            📝
-                        </div>
+                        <div class="w-16 h-16 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center text-2xl mb-4">📝</div>
                         <h4 class="text-xl font-extrabold text-slate-800">Trắc nghiệm và tự luận chuẩn lớp 6</h4>
                         <p class="text-slate-500 text-sm mt-2 max-w-md">Bài kiểm tra gồm 5 câu trắc nghiệm nhanh bám sát ngữ pháp trọng tâm và từ vựng của bài học này.</p>
                         <button onclick="startStandardTest()" class="mt-6 px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-md transition-all">
@@ -439,9 +416,7 @@
                         </button>
                     </div>
 
-                    <!-- Quá trình làm bài -->
                     <div id="testQuestionView" class="hidden space-y-6 flex-1">
-                        <!-- Thanh tiến độ câu hỏi -->
                         <div class="space-y-1.5">
                             <div class="flex justify-between text-xs font-bold text-slate-400 uppercase tracking-widest">
                                 <span id="testProgressText">Câu hỏi 1 / 5</span>
@@ -452,18 +427,13 @@
                             </div>
                         </div>
 
-                        <!-- Khung câu hỏi -->
                         <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-inner relative">
                             <span class="text-[10px] bg-brand-100 text-brand-700 font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider block w-max mb-3">Câu hỏi thử thách</span>
-                            <h4 id="testQuestionText" class="text-base sm:text-lg font-bold text-slate-800">Cầu hỏi hiển thị ở đây</h4>
+                            <h4 id="testQuestionText" class="text-base sm:text-lg font-bold text-slate-800">Câu hỏi hiển thị ở đây</h4>
                         </div>
 
-                        <!-- Lựa chọn đáp án (Trắc nghiệm) -->
-                        <div id="testOptionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <!-- Đáp án sẽ hiển thị tự động -->
-                        </div>
+                        <div id="testOptionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
 
-                        <!-- Điều hướng làm bài -->
                         <div class="flex justify-between pt-6 border-t border-slate-100">
                             <button id="btnPrevQuestion" onclick="goToPrevQuestion()" class="px-4 py-2 text-slate-500 hover:text-slate-700 font-bold text-sm flex items-center gap-1.5 transition-all">
                                 <i class="fa-solid fa-arrow-left"></i> Câu trước
@@ -474,13 +444,11 @@
                         </div>
                     </div>
 
-                    <!-- KHU VỰC KẾT QUẢ BÀI THI -->
                     <div id="testResultView" class="hidden flex-1 flex flex-col items-center justify-center py-6 text-center max-w-xl mx-auto">
                         <div id="testResultAnimationBox" class="text-6xl mb-4 bounce-gentle">🏆</div>
                         <h4 class="text-2xl font-extrabold text-slate-800" id="testResultTitle">Chúc mừng con hoàn thành!</h4>
                         <p class="text-slate-500 text-sm mt-1" id="testResultSubtitle">Con đã thể hiện rất tuyệt vời.</p>
                         
-                        <!-- Điểm số và sao thưởng -->
                         <div class="grid grid-cols-2 gap-4 w-full max-w-xs mt-6 mb-6">
                             <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 shadow-sm">
                                 <p class="text-xs text-slate-400 font-extrabold uppercase tracking-wider">Đạt điểm số</p>
@@ -492,10 +460,7 @@
                             </div>
                         </div>
 
-                        <!-- Điểm số chi tiết từng câu -->
-                        <div id="testResultDetailedBreakdown" class="w-full text-left space-y-2 mb-6 max-h-[200px] overflow-y-auto p-2 bg-slate-50 rounded-xl border border-slate-200">
-                            <!-- Đáp án sai đúng phân tích ở đây -->
-                        </div>
+                        <div id="testResultDetailedBreakdown" class="w-full text-left space-y-2 mb-6 max-h-[200px] overflow-y-auto p-2 bg-slate-50 rounded-xl border border-slate-200"></div>
 
                         <div class="flex gap-3">
                             <button onclick="restartTest()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-sm transition-all">
@@ -521,9 +486,7 @@
                     <i class="fa-solid fa-xmark"></i>
                 </button>
                 <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/15 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
-                        🏆
-                    </div>
+                    <div class="w-12 h-12 bg-white/15 rounded-2xl flex items-center justify-center text-2xl shadow-inner">🏆</div>
                     <div>
                         <h4 class="text-lg font-bold font-kids tracking-wide">Bảng vàng vinh danh</h4>
                         <p class="text-indigo-200 text-xs mt-0.5">Top những chiến binh chăm chỉ nhất lớp học</p>
@@ -531,10 +494,7 @@
                 </div>
             </div>
             
-            <!-- Danh sách học sinh xếp hạng -->
-            <div class="p-6 max-h-[400px] overflow-y-auto space-y-3" id="leaderboardListContainer">
-                <!-- Chạy JS vẽ danh sách học sinh -->
-            </div>
+            <div class="p-6 max-h-[400px] overflow-y-auto space-y-3" id="leaderboardListContainer"></div>
             
             <div class="bg-slate-50 px-6 py-4 border-t border-slate-100 text-center">
                 <button onclick="closeLeaderboard()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-xs transition-all">
@@ -545,7 +505,7 @@
     </div>
 
 
-    <!-- MODAL: CỔNG XÁC THỰC GIÁO VIÊN / ADMIN -->
+    <!-- MODAL: CỔNG XÁC THỰC GIÁO VIÊN -->
     <div id="adminAuthModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl p-6 border border-slate-100">
             <div class="text-center mb-5">
@@ -577,9 +537,7 @@
         <div class="bg-white rounded-3xl w-full max-w-4xl overflow-hidden border border-slate-100 shadow-2xl flex flex-col h-[90vh]">
             <div class="bg-gradient-to-r from-indigo-800 to-indigo-950 text-white p-6 relative flex justify-between items-center flex-shrink-0">
                 <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-xl shadow-inner">
-                        🛠️
-                    </div>
+                    <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-xl shadow-inner">🛠️</div>
                     <div>
                         <h4 class="text-lg font-bold font-kids tracking-wide">Bảng Điều Khiển Giáo Viên</h4>
                         <p class="text-indigo-200 text-xs mt-0.5">Quản lý lớp học, điểm sao học sinh, và cấu hình hệ thống Admin</p>
@@ -590,7 +548,6 @@
                 </button>
             </div>
 
-            <!-- CHỌN PHÂN HỆ TAB TRONG PANEL QUẢN TRỊ -->
             <div class="flex border-b border-slate-200 px-6 py-2 bg-slate-50 gap-4 flex-shrink-0">
                 <button type="button" onclick="switchAdminTab('students')" id="adminTabBtn_students" class="pb-2 pt-1 text-sm font-bold border-b-2 border-brand-600 text-brand-800 transition-all flex items-center gap-1.5">
                     <i class="fa-solid fa-user-graduate"></i> Quản lý Học sinh
@@ -602,12 +559,11 @@
             
             <!-- TAB CONTENT 1: QUẢN LÝ HỌC SINH -->
             <div id="adminTabContent_students" class="p-6 overflow-y-auto flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- Cột trái: Quản lý / Chỉnh sửa -->
                 <div class="lg:col-span-4 bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-5 h-fit">
                     <h5 class="text-xs font-bold uppercase tracking-wider text-slate-400" id="adminFormTitle">Thêm học sinh mới</h5>
                     
                     <form id="adminUserForm" onsubmit="handleAdminUserSave(event)" class="space-y-4">
-                        <input type="hidden" id="adminEditMode" value="create"> <!-- 'create' hoặc 'edit' -->
+                        <input type="hidden" id="adminEditMode" value="create">
                         <input type="hidden" id="adminEditUsernameRaw" value="">
 
                         <div>
@@ -640,7 +596,6 @@
                     </form>
                 </div>
 
-                <!-- Cột phải: Danh sách toàn bộ tài khoản -->
                 <div class="lg:col-span-8 space-y-4">
                     <div class="flex items-center justify-between">
                         <h5 class="text-xs font-bold uppercase tracking-wider text-slate-400">Danh sách tài khoản hiện tại</h5>
@@ -658,9 +613,7 @@
                                     <th class="px-4 py-3 text-right">Hành động</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-100 text-xs text-slate-600 font-semibold" id="adminUserTableBody">
-                                <!-- Chạy JS điền dữ liệu học sinh -->
-                            </tbody>
+                            <tbody class="divide-y divide-slate-100 text-xs text-slate-600 font-semibold" id="adminUserTableBody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -670,7 +623,6 @@
             <div id="adminTabContent_settings" class="p-6 overflow-y-auto flex-1 space-y-6 hidden bg-slate-50/50">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     
-                    <!-- Card A: Quản lý & Thay đổi mật khẩu Admin -->
                     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between">
                         <div class="space-y-4">
                             <div class="flex items-center gap-2 pb-2 border-b border-slate-100">
@@ -704,7 +656,6 @@
                         </div>
                     </div>
 
-                    <!-- Card B: Backup sao lưu dữ liệu & Reset hệ thống -->
                     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6 flex flex-col justify-between">
                         <div class="space-y-4">
                             <div class="flex items-center gap-2 pb-2 border-b border-slate-100">
@@ -752,12 +703,10 @@
     </div>
 
 
-    <!-- MODAL: XÁC NHẬN CUSTOM (Thay thế alert/confirm nguyên bản) -->
+    <!-- MODAL: XÁC NHẬN CUSTOM -->
     <div id="customConfirmModal" class="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl p-6 border border-slate-100 text-center scale-95 duration-200 transition-all">
-            <div id="customConfirmIcon" class="w-14 h-14 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto text-3xl mb-3 animate-bounce">
-                ❓
-            </div>
+            <div id="customConfirmIcon" class="w-14 h-14 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto text-3xl mb-3 animate-bounce">❓</div>
             <h4 id="customConfirmTitle" class="text-base font-extrabold text-slate-800">Xác nhận hành động</h4>
             <p id="customConfirmText" class="text-xs text-slate-500 mt-2 line-clamp-4 leading-relaxed">Nội dung xác nhận sẽ xuất hiện ở đây.</p>
             <div class="flex gap-2.5 mt-5">
@@ -772,14 +721,15 @@
     </div>
 
 
-    <!-- JAVASCRIPT HỆ THỐNG XỬ LÝ TOÀN BỘ LOGIC (Firebase Module) -->
+    <!-- JAVASCRIPT HỆ THỐNG (SỬ DỤNG FIREBASE SDK) -->
     <script type="module">
-        // Import Firebase SDK Modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, collection, getDocs, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // ================= CẤU HÌNH FIREBASE CHUYÊN BIỆT =================
+        // Khai báo apiKey trống theo hướng dẫn bắt buộc
+        const apiKey = "";
+
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
             apiKey: "AIzaSyBWCNOQaX3lSs1xAPrINk48lmJKFR5rYXg",
             authDomain: "tieng-anh-cap2.firebaseapp.com",
@@ -798,7 +748,6 @@
         let fbUser = null;
         let cachedAdminPassword = "215151365";
 
-        // Khởi chạy cơ chế xác thực ẩn danh theo Rule 3
         const initAuth = async () => {
             try {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -820,7 +769,7 @@
             }
         });
 
-        // ================= DỮ LIỆU CHƯƠNG TRÌNH TIẾNG ANH 6 (GLOBAL SUCCESS TẬP 1 & 2) =================
+        // ================= CHƯƠNG TRÌNH TIẾNG ANH 6 =================
         const grade6Curriculum = {
             semester1: [
                 {
@@ -1344,7 +1293,6 @@
             ]
         };
 
-        // ================= TRẠNG THÁI HỆ THỐNG / CHƯA ĐĂNG NHẬP HOẶC KHỞI TẠO =================
         let allAccounts = {};
         let appState = {
             username: "",
@@ -1352,33 +1300,28 @@
             points: 0,
             streak: 0,
             avatarId: 1,
-            completedSpeaking: [], // Lưu trữ các câu đã phát âm xuất sắc: [ {unitId, phraseIndex, score} ]
-            completedTests: {}, // Lưu kết quả thi: { unitId: maxScore }
-            selectedVoice: "ai-Leda", // Đồng bộ giọng đọc ưu tiên (Đặt Leda làm mặc định)
-            speechRate: 0.85              // Tốc độ đọc ưu tiên
+            completedSpeaking: [],
+            completedTests: {},
+            selectedVoice: "ai-Leda",
+            speechRate: 0.85
         };
 
-        // Trạng thái điều hướng bài học hiện tại
-        let currentSemester = 1; // 1 hoặc 2
-        let currentUnitIndex = 0; // Index trong danh sách 6 bài của Học kỳ
-        let currentActivityTab = "speaking"; // "speaking" hoặc "test"
+        let currentSemester = 1;
+        let currentUnitIndex = 0;
+        let currentActivityTab = "speaking";
 
-        // Trạng thái hoạt động Luyện nói
         let selectedPhraseIndex = 0;
         let isRecording = false;
         let recognition = null;
 
-        // Trạng thái hoạt động Làm bài thi
         let testQuestions = [];
         let testCurrentQuestionIndex = 0;
-        let testUserAnswers = []; // Mảng chứa đáp án bé chọn
+        let testUserAnswers = [];
         let testTimerInterval = null;
         let testSecondsElapsed = 0;
 
-        // Trạng thái Avatar được chọn khi đăng ký
         let selectedRegAvatarId = 1;
 
-        // Avatar Maps
         const avatarMap = {
             1: "https://api.dicebear.com/7.x/bottts/svg?seed=Felix&backgroundColor=b6e3f4",
             2: "https://api.dicebear.com/7.x/bottts/svg?seed=Aneka&backgroundColor=ffdfbf",
@@ -1387,32 +1330,26 @@
             5: "https://api.dicebear.com/7.x/bottts/svg?seed=Oscar&backgroundColor=ffd5dc"
         };
 
-        // Khởi động khi tải xong trang
         window.addEventListener('DOMContentLoaded', () => {
             setupSpeechRecognition();
             checkSession();
         });
 
-        // ================= CƠ SỞ DỮ LIỆU ĐỒNG BỘ FIRESTORE (RULE 1 & 2 & 3) =================
-        
-        // Trình lắng nghe đồng bộ cơ sở dữ liệu thời gian thực
+        // ================= DỒNG BỘ FIRESTORE THỜI GIAN THỰC =================
         function startFirestoreSync() {
             if (!fbUser) return;
 
-            // 1. Đồng bộ hóa cấu hình Admin trực tuyến
             const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'config', 'admin');
             onSnapshot(configDocRef, (docSnap) => {
                 if (docSnap.exists()) {
                     cachedAdminPassword = docSnap.data().password || "215151365";
                 } else {
-                    // Tạo tài liệu cấu hình mật khẩu mặc định nếu chưa tồn tại
                     setDoc(configDocRef, { password: "215151365" });
                 }
             }, (error) => {
-                console.error("Firestore Admin Config Sync Error:", error);
+                console.error("Lỗi đồng bộ cấu hình Admin:", error);
             });
 
-            // 2. Đồng bộ hóa danh sách tài khoản học sinh
             const accountsCol = collection(db, 'artifacts', appId, 'public', 'data', 'accounts');
             onSnapshot(accountsCol, (snapshot) => {
                 allAccounts = {};
@@ -1420,18 +1357,15 @@
                     allAccounts[docSnap.id] = docSnap.data();
                 });
 
-                // Cập nhật thời gian thực vào trạng thái người dùng hiện tại nếu đang đăng nhập
                 if (appState.username) {
                     if (allAccounts[appState.username]) {
                         appState = allAccounts[appState.username];
                         updateProfileBar();
                     } else if (appState.username !== "admin_session") {
-                        // Trường hợp tài khoản bị Admin xóa trực tuyến (ngoại trừ tài khoản admin ảo)
                         handleLogoutDirectly();
                     }
                 }
 
-                // Cập nhật tự động các View bổ trợ
                 if (!document.getElementById("leaderboardModal").classList.contains("hidden")) {
                     openLeaderboard();
                 }
@@ -1440,11 +1374,10 @@
                 }
                 renderUnitList();
             }, (error) => {
-                console.error("Firestore Accounts Sync Error:", error);
+                console.error("Lỗi đồng bộ danh sách tài khoản:", error);
             });
         }
 
-        // Lấy mật khẩu Admin
         function getAdminPassword() {
             return cachedAdminPassword;
         }
@@ -1454,7 +1387,6 @@
             if (savedSession) {
                 const session = JSON.parse(savedSession);
                 
-                // Trường hợp phiên lưu trữ là Giáo viên Admin
                 if (session.username === "admin_session") {
                     appState = {
                         username: "admin_session",
@@ -1472,7 +1404,6 @@
                     return;
                 }
 
-                // Đợi Firestore đồng bộ rồi gán session sau
                 const interval = setInterval(() => {
                     if (Object.keys(allAccounts).length > 0) {
                         clearInterval(interval);
@@ -1485,7 +1416,6 @@
                     }
                 }, 200);
 
-                // Timeout bảo vệ nếu không có mạng
                 setTimeout(() => clearInterval(interval), 4000);
             } else {
                 showLoginScreen();
@@ -1495,7 +1425,6 @@
         async function saveProgress() {
             if (!fbUser) return;
             if (appState.username) {
-                // Không lưu tài khoản giáo viên giả lập lên cơ sở dữ liệu học sinh
                 if (appState.username === "admin_session") return;
 
                 const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'accounts', appState.username);
@@ -1503,13 +1432,12 @@
                     await setDoc(userDocRef, appState, { merge: true });
                     updateProfileBar();
                 } catch (error) {
-                    console.error("Error saving progress:", error);
-                    showToast("Không thể đồng bộ dữ liệu lên đám mây!", "fa-circle-exmark", "rose");
+                    console.error("Lỗi lưu tiến trình:", error);
+                    showToast("Không thể đồng bộ dữ liệu đám mây!", "fa-circle-xmark", "rose");
                 }
             }
         }
 
-        // Đăng xuất ngay lập tức không cần Modal khi tài khoản bị Admin xóa
         function handleLogoutDirectly() {
             localStorage.removeItem("currentSession_grade6");
             appState = {
@@ -1522,11 +1450,11 @@
                 completedTests: {}
             };
             showLoginScreen();
-            showToast("Tài khoản của con đã bị thay đổi trên máy chủ!", "fa-circle-info", "brand");
+            showToast("Tài khoản đã được thay đổi hoặc bị xóa!", "fa-circle-info", "brand");
         }
 
 
-        // ================= CHUYỂN ĐỔI TAB ĐĂNG NHẬP / ĐĂNG KÝ =================
+        // ================= TABS ĐĂNG NHẬP / ĐĂNG KÝ =================
         function switchAuthTab(tab) {
             const btnLogin = document.getElementById("btnAuthTabLogin");
             const btnRegister = document.getElementById("btnAuthTabRegister");
@@ -1559,7 +1487,7 @@
         }
 
 
-        // ================= XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ / ĐĂNG XUẤT =================
+        // ================= XỬ LÝ AUTH =================
         async function handleLogin(e) {
             e.preventDefault();
             const usernameInput = document.getElementById("loginUsername").value.trim().toLowerCase();
@@ -1572,12 +1500,10 @@
 
             const adminPass = getAdminPassword();
 
-            // THƯỜNG HỢP 1: Đăng nhập trực tiếp bằng tài khoản "admin" và mật khẩu Admin
             if (usernameInput === "admin") {
                 if (passwordInput === adminPass) {
                     showToast("Đăng nhập Giáo viên thành công!", "fa-user-shield", "emerald");
                     
-                    // Thiết lập trạng thái phiên cho Admin ảo
                     appState = {
                         username: "admin_session",
                         fullName: "Giáo viên Admin",
@@ -1594,7 +1520,6 @@
                     
                     showMainDashboard();
                     
-                    // Tự động kích hoạt mở panel quản lý
                     setTimeout(() => {
                         showAdminDashboard();
                     }, 600);
@@ -1605,31 +1530,28 @@
                 }
             }
 
-            // TRƯỜNG HỢP 2: Đăng nhập tài khoản học sinh thông thường
             const account = allAccounts[usernameInput];
             if (account) {
-                // Kiểm tra xem có sử dụng mật khẩu Admin để Đăng nhập khẩn cấp (Master Key) hay không
                 if (passwordInput && passwordInput !== adminPass) {
                     showToast("Mật khẩu Giáo viên không chính xác đối với tài khoản này!", "fa-circle-xmark", "rose");
                     return;
                 }
 
                 appState = account;
-                // Cộng thêm streak tự động mỗi ngày đăng nhập
                 appState.streak = (appState.streak || 0) + 1;
                 
                 localStorage.setItem("currentSession_grade6", JSON.stringify({ username: appState.username }));
                 saveProgress();
 
                 if (passwordInput === adminPass) {
-                    showToast(`Đăng nhập học sinh ${appState.fullName} bằng quyền Giáo viên tối cao!`, "fa-user-shield", "emerald");
+                    showToast(`Đăng nhập bằng quyền Giáo viên tối cao!`, "fa-user-shield", "emerald");
                 } else {
-                    showToast(`Chào mừng ${appState.fullName || appState.username} quay trở lại học tập!`, "fa-face-smile", "emerald");
+                    showToast(`Chào mừng ${appState.fullName || appState.username} quay trở lại!`, "fa-face-smile", "emerald");
                 }
                 
                 showMainDashboard();
             } else {
-                showToast("Tên tài khoản không tồn tại! Hãy chuyển qua tab Tạo tài khoản.", "fa-circle-exmark", "rose");
+                showToast("Tên tài khoản không tồn tại! Hãy đăng ký tài khoản.", "fa-circle-exmark", "rose");
             }
         }
 
@@ -1642,22 +1564,19 @@
                 return;
             }
 
-            // Kiểm tra tên đăng nhập không dấu, viết liền
             const usernameRegex = /^[a-z0-9]+$/;
             if (!usernameRegex.test(username)) {
-                showToast("Tên đăng nhập chỉ được chứa chữ cái thường viết liền và số!", "fa-circle-exmark", "rose");
+                showToast("Tên đăng nhập viết liền không dấu và số!", "fa-circle-exmark", "rose");
                 return;
             }
 
             if (allAccounts[username]) {
-                showToast("Tên tài khoản này đã tồn tại trên hệ thống!", "fa-circle-exmark", "rose");
+                showToast("Tên tài khoản này đã tồn tại!", "fa-circle-exmark", "rose");
                 return;
             }
 
-            // Tạo tên hiển thị tự động từ tên đăng nhập (viết hoa chữ cái đầu)
             const autoFullName = username.charAt(0).toUpperCase() + username.slice(1);
 
-            // Tạo tài khoản mới
             const newAcc = {
                 username: username,
                 password: "",
@@ -1672,25 +1591,24 @@
             };
 
             try {
-                // Đẩy trực tiếp lên mây Firestore
                 await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'accounts', username), newAcc);
                 
                 appState = newAcc;
                 localStorage.setItem("currentSession_grade6", JSON.stringify({ username: appState.username }));
                 updateProfileBar();
 
-                showToast("Tạo tài khoản trực tuyến thành công!", "fa-circle-check", "emerald");
+                showToast("Tạo tài khoản thành công!", "fa-circle-check", "emerald");
                 showMainDashboard();
             } catch (error) {
-                console.error("Firebase write error on registration:", error);
-                showToast("Lỗi đăng ký dữ liệu lên Cloud!", "fa-circle-exmark", "rose");
+                console.error("Lỗi đăng ký:", error);
+                showToast("Lỗi dữ liệu Cloud!", "fa-circle-exmark", "rose");
             }
         }
 
         function handleLogout() {
             showCustomConfirm(
                 "Xác nhận đăng xuất",
-                "Con có chắc chắn muốn thoát khỏi phiên học tập hiện tại này không?",
+                "Con có chắc chắn muốn thoát khỏi phiên học tập hiện tại không?",
                 "🚪",
                 () => {
                     localStorage.removeItem("currentSession_grade6");
@@ -1705,7 +1623,7 @@
                     };
                     showLoginScreen();
                     showToast("Đã đăng xuất tài khoản thành công!", "fa-circle-info", "brand");
-                    document.getElementById("loginPassword").value = ""; // Xoá trường mật khẩu cũ
+                    document.getElementById("loginPassword").value = "";
                 }
             );
         }
@@ -1719,7 +1637,6 @@
             document.getElementById("loginScreen").classList.add("hidden");
             document.getElementById("mainDashboard").classList.remove("hidden");
             
-            // Render giao diện bài học
             currentSemester = 1;
             currentUnitIndex = 0;
             currentActivityTab = "speaking";
@@ -1737,7 +1654,7 @@
         }
 
 
-        // ================= ĐIỀU HƯỚNG BÀI HỌC THEO HỌC KỲ / UNIT =================
+        // ================= ĐIỀU HƯỚNG BÀI HỌC =================
         function switchSemester(sem) {
             currentSemester = sem;
             currentUnitIndex = 0;
@@ -1769,15 +1686,10 @@
 
             list.forEach((unit, idx) => {
                 const isSelected = idx === currentUnitIndex;
-                
-                // Đếm số lượng câu nói đã đạt hoàn thành trong unit này
                 const unitSpeakingDone = (appState.completedSpeaking || []).filter(item => item.unitId === unit.id && item.score >= 70).length;
                 const totalSpeaking = unit.speaking.length;
-
-                // Điểm kiểm tra cao nhất
                 const bestTestScore = (appState.completedTests && appState.completedTests[unit.id] !== undefined) ? appState.completedTests[unit.id] : -1;
 
-                // Thiết lập màu sắc và kiểu dáng thẻ
                 let borderClass = isSelected ? "border-brand-500 shadow-md bg-brand-50/50" : "border-slate-100 bg-white hover:border-brand-200";
                 let textClass = isSelected ? "text-brand-800" : "text-slate-700";
 
@@ -1823,15 +1735,11 @@
             const list = currentSemester === 1 ? grade6Curriculum.semester1 : grade6Curriculum.semester2;
             const unit = list[currentUnitIndex];
 
-            // Cập nhật giao diện tiêu đề
             document.getElementById("curUnitSub").innerText = unit.unitNum;
             document.getElementById("curUnitSemBadge").innerText = currentSemester === 1 ? "Tập 1" : "Tập 2";
             document.getElementById("curUnitTitle").innerText = unit.title;
 
-            // Đóng hộp kết quả luyện nói trước đó nếu có
             closeResultBox();
-
-            // Trở về mặc định học nói
             switchUnitActivity(currentActivityTab);
         }
 
@@ -1861,7 +1769,7 @@
         }
 
 
-        // ================= LOGIC LUYỆN NÓI AI (SPEAKING) =================
+        // ================= LUYỆN NÓI AI (SPEAKING) =================
         function loadSpeakingContent() {
             const list = currentSemester === 1 ? grade6Curriculum.semester1 : grade6Curriculum.semester2;
             const unit = list[currentUnitIndex];
@@ -1869,7 +1777,6 @@
             const phrasesGrid = document.getElementById("speakingPhrasesGrid");
             phrasesGrid.innerHTML = "";
 
-            // Cập nhật huy hiệu tiến trình nói
             const completedPhrases = (appState.completedSpeaking || []).filter(item => item.unitId === unit.id && item.score >= 70);
             document.getElementById("speakingProgressBadge").innerText = `${completedPhrases.length}/${unit.speaking.length} Đã lưu`;
 
@@ -1912,14 +1819,12 @@
                 phrasesGrid.appendChild(card);
             });
 
-            // Chọn mẫu câu mặc định đầu tiên
             selectSpeakingPhrase(selectedPhraseIndex >= unit.speaking.length ? 0 : selectedPhraseIndex);
         }
 
         function selectSpeakingPhrase(idx) {
             selectedPhraseIndex = idx;
             
-            // Highlight viền trong danh sách
             const cards = document.querySelectorAll("#speakingPhrasesGrid button");
             cards.forEach((card, cIdx) => {
                 if (cIdx === idx) {
@@ -1951,11 +1856,9 @@
                 appState.speechRate = 0.85;
             }
 
-            // Đóng popup chấm điểm
             closeResultBox();
         }
 
-        // ĐỒNG BỘ KHI THAY ĐỔI GIỌNG ĐỌC ƯU TIÊN
         function onVoicePreferenceChange() {
             const selector = document.getElementById("voiceSelector");
             appState.selectedVoice = selector.value;
@@ -1963,7 +1866,6 @@
             showToast("Đã lưu tùy chọn giọng phát âm!", "fa-circle-check", "brand");
         }
 
-        // ĐỒNG BỘ KHI THAY ĐỔI TỐC ĐỘ ĐỌC ƯU TIÊN
         function onSpeedPreferenceChange() {
             const slider = document.getElementById("speechRateSlider");
             const rateVal = parseFloat(slider.value);
@@ -1972,52 +1874,73 @@
             saveProgress();
         }
 
-        // Chuyển đổi mảng byte Base64 thô nhận về từ Cloud thành ArrayBuffer
-        function base64ToArrayBuffer(base64) {
-            const binaryString = atob(base64);
+        // ================= CÔNG NGHỆ CHUYỂN ĐỔI PCM-16 SANG WAV CHUẨN (LITTLE-ENDIAN) =================
+        function pcmToWav(base64Data, sampleRate = 24000) {
+            const binaryString = atob(base64Data);
             const len = binaryString.length;
-            const bytes = new Uint8Array(len);
-            for (let i = 0; i < len; i++) {
-                bytes[i] = binaryString.charCodeAt(i);
-            }
-            return bytes.buffer;
-        }
-
-        // Tạo tệp WAV từ dữ liệu PCM thô nhận từ mô hình AI
-        function pcmToWav(pcmSamples, sampleRate) {
-            const buffer = new ArrayBuffer(44 + pcmSamples.length * 2);
+            const buffer = new ArrayBuffer(44 + len);
             const view = new DataView(buffer);
 
-            const writeString = (view, offset, string) => {
+            const writeString = (offset, string) => {
                 for (let i = 0; i < string.length; i++) {
                     view.setUint8(offset + i, string.charCodeAt(i));
                 }
             };
 
-            /* Ghi phần WAVE Header */
-            writeString(view, 0, 'RIFF');
-            view.setUint32(4, 36 + pcmSamples.length * 2, true);
-            writeString(view, 8, 'WAVE');
-            writeString(view, 12, 'fmt ');
+            // Ghi phần RIFF/WAVE Header chuẩn hóa
+            writeString(0, 'RIFF');
+            view.setUint32(4, 36 + len, true);
+            writeString(8, 'WAVE');
+            writeString(12, 'fmt ');
             view.setUint32(16, 16, true);
             view.setUint16(20, 1, true); // PCM format
-            view.setUint16(22, 1, true); // 1 Channel (Mono)
+            view.setUint16(22, 1, true); // Mono Channel
             view.setUint32(24, sampleRate, true);
-            view.setUint32(28, sampleRate * 2, true);
+            view.setUint32(28, sampleRate * 2, true); // Byte rate (sampleRate * channel * bitDepth/8)
             view.setUint16(32, 2, true); // Block align
-            view.setUint16(34, 16, true); // Bits per sample
-            writeString(view, 36, 'data');
-            view.setUint32(40, pcmSamples.length * 2, true);
+            view.setUint16(34, 16, true); // 16-bit
+            writeString(36, 'data');
+            view.setUint32(40, len, true);
 
-            // Ghi các mẫu dữ liệu âm thanh Signed Int16
+            // Chuyển đổi dữ liệu PCM Big-Endian từ API sang Little-Endian của file WAV
             let offset = 44;
-            for (let i = 0; i < pcmSamples.length; i++, offset += 2) {
-                view.setInt16(offset, pcmSamples[i], true);
+            for (let i = 0; i < len; i += 2) {
+                if (i + 1 < len) {
+                    const b1 = binaryString.charCodeAt(i);
+                    const b2 = binaryString.charCodeAt(i + 1);
+                    
+                    // Ghép hai byte thành số nguyên 16-bit có dấu (Big-Endian)
+                    let val = (b1 << 8) | b2;
+                    if (val & 0x8000) val |= ~0xffff; // Xử lý số âm
+                    
+                    // Ghi số nguyên vào DataView dạng Little-Endian
+                    view.setInt16(offset, val, true);
+                    offset += 2;
+                }
             }
 
-            return new Blob([view], { type: 'audio/wav' });
+            return new Blob([buffer], { type: 'audio/wav' });
         }
 
+        // Hàm gọi fetch kèm thuật toán Exponential Backoff tự động khi quá tải hệ thống
+        async function fetchWithExponentialBackoff(url, options, retries = 5, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    throw new Error(`Mã lỗi HTTP: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                if (retries > 0) {
+                    // Chờ đợi theo hàm mũ: 1s -> 2s -> 4s -> 8s -> 16s
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchWithExponentialBackoff(url, options, retries - 1, delay * 2);
+                }
+                throw error;
+            }
+        }
+
+        // PHÁT GIỌNG NÓI CHUẨN AI VỚI GIỌNG TÙY CHỌN HOẠT ĐỘNG HOÀN HẢO
         async function playTargetTTS() {
             const text = document.getElementById("phraseCardEnglish").innerText;
             if (!text) return;
@@ -2025,7 +1948,6 @@
             const selectedVoiceType = appState.selectedVoice || "ai-Leda";
             const speedRate = appState.speechRate || 0.85;
 
-            // TRƯỜNG HỢP 1: GIỌNG AI CLOUD (BẰNG GEMINI TTS API)
             if (selectedVoiceType.startsWith("ai-")) {
                 const voiceModelName = selectedVoiceType.replace("ai-", "");
                 const playBtn = document.getElementById("playTtsBtn");
@@ -2035,10 +1957,9 @@
                 loader.classList.remove("hidden");
 
                 try {
-                    const apiKey = ""; // Để trống để Canvas tự động gán API key tại runtime
+                    // API endpoint và API key tự động xử lý
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
 
-                    // Điều khiển tốc độ phát bằng mô tả ngữ cảnh tự nhiên vào prompt
                     let speedGuidance = "at a perfectly normal pace";
                     if (speedRate < 0.65) speedGuidance = "extremely slowly and very clearly for a young student to follow";
                     else if (speedRate < 0.85) speedGuidance = "slowly and clearly";
@@ -2046,6 +1967,7 @@
 
                     const customPrompt = `Speak this phrase ${speedGuidance}, with absolutely perfect native pronunciation: "${text}"`;
 
+                    // Gửi chính xác payload theo đúng chuẩn cấu hình mô hình TTS
                     const payload = {
                         contents: [{
                             parts: [{ text: customPrompt }]
@@ -2057,54 +1979,46 @@
                                     prebuiltVoiceConfig: { voiceName: voiceModelName }
                                 }
                             }
-                        }
+                        },
+                        model: "gemini-2.5-flash-preview-tts"
                     };
 
-                    const response = await fetch(apiUrl, {
+                    const result = await fetchWithExponentialBackoff(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
 
-                    if (!response.ok) {
-                        throw new Error("Không phản hồi từ AI TTS Cloud.");
-                    }
-
-                    const result = await response.json();
                     const part = result?.candidates?.[0]?.content?.parts?.[0];
                     const audioDataBase64 = part?.inlineData?.data;
                     const mimeType = part?.inlineData?.mimeType;
 
                     if (audioDataBase64 && mimeType && mimeType.startsWith("audio/")) {
-                        // Tách tần số lấy mẫu từ mimeType (mặc định 24000Hz)
                         const sampleRateMatch = mimeType.match(/rate=(\d+)/);
                         const sampleRate = sampleRateMatch ? parseInt(sampleRateMatch[1], 10) : 24000;
                         
-                        const pcmBuffer = base64ToArrayBuffer(audioDataBase64);
-                        const pcm16 = new Int16Array(pcmBuffer);
-                        const wavBlob = pcmToWav(pcm16, sampleRate);
+                        // Chuyển đổi dữ liệu PCM Big-Endian thành tệp âm thanh WAV tương thích hoàn hảo
+                        const wavBlob = pcmToWav(audioDataBase64, sampleRate);
                         const audioUrl = URL.createObjectURL(wavBlob);
 
                         const audio = new Audio(audioUrl);
                         audio.play();
                     } else {
-                        throw new Error("Dữ liệu âm thanh phản hồi bị trống.");
+                        throw new Error("Không thể trích xuất luồng dữ liệu âm thanh.");
                     }
                 } catch (err) {
-                    console.error("Lỗi AI TTS, chuyển hướng về giọng đọc hệ thống:", err);
-                    showToast("Không thể tải giọng AI Cloud, chuyển sang giọng đọc mặc định thay thế!", "fa-circle-info", "brand");
+                    console.error("Lỗi kết nối AI TTS Cloud:", err);
+                    showToast("Giọng AI đám mây đang bận, hệ thống chuyển sang giọng đọc mặc định thiết bị!", "fa-circle-info", "brand");
                     playLocalTTS(text, selectedVoiceType, speedRate);
                 } finally {
                     playBtn.disabled = false;
                     loader.classList.add("hidden");
                 }
             } else {
-                // TRƯỜNG HỢP 2: GIỌNG NATIVE (BẢN XỨ) TRÊN THIẾT BỊ
                 playLocalTTS(text, selectedVoiceType, speedRate);
             }
         }
 
-        // Phát âm ngoại tuyến bằng Web Speech API
         function playLocalTTS(text, voiceType, speedRate) {
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = voiceType.includes("uk") ? "en-GB" : "en-US";
@@ -2113,7 +2027,6 @@
             const voices = window.speechSynthesis.getVoices();
             let matchedVoice = null;
 
-            // Chọn các bộ lọc giọng nói phổ biến trên thiết bị di động & máy tính
             if (voiceType === "native-us-f") {
                 matchedVoice = voices.find(v => v.lang.includes("en-US") && (v.name.toLowerCase().includes("female") || v.name.toLowerCase().includes("zira") || v.name.toLowerCase().includes("samantha") || v.name.toLowerCase().includes("google")));
             } else if (voiceType === "native-us-m") {
@@ -2124,7 +2037,6 @@
                 matchedVoice = voices.find(v => v.lang.includes("en-GB") && (v.name.toLowerCase().includes("male") || v.name.toLowerCase().includes("george") || v.name.toLowerCase().includes("daniel")));
             }
 
-            // Nếu không khớp giọng mong muốn, sử dụng giọng bất kỳ theo ngôn ngữ phù hợp
             if (!matchedVoice) {
                 matchedVoice = voices.find(v => v.lang.includes(utterance.lang));
             }
@@ -2135,7 +2047,7 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        // ================= CÔNG NGHỆ THU ÂM NHẬN DIỆN GIỌNG NÓI AI =================
+        // ================= THU ÂM NHẬN DIỆN GIỌNG NÓI =================
         function setupSpeechRecognition() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             
@@ -2153,13 +2065,11 @@
 
                 recognition.onresult = (event) => {
                     const resultText = event.results[0][0].transcript;
-                    const confidence = event.results[0][0].confidence;
-                    
                     analyzeSpeakingResult(resultText);
                 };
 
                 recognition.onerror = (event) => {
-                    console.error("Speech Recognition Error", event.error);
+                    console.error("Lỗi nhận dạng giọng nói:", event.error);
                     stopRecordingSession();
                     
                     if (event.error === 'no-speech') {
@@ -2167,21 +2077,18 @@
                     } else if (event.error === 'not-allowed') {
                         showToast("Vui lòng cấp quyền truy cập Mic cho ứng dụng!", "fa-circle-exmark", "rose");
                     } else {
-                        simulateSpeakingFlowFallback(); // Fallback khi gặp lỗi
+                        simulateSpeakingFlowFallback();
                     }
                 };
 
                 recognition.onend = () => {
                     stopRecordingSession();
                 };
-            } else {
-                console.warn("Speech Recognition not supported in this browser.");
             }
         }
 
         function toggleSpeechRecognition() {
             if (!recognition) {
-                // Trình duyệt không hỗ trợ Web Speech API (VD: Một số iframe bảo mật)
                 simulateSpeakingFlowFallback();
                 return;
             }
@@ -2226,7 +2133,6 @@
             }
         }
 
-        // Trình mô phỏng nói khi không có quyền mic hoặc trên thiết bị không hỗ trợ
         function simulateSpeakingFlowFallback() {
             showToast("Bắt đầu thử giọng mô phỏng chuẩn AI!", "fa-microphone", "brand");
             document.getElementById("micStatusText").innerText = "Đang thử giọng nói thử thách...";
@@ -2236,30 +2142,27 @@
                 document.getElementById("micStatusText").innerText = "Nhấn vào mic để nói mẫu câu";
                 document.getElementById("micStatusText").className = "text-xs font-bold text-slate-500 uppercase tracking-widest mt-4";
                 
-                // Trả về kết quả ngẫu nhiên để bé luyện tập
                 const list = currentSemester === 1 ? grade6Curriculum.semester1 : grade6Curriculum.semester2;
                 const sampleText = list[currentUnitIndex].speaking[selectedPhraseIndex].text;
                 
-                // Xác suất 80% đọc đúng hoàn toàn khi mô phỏng
                 const rand = Math.random();
                 let simulatedResultText = sampleText;
                 if (rand < 0.15) {
-                    simulatedResultText = sampleText.replace(/[a-zA-Z]+$/, "..."); // Đọc thiếu từ cuối
+                    simulatedResultText = sampleText.replace(/[a-zA-Z]+$/, "...");
                 } else if (rand < 0.25) {
-                    simulatedResultText = "Hello " + sampleText.toLowerCase(); // Đọc dư từ đầu
+                    simulatedResultText = "Hello " + sampleText.toLowerCase();
                 }
 
                 analyzeSpeakingResult(simulatedResultText);
             }, 2500);
         }
 
-        // ================= CHẤM ĐIỂM VÀ SO SÁNH PHÁT ÂM =================
+        // ================= CHẤM ĐIỂM & ĐÁNH GIÁ =================
         function analyzeSpeakingResult(spokenText) {
             const list = currentSemester === 1 ? grade6Curriculum.semester1 : grade6Curriculum.semester2;
             const unit = list[currentUnitIndex];
             const targetText = unit.speaking[selectedPhraseIndex].text;
 
-            // Làm sạch văn bản để so sánh chính xác
             const cleanString = (str) => {
                 return str.toLowerCase()
                           .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "")
@@ -2273,7 +2176,6 @@
             const targetWords = cleanTarget.split(" ");
             const spokenWords = cleanSpoken.split(" ");
 
-            // Tính điểm tương đồng dựa trên số từ khớp
             let matches = 0;
             targetWords.forEach(word => {
                 if (spokenWords.includes(word)) {
@@ -2281,11 +2183,9 @@
                 }
             });
 
-            // Tính tỷ lệ phần trăm khớp
             const rawScore = (matches / targetWords.length) * 100;
             const finalScore = Math.min(100, Math.round(rawScore));
 
-            // Xác định phân cấp phần thưởng
             let ratingTitle = "";
             let ratingIcon = "";
             let ratingColor = "";
@@ -2308,11 +2208,9 @@
                 xpReward = 2;
             }
 
-            // Lưu lịch sử phát âm
             const existingRecordIndex = (appState.completedSpeaking || []).findIndex(item => item.unitId === unit.id && item.phraseIndex === selectedPhraseIndex);
             
             if (existingRecordIndex >= 0) {
-                // Chỉ ghi đè nếu điểm mới cao hơn điểm cũ
                 if (appState.completedSpeaking[existingRecordIndex].score < finalScore) {
                     appState.completedSpeaking[existingRecordIndex].score = finalScore;
                 }
@@ -2325,11 +2223,9 @@
                 });
             }
 
-            // Tặng sao tích lũy (Cộng dồn điểm)
             appState.points = (appState.points || 0) + xpReward;
             saveProgress();
 
-            // Hiển thị kết quả chi tiết
             const resultBox = document.getElementById("pronunciationResultBox");
             const resultRatingIconBox = document.getElementById("resultRatingIconBox");
             const resultTitle = document.getElementById("resultTitle");
@@ -2340,7 +2236,6 @@
             resultBox.classList.remove("hidden");
             resultRatingIconBox.innerText = ratingIcon;
             
-            // Thiết lập phong cách rating màu sắc
             if (ratingColor === "emerald") {
                 resultRatingIconBox.className = "w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-xl font-bold bg-emerald-100 text-emerald-800 shadow-neon-emerald";
                 resultTitle.className = "font-extrabold text-base text-emerald-600";
@@ -2359,7 +2254,6 @@
             resultScore.innerText = `${finalScore}% Match (+${xpReward} Sao)`;
             resultSpokenText.innerText = spokenText || "(Bé chưa nói từ nào)";
 
-            // So sánh từng từ trực quan
             resultComparison.innerHTML = "";
             const headerComp = document.createElement("p");
             headerComp.className = "text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1";
@@ -2382,10 +2276,8 @@
             });
             resultComparison.appendChild(wordsWrapper);
 
-            // Cập nhật lại danh sách câu
             loadSpeakingContent();
 
-            // Nếu đạt 100%, nổ pháo hoa mừng bé
             if (finalScore >= 95) {
                 triggerConfetti();
             }
@@ -2396,9 +2288,8 @@
         }
 
 
-        // ================= BÀI KIỂM TRA CHUẨN HOÁ (TEST SUITE) =================
+        // ================= HỆ THỐNG BÀI THI (TEST) =================
         function loadTestContent() {
-            // Hiển thị màn hình chuẩn bị bắt đầu
             document.getElementById("testStartView").classList.remove("hidden");
             document.getElementById("testQuestionView").classList.add("hidden");
             document.getElementById("testResultView").classList.add("hidden");
@@ -2408,7 +2299,6 @@
             const list = currentSemester === 1 ? grade6Curriculum.semester1 : grade6Curriculum.semester2;
             const unit = list[currentUnitIndex];
 
-            // Trích xuất ngân hàng câu hỏi
             testQuestions = unit.questions;
             testCurrentQuestionIndex = 0;
             testUserAnswers = new Array(testQuestions.length).fill(null);
@@ -2417,7 +2307,6 @@
             document.getElementById("testQuestionView").classList.remove("hidden");
             document.getElementById("testResultView").classList.add("hidden");
 
-            // Bắt đầu đồng hồ tính giờ
             startTestTimer();
             displayQuestion();
         }
@@ -2438,15 +2327,12 @@
         function displayQuestion() {
             const question = testQuestions[testCurrentQuestionIndex];
             
-            // Cập nhật thông tin tiến trình làm bài
             document.getElementById("testProgressText").innerText = `Câu hỏi ${testCurrentQuestionIndex + 1} / ${testQuestions.length}`;
             const percent = ((testCurrentQuestionIndex + 1) / testQuestions.length) * 100;
             document.getElementById("testProgressBar").style.width = `${percent}%`;
 
-            // Điền câu hỏi
             document.getElementById("testQuestionText").innerText = question.question;
 
-            // Xây dựng các đáp án lựa chọn
             const container = document.getElementById("testOptionsContainer");
             container.innerHTML = "";
 
@@ -2471,7 +2357,6 @@
                 container.appendChild(btn);
             });
 
-            // Cập nhật nút điều hướng
             const btnPrev = document.getElementById("btnPrevQuestion");
             const btnNext = document.getElementById("btnNextQuestion");
 
@@ -2512,10 +2397,9 @@
                 testCurrentQuestionIndex++;
                 displayQuestion();
             } else {
-                // Xác nhận nộp bài thi
                 showCustomConfirm(
                     "Xác nhận nộp bài thi",
-                    "Con đã làm xong toàn bộ câu hỏi. Nhấn đồng ý để hệ thống tự động chấm điểm và thưởng sao vàng nhé!",
+                    "Con đã làm xong toàn bộ câu hỏi. Nhấn đồng ý để hệ thống chấm điểm và nhận sao thưởng!",
                     "📝",
                     () => {
                         submitTest();
@@ -2524,8 +2408,6 @@
             }
         }
 
-
-        // ================= TỔNG HỢP VÀ CHẤM ĐIỂM THI =================
         function submitTest() {
             clearInterval(testTimerInterval);
 
@@ -2547,13 +2429,11 @@
                 });
             });
 
-            // Thưởng sao vàng dựa theo điểm số
-            let xpReward = correctCount * 10; // Mỗi câu đúng tương đương 10 sao
+            let xpReward = correctCount * 10;
             if (correctCount === testQuestions.length) {
-                xpReward += 10; // Điểm tuyệt đối được bonus thêm 10 sao
+                xpReward += 10;
             }
 
-            // Lưu kết quả thi xuất sắc nhất vào account học sinh
             const list = currentSemester === 1 ? grade6Curriculum.semester1 : grade6Curriculum.semester2;
             const unit = list[currentUnitIndex];
 
@@ -2566,7 +2446,6 @@
             appState.points = (appState.points || 0) + xpReward;
             saveProgress();
 
-            // Hiển thị kết quả chi tiết lên màn hình
             document.getElementById("testQuestionView").classList.add("hidden");
             document.getElementById("testResultView").classList.remove("hidden");
 
@@ -2576,27 +2455,24 @@
             const scoreText = document.getElementById("testResultScoreText");
             const xpRewardText = document.getElementById("testResultXpRewardText");
 
-            // Điền số điểm
             scoreText.innerText = `${correctCount} / ${testQuestions.length}`;
             xpRewardText.innerText = `+${xpReward} Sao`;
 
-            // Trang trí hoạt cảnh và thông báo
             if (correctCount === testQuestions.length) {
                 resultAnimBox.innerText = "🏆";
                 resultTitle.innerText = "Điểm tuyệt đối! Quá xuất sắc!";
-                resultSubtitle.innerText = `Con hoàn thành bài thi cực nhanh trong ${testSecondsElapsed} giây và giành trọn sao thưởng!`;
+                resultSubtitle.innerText = `Con hoàn thành bài thi cực nhanh trong ${testSecondsElapsed} giây!`;
                 triggerConfetti();
             } else if (correctCount >= 3) {
                 resultAnimBox.innerText = "⭐";
                 resultTitle.innerText = "Con đã hoàn thành rất tốt!";
-                resultSubtitle.innerText = `Kết quả khả quan! Con làm xong bài thi trong ${testSecondsElapsed} giây.`;
+                resultSubtitle.innerText = `Kết quả khả quan! Con hoàn thành trong ${testSecondsElapsed} giây.`;
             } else {
                 resultAnimBox.innerText = "📖";
                 resultTitle.innerText = "Con hãy cố gắng ở lần thi tới!";
-                resultSubtitle.innerText = "Hãy ôn tập lại phần từ vựng và xem kỹ đáp án phía dưới nhé.";
+                resultSubtitle.innerText = "Hãy ôn tập lại phần từ vựng và xem kỹ đáp án phía dưới.";
             }
 
-            // Điền bảng chi tiết câu trả lời
             const tableBreakdown = document.getElementById("testResultDetailedBreakdown");
             tableBreakdown.innerHTML = "";
 
@@ -2606,7 +2482,7 @@
                 
                 itemDiv.innerHTML = `
                     <div class="flex items-center gap-1.5 font-bold">
-                        <span>Câu ${item.qNum}: ${item.isCorrect ? '✅ Đọc đúng' : '❌ Đọc sai'}</span>
+                        <span>Câu ${item.qNum}: ${item.isCorrect ? '✅ Trả lời đúng' : '❌ Trả lời sai'}</span>
                     </div>
                     <p class="font-semibold text-slate-700 mt-1">${item.question}</p>
                     <div class="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-[11px]">
@@ -2617,7 +2493,6 @@
                 tableBreakdown.appendChild(itemDiv);
             });
 
-            // Làm mới bảng điều khiển bài học
             renderUnitList();
         }
 
@@ -2630,19 +2505,17 @@
         }
 
 
-        // ================= BANG XEP HANG HOC SINH (LEADERBOARD) =================
+        // ================= BẢNG XẾP HẠNG (LEADERBOARD) =================
         function openLeaderboard() {
             document.getElementById("leaderboardModal").classList.remove("hidden");
             
-            // Render danh sách
             const listContainer = document.getElementById("leaderboardListContainer");
             listContainer.innerHTML = "";
 
-            // Chuyển đối tượng allAccounts thành mảng rồi sắp xếp giảm dần theo điểm số (points)
             const sortedAccounts = Object.values(allAccounts).sort((a, b) => b.points - a.points);
 
             sortedAccounts.forEach((acc, index) => {
-                if (acc.username === "admin_session") return; // Bỏ qua giáo viên trong BXH
+                if (acc.username === "admin_session") return;
 
                 let badgeClass = "bg-slate-100 text-slate-600";
                 let rankIcon = index + 1;
@@ -2688,7 +2561,7 @@
         }
 
 
-        // ================= KHU VỰC CỦA GIÁO VIÊN / ADMIN =================
+        // ================= KHU VỰC QUẢN TRỊ VIÊN / GIÁO VIÊN =================
         function openAdminGateway() {
             document.getElementById("adminAuthModal").classList.remove("hidden");
             document.getElementById("adminPasswordInput").value = "";
@@ -2713,21 +2586,18 @@
 
         function showAdminDashboard() {
             document.getElementById("adminDashboardModal").classList.remove("hidden");
-            // Mặc định về tab quản lý học sinh khi mở
             switchAdminTab('students');
         }
 
         function closeAdminDashboard() {
             document.getElementById("adminDashboardModal").classList.add("hidden");
             
-            // Đồng bộ lại chỉ số ở header giao diện chính nếu người dùng hiện tại bị sửa điểm
             if (appState.username && appState.username !== "admin_session") {
                 appState = allAccounts[appState.username];
                 updateProfileBar();
             }
         }
 
-        // CHUYỂN TAB TRONG PANEL QUẢN TRỊ
         function switchAdminTab(tab) {
             const btnStudents = document.getElementById("adminTabBtn_students");
             const btnSettings = document.getElementById("adminTabBtn_settings");
@@ -2753,13 +2623,11 @@
         }
 
         function loadAdminSettings() {
-            // Reset các ô nhập mật khẩu
             document.getElementById("settingsOldPassword").value = "";
             document.getElementById("settingsNewPassword").value = "";
             document.getElementById("settingsConfirmPassword").value = "";
         }
 
-        // XỬ LÝ ĐỔI MẬT KHẨU ADMIN TRỰC TUYẾN
         async function handleUpdateAdminPassword(e) {
             e.preventDefault();
             const currentPass = document.getElementById("settingsOldPassword").value;
@@ -2782,7 +2650,6 @@
             }
 
             try {
-                // Đẩy cấu hình mật khẩu mới lên đám mây Firestore
                 const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'config', 'admin');
                 await setDoc(configDocRef, { password: newPass }, { merge: true });
                 showToast("Đã đổi mật khẩu Admin thành công trực tuyến!", "fa-circle-check", "emerald");
@@ -2792,10 +2659,8 @@
             }
         }
 
-        // XUẤT SAO LƯU DỮ LIỆU JSON
         function exportClassData() {
             try {
-                // Lọc bỏ tài khoản admin ảo ra khỏi file backup
                 const backupAccounts = { ...allAccounts };
                 delete backupAccounts["admin_session"];
 
@@ -2812,7 +2677,6 @@
             }
         }
 
-        // NHẬP KHÔI PHỤC DỮ LIỆU JSON (ĐỒNG BỘ TRỰC TIẾP LÊN MÂY)
         async function importClassData(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -2821,12 +2685,11 @@
             reader.onload = async function(evt) {
                 try {
                     const parsed = JSON.parse(evt.target.result);
-                    // Kiểm tra sơ bộ định dạng dữ liệu lớp học
                     if (typeof parsed === 'object' && parsed !== null) {
                         showToast("Đang đồng bộ dữ liệu phục hồi lên máy chủ...", "fa-arrows-rotate", "brand");
 
                         const uploadPromises = Object.keys(parsed).map((username) => {
-                            if (username === "admin_session") return Promise.resolve(); // Bỏ qua giáo viên
+                            if (username === "admin_session") return Promise.resolve();
                             const studentDoc = doc(db, 'artifacts', appId, 'public', 'data', 'accounts', username);
                             return setDoc(studentDoc, parsed[username]);
                         });
@@ -2834,10 +2697,8 @@
                         await Promise.all(uploadPromises);
                         showToast("Đã nhập khôi phục dữ liệu học tập thành công!", "fa-file-import", "emerald");
                         
-                        // Đưa về tab Học sinh
                         switchAdminTab('students');
 
-                        // Đồng bộ lại tài khoản học sinh hiện tại nếu bị ảnh hưởng
                         if (appState.username && appState.username !== "admin_session" && !parsed[appState.username]) {
                             handleLogoutDirectly();
                         } else if (appState.username && appState.username !== "admin_session") {
@@ -2852,11 +2713,9 @@
                 }
             };
             reader.readAsText(file);
-            // Reset input file để có thể nhập lại cùng 1 file nếu muốn
             document.getElementById("importFileInput").value = "";
         }
 
-        // RESET TOÀN BỘ DỮ LIỆU VỀ MẶC ĐỊNH (XÓA TRỰC TIẾP TRÊN MÂY)
         function resetAllClassData() {
             showCustomConfirm(
                 "Xác nhận RESET toàn bộ hệ thống",
@@ -2935,9 +2794,8 @@
             document.getElementById("adminEditMode").value = "edit";
             document.getElementById("adminEditUsernameRaw").value = username;
 
-            // Đưa thông tin lên form
             document.getElementById("adminUsername").value = acc.username;
-            document.getElementById("adminUsername").disabled = true; // Không cho sửa username gốc tránh lỗi khóa ngoại
+            document.getElementById("adminUsername").disabled = true;
             document.getElementById("adminFullName").value = acc.fullName;
             document.getElementById("adminPoints").value = acc.points;
             document.getElementById("adminStreak").value = acc.streak;
@@ -2988,7 +2846,7 @@
                     fullName: fullName,
                     points: points,
                     streak: streak,
-                    avatarId: Math.floor(Math.random() * 5) + 1, // Chọn avatar ngẫu nhiên cho bé
+                    avatarId: Math.floor(Math.random() * 5) + 1,
                     completedSpeaking: [],
                     completedTests: {}
                 };
@@ -3042,11 +2900,10 @@
         }
 
 
-        // ================= CÁC TIỆN ÍCH HIỆU ỨNG TRỰC QUAN GIAO DIỆN (UI UTILITIES) =================
+        // ================= HIỆU ỨNG GIAO DIỆN (UI TOAST/CONFETTI/CONFIRM) =================
         function showToast(message, iconClass, colorClass) {
             const container = document.getElementById("toastContainer");
             
-            // Thiết lập phong cách màu sắc cho toast
             let bgStyle = "bg-white border-slate-200 text-slate-800";
             let iconStyle = "text-brand-500";
             if (colorClass === "emerald") {
@@ -3069,12 +2926,10 @@
 
             container.appendChild(toast);
 
-            // Trigger chuyển động trượt vào
             setTimeout(() => {
                 toast.classList.remove("translate-x-10", "opacity-0");
             }, 10);
 
-            // Tự động xoá sau 3.5 giây
             setTimeout(() => {
                 toast.classList.add("opacity-0", "translate-x-10");
                 setTimeout(() => {
@@ -3096,7 +2951,6 @@
             modalText.innerText = text;
             modalIcon.innerText = icon || "❓";
 
-            // Gỡ bỏ event listeners cũ bằng cách clone các nút
             const newCancelBtn = cancelBtn.cloneNode(true);
             const newOkBtn = okBtn.cloneNode(true);
             
@@ -3113,7 +2967,6 @@
             });
         }
 
-        // Tạo hiệu ứng pháo hoa sao vàng rơi siêu lấp lánh mừng bé đạt điểm xuất sắc
         function triggerConfetti() {
             const overlay = document.getElementById("confettiOverlay");
             overlay.innerHTML = "";
@@ -3127,14 +2980,12 @@
                 star.innerHTML = i % 2 === 0 ? "★" : "✨";
                 star.style.color = colors[Math.floor(Math.random() * colors.length)];
                 
-                // Vị trí rơi ban đầu ngẫu nhiên từ đỉnh màn hình
                 star.style.top = `-20px`;
                 star.style.left = `${Math.random() * 100}%`;
                 star.style.transform = `scale(${0.5 + Math.random()})`;
                 
                 overlay.appendChild(star);
 
-                // Kích hoạt chuyển động rơi sau vài mili-giây
                 const fallDuration = 1000 + Math.random() * 1500;
                 setTimeout(() => {
                     star.style.top = `105vh`;
@@ -3143,13 +2994,12 @@
                 }, 50);
             }
 
-            // Tự động đóng overlay sau 2.5 giây
             setTimeout(() => {
                 overlay.classList.add("hidden");
             }, 2500);
         }
 
-        // ĐỒNG BỘ TOÀN CỤC CÁC HÀM TỚI WINDOW ĐỂ HTML KÍCH HOẠT (Module Scope Fallback)
+        // ĐỒNG BỘ WINDOW SCOPE CHO CÁC HÀM TRÊN GIAO DIỆN HTML
         window.switchAuthTab = switchAuthTab;
         window.selectAvatar = selectAvatar;
         window.handleLogin = handleLogin;
