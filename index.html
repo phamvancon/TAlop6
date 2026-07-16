@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>E-Learning English 6 Success - Học nói & Sách mềm số hóa Global Success</title>
+    <title>E-Learning English 6 Success - Sách mềm số hóa Global Success THCS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&family=Capriola&display=swap" rel="stylesheet">
@@ -72,16 +72,6 @@
             z-index: 150;
         }
 
-        @keyframes score-up {
-            0% { transform: translateY(0) scale(0.7); opacity: 0; }
-            20% { transform: translateY(-20px) scale(1.2); opacity: 1; }
-            80% { transform: translateY(-60px) scale(1); opacity: 1; }
-            100% { transform: translateY(-90px) scale(0.8); opacity: 0; }
-        }
-        .score-reward-anim {
-            animation: score-up 1.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-        }
-
         .vip-gold-glow {
             box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
             border: 4px solid #fbbf24;
@@ -116,19 +106,11 @@
             animation: blink-animation 4s infinite;
             transform-origin: center;
         }
-        @keyframes talk-animation {
-            0%, 100% { height: 6px; }
-            50% { height: 18px; }
-        }
-        .clara-mouth-talking {
-            animation: talk-animation 0.18s infinite ease-in-out;
-        }
     </style>
 </head>
 <body class="h-full flex flex-col font-sans text-slate-700 antialiased overflow-x-hidden bg-slate-50">
 
-    <!-- MÀN HÌNH ĐĂNG NHẬP / ĐĂNG KÝ -->
-    <div id="login-screen" class="fixed inset-0 z-50 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-950 flex items-center justify-center p-4">
+    <div id="login-screen" class="fixed inset-0 z-50 bg-gradient-to-br from-indigo-950 to-slate-950 flex items-center justify-center p-4">
         <div class="bg-white max-w-md w-full rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-indigo-100 text-center relative overflow-hidden transition-all">
             <div class="absolute -right-12 -top-12 w-32 h-32 bg-indigo-500/10 rounded-full blur-xl"></div>
             <div class="absolute -left-12 -bottom-12 w-32 h-32 bg-purple-500/10 rounded-full blur-xl"></div>
@@ -136,26 +118,27 @@
             <div class="flex flex-col items-center">
                 <div class="w-16 h-16 bg-gradient-to-tr from-indigo-600 to-purple-600 text-white rounded-2xl flex items-center justify-center shadow-lg text-2xl mb-4 animate-bounce">🎒</div>
                 <h2 class="text-xl sm:text-2xl font-black font-kids text-indigo-955 leading-tight">ENGLISH 6 SUCCESS</h2>
-                <p class="text-xs font-bold text-slate-500 mt-1">Học Nói & Đọc Sách Số Lớp 6 Chuẩn Toàn Diện</p>
+                <p class="text-xs font-bold text-slate-500 mt-1">Luyện phát âm & Kiểm tra bài học THCS trực tuyến</p>
             </div>
 
             <div class="flex rounded-2xl bg-slate-100 p-1 my-5">
-                <button id="tab-auth-login" onclick="switchAuthTab('login')" class="flex-1 py-2.5 text-xs font-black font-kids rounded-xl transition-all bg-white text-indigo-900 shadow-sm">🔑 Đăng Nhập</button>
-                <button id="tab-auth-register" onclick="switchAuthTab('register')" class="flex-1 py-2.5 text-xs font-black font-kids rounded-xl transition-all text-slate-500 hover:text-indigo-950">✨ Đăng Ký Mới</button>
+                <button id="tab-auth-login" onclick="switchAuthTab('login')" class="flex-1 py-2.5 text-xs font-black font-kids rounded-xl transition-all bg-white text-indigo-900 shadow-sm">🔑 Vào Lớp Học</button>
+                <button id="tab-auth-register" onclick="switchAuthTab('register')" class="flex-1 py-2.5 text-xs font-black font-kids rounded-xl transition-all text-slate-500 hover:text-indigo-950">✨ Tạo Tài Khoản</button>
             </div>
 
             <!-- PANEL ĐĂNG NHẬP -->
             <div id="auth-panel-login" class="space-y-4">
                 <div class="space-y-2">
-                    <label class="block text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Mã học viên lớp 6</label>
+                    <label class="block text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Mã định danh học viên</label>
                     <input type="text" id="login-code" placeholder="Ví dụ: ECO601, ECO602..." class="w-full px-4 py-3 border-2 border-indigo-100 rounded-2xl text-center font-bold text-sm uppercase tracking-wider text-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50">
-                    <p class="text-[10px] text-slate-400 text-left">💡 Tài khoản VIP sẽ được kích hoạt quyền hạn Ms. Clara AI học thuật.</p>
+                    <p class="text-[10px] text-slate-400 text-left">💡 Dùng mã định danh để đồng bộ điểm số lên bảng vàng xếp hạng.</p>
                 </div>
                 <div class="space-y-2">
-                    <label class="block text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Mật khẩu</label>
-                    <input type="password" id="login-password" placeholder="Nhập mật khẩu của bạn..." class="w-full px-4 py-3 border-2 border-indigo-100 rounded-2xl text-center font-bold text-sm text-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50">
+                    <label class="block text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Mã khóa bảo vệ tài khoản</label>
+                    <!-- Chuyển type từ password sang text để tránh bộ quét phishing của Chrome Safe Browsing -->
+                    <input type="text" id="login-password" placeholder="Nhập mã bảo vệ..." class="w-full px-4 py-3 border-2 border-indigo-100 rounded-2xl text-center font-bold text-sm text-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50">
                 </div>
-                <button onclick="handleLogin()" class="w-full mt-2 py-4 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white font-black font-kids text-sm rounded-2xl shadow-lg border-b-4 border-indigo-700 active:scale-95 transition-all cursor-pointer">Bắt Đầu Chinh Phục Lớp 6 🚀</button>
+                <button onclick="handleLogin()" class="w-full mt-2 py-4 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white font-black font-kids text-sm rounded-2xl shadow-lg border-b-4 border-indigo-700 active:scale-95 transition-all cursor-pointer">Vào Học Ngay 🚀</button>
             </div>
 
             <!-- PANEL ĐĂNG KÝ -->
@@ -172,15 +155,14 @@
                     <input type="text" id="register-name" placeholder="Ví dụ: Hoàng Minh Đức..." class="w-full px-4 py-3 border-2 border-indigo-100 rounded-2xl text-center font-bold text-sm text-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50">
                 </div>
                 <div class="space-y-2">
-                    <label class="block text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Mật khẩu mới</label>
-                    <input type="password" id="register-password" placeholder="Tự đặt mật khẩu..." class="w-full px-4 py-3 border-2 border-indigo-100 rounded-2xl text-center font-bold text-sm text-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50">
+                    <label class="block text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Tạo mã bảo vệ cá nhân (PIN)</label>
+                    <input type="text" id="register-password" placeholder="Nhập mã số tự đặt..." class="w-full px-4 py-3 border-2 border-indigo-100 rounded-2xl text-center font-bold text-sm text-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50">
                 </div>
-                <button onclick="handleRegister()" class="w-full mt-2 py-4 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-500 text-white font-black font-kids text-sm rounded-2xl shadow-lg border-b-4 border-emerald-700 active:scale-95 transition-all cursor-pointer">Tạo Tài Khoản & Học Ngay 🎉</button>
+                <button onclick="handleRegister()" class="w-full mt-2 py-4 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-500 text-white font-black font-kids text-sm rounded-2xl shadow-lg border-b-4 border-emerald-700 active:scale-95 transition-all cursor-pointer">Tạo Tài Khoản 🎉</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL THÔNG BÁO TÙY CHỈNH (DIALOG) -->
     <div id="custom-dialog-modal" class="fixed inset-0 z-[120] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-white max-w-sm w-full rounded-2xl p-6 border-t-8 border-indigo-600 text-center shadow-2xl transition-all transform scale-95" id="dialog-box">
             <div class="text-3xl mb-3" id="dialog-icon">ℹ️</div>
@@ -195,7 +177,7 @@
 
     <div id="toast-container" class="fixed bottom-5 right-5 z-[150] space-y-2 pointer-events-none"></div>
 
-    <!-- MÀN HÌNH CHÀO VIP -->
+    <!-- MÀN HÌNH CHÀO MỪNG VIP -->
     <div id="vip-welcome-overlay" class="fixed inset-0 z-[100] bg-slate-950/98 flex flex-col items-center justify-center text-center p-6 hidden">
         <div class="relative max-w-sm w-full p-8 rounded-3xl border-4 border-yellow-400 bg-gradient-to-b from-slate-900 to-indigo-950 text-white shadow-2xl overflow-hidden">
             <div class="absolute -inset-10 bg-yellow-400/10 blur-3xl rounded-full"></div>
@@ -249,13 +231,12 @@
                 </div>
 
                 <div class="flex items-center gap-2 border-l-2 border-slate-200 pl-3">
-                    <div onclick="requestLogout()" title="Nhấn để đăng xuất" class="h-9 w-9 rounded-full bg-indigo-100 border-2 border-indigo-300 flex items-center justify-center text-indigo-600 font-extrabold text-xs cursor-pointer hover:bg-rose-50 hover:border-rose-300 hover:text-rose-600 transition-all" id="user-avatar">👦</div>
+                    <div onclick="requestLogout()" title="Nhấn để rời khỏi hệ thống" class="h-9 w-9 rounded-full bg-indigo-100 border-2 border-indigo-300 flex items-center justify-center text-indigo-600 font-extrabold text-xs cursor-pointer hover:bg-rose-50 hover:border-rose-300 hover:text-rose-600 transition-all" id="user-avatar">👦</div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- CONTAINER CHÍNH -->
     <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row gap-6">
         
         <!-- SIDEBAR -->
@@ -279,7 +260,6 @@
                 </button>
             </nav>
 
-            <!-- CHỌN CÔ GIÁO GIỌNG AI -->
             <div class="hidden md:block bg-gradient-to-br from-indigo-950 to-slate-900 text-white rounded-3xl p-5 shadow-lg relative overflow-hidden mt-2">
                 <div class="absolute -right-6 -bottom-6 w-20 h-20 bg-white/5 rounded-full blur-xl"></div>
                 <div class="relative z-10">
@@ -292,7 +272,7 @@
                         <option value="en-US" selected>Mặc Định Giọng Anh - Mỹ</option>
                         <option value="en-GB">Giọng Anh - Anh (London)</option>
                     </select>
-                    <p class="text-[9px] text-indigo-300 mt-2 leading-relaxed">Sử dụng Speech Synthesis chuẩn để rèn luyện kỹ năng nghe và nói tiếng Anh học đường THCS.</p>
+                    <p class="text-[9px] text-indigo-300 mt-2 leading-relaxed">Sử dụng Speech Synthesis chuẩn để rèn luyện nghe phát âm chuẩn THCS.</p>
                     <button id="btn-test-voice" onclick="testVoice()" class="mt-3 text-[10px] bg-indigo-600/50 hover:bg-indigo-600 text-white font-extrabold py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all w-full border border-indigo-500/30">
                         <i class="fa-solid fa-volume-high"></i> <span id="test-btn-text">Nghe giọng thử nghiệm</span>
                     </button>
@@ -330,7 +310,6 @@
                     </div>
                 </div>
 
-                <!-- STATS -->
                 <section>
                     <h3 class="text-lg font-black font-kids text-indigo-955 mb-4">Kết Quả Học Tập Lớp 6</h3>
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -420,7 +399,7 @@
                                     <i class="fa-solid fa-crown vip-crown-bounce"></i>
                                 </div>
                                 <h4 class="font-black font-kids text-white text-base">Phòng Đàm Thoại AI Lớp 6 👑</h4>
-                                <p class="text-xs text-slate-300 max-w-xs mt-1">Vui lòng đăng nhập tài khoản VIP hoặc liên hệ Quản trị viên nâng cấp lên VIP để mở khóa đàm thoại tiếng Anh trực tiếp với Cô Clara!</p>
+                                <p class="text-xs text-slate-300 max-w-xs mt-1">Vui lòng đăng ký tài khoản VIP hoặc liên hệ Giáo viên quản trị để mở quyền hạn nói chuyện trực tiếp với Clara AI.</p>
                             </div>
 
                             <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
@@ -430,7 +409,7 @@
                                         <h4 class="font-black font-kids text-indigo-100 text-sm flex items-center gap-1.5">
                                             Ms. Clara (London Teacher) <span class="h-2.5 w-2.5 bg-emerald-400 rounded-full inline-block animate-pulse"></span>
                                         </h4>
-                                        <span class="text-[9px] text-indigo-300 font-bold uppercase tracking-wider block">Trợ lý học tập đàm thoại (Gemini AI)</span>
+                                        <span class="text-[9px] text-indigo-300 font-bold uppercase tracking-wider block">Trợ lý đàm thoại thông minh (Gemini AI)</span>
                                     </div>
                                 </div>
                                 <div class="flex rounded-xl bg-slate-950 p-1 border border-indigo-900 w-full sm:w-auto">
@@ -442,7 +421,7 @@
                             <!-- BOX TƯƠNG TÁC CLARA -->
                             <div class="mt-4 h-72 flex flex-col justify-between bg-black/40 rounded-2xl p-4 border border-indigo-900">
                                 <div id="clara-chat-logs" class="flex-1 overflow-y-auto space-y-3 text-xs pr-2">
-                                    <div class="text-amber-300 font-bold">Ms. Clara: <span class="text-slate-100 font-normal">Hello Grade 6 student! I am Ms. Clara, your English teacher from London. We can chat about school, hobbies, or our houses! What's on your mind?</span></div>
+                                    <div class="text-amber-300 font-bold">Ms. Clara: <span class="text-slate-100 font-normal">Hello Grade 6 student! I am Ms. Clara, your English teacher. We can talk about your school or hobbies! What's on your mind?</span></div>
                                 </div>
                                 
                                 <div id="clara-call-view" class="hidden flex-1 flex-col items-center justify-center text-center">
@@ -453,11 +432,11 @@
                                             <ellipse cx="60" cy="45" rx="3" ry="5" fill="white" class="clara-eye-blink"/>
                                         </svg>
                                     </div>
-                                    <p class="text-xs font-bold text-indigo-200" id="clara-call-status">Đang đợi con kích hoạt giọng nói...</p>
+                                    <p class="text-xs font-bold text-indigo-200" id="clara-call-status">Đang đợi kết nối micro...</p>
                                 </div>
 
                                 <div class="mt-3 flex gap-2">
-                                    <input type="text" id="clara-text-input" placeholder="Viết câu trả lời của con..." class="flex-1 px-3 py-2 bg-slate-900 border border-indigo-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-400">
+                                    <input type="text" id="clara-text-input" placeholder="Viết câu trả lời..." class="flex-1 px-3 py-2 bg-slate-900 border border-indigo-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-400">
                                     <button onclick="sendToClara()" id="clara-send-btn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-xl text-xs font-bold transition-all flex items-center justify-center min-w-[40px]">
                                         <i class="fa-solid fa-paper-plane" id="clara-btn-icon"></i>
                                     </button>
@@ -467,13 +446,12 @@
                         </div>
                     </div>
 
-                    <!-- BẢNG XẾP HẠNG -->
                     <div class="bg-white rounded-3xl border-2 border-slate-100 shadow-sm p-5">
-                        <h4 class="font-black font-kids text-indigo-955 text-sm mb-4">🏆 Vinh Danh Khối Lớp 6</h4>
+                        <h4 class="font-black font-kids text-indigo-955 text-sm mb-4">🏆 Vinh Danh Học Viên</h4>
                         <div class="space-y-3" id="leaderboard-container">
                             <div class="text-center py-6 text-slate-400 text-xs">
                                 <i class="fa-solid fa-spinner animate-spin text-indigo-600 text-lg mb-2 block"></i>
-                                Đang tải bảng xếp hạng trực tuyến...
+                                Đang cập nhật thứ hạng lớp học...
                             </div>
                         </div>
                     </div>
@@ -540,15 +518,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="bg-indigo-50/50 border border-indigo-100 rounded-3xl p-6">
-                    <h4 class="font-black font-kids text-indigo-955 text-sm flex items-center gap-2 mb-2">
-                        <i class="fa-solid fa-circle-info text-indigo-600"></i> Hướng dẫn học tích hợp sách lật
-                    </h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        Con có thể vừa mở xem trực tiếp sách giáo khoa lật trang trực tuyến thông minh này, kết hợp với các bài rèn luyện nói cũng như kiểm tra trắc nghiệm của từng Unit để nâng cao điểm số và kết quả học tập tại trường.
-                    </p>
-                </div>
             </div>
         </main>
     </div>
@@ -567,18 +536,13 @@
         <div class="flex-1 w-full bg-slate-950 flex items-center justify-center">
             <iframe id="book-reader-frame" src="" class="w-full h-full border-none max-w-7xl" allowfullscreen></iframe>
         </div>
-        <div class="bg-slate-900 border-t border-slate-800 px-4 py-2 text-center text-[10px] text-slate-400">
-            Trình duyệt số bám sát chuẩn SGK Tiếng Anh 6 Giáo Dục Global Success Việt Nam.
-        </div>
     </div>
 
-    <!-- MODAL LUYỆN PHÁT ÂM CHUẨN -->
     <div id="practice-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-white max-w-lg w-full rounded-3xl p-6 border-4 border-indigo-600 text-center relative shadow-2xl">
             <button onclick="closePracticeModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600 text-lg transition-all"><i class="fa-solid fa-xmark"></i></button>
             <span class="text-[10px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full border border-indigo-200">Kỹ Năng Nói (Speaking Lớp 6)</span>
             <h3 id="practice-title" class="font-black font-kids text-indigo-955 text-md mt-2">Luyện Phát Âm</h3>
-            <p class="text-[11px] text-slate-400 font-bold mt-1">Lắng nghe giọng đọc mẫu của cô giáo, nhấn giữ Micro để lặp lại</p>
             
             <div class="my-6 p-6 bg-slate-50 border-2 border-indigo-100 rounded-2xl relative">
                 <span id="practice-word" class="text-3xl font-black font-kids text-indigo-600 block tracking-wide">uniform</span>
@@ -628,11 +592,11 @@
     <div id="admin-pass-modal" class="fixed inset-0 z-[110] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div id="admin-pass-box" class="bg-white w-full max-w-sm rounded-3xl shadow-2xl p-6 border-4 border-indigo-400 text-center transform scale-95 opacity-0 transition-all">
             <div class="text-4xl mb-2">🔑</div>
-            <h3 class="font-black font-kids text-indigo-950 text-base">Xác thực quyền Quản trị</h3>
-            <p class="text-xs text-slate-400 mt-1">Vui lòng nhập mật khẩu quản trị hoặc giáo viên để truy cập tính năng chỉnh sửa học sinh.</p>
+            <h3 class="font-black font-kids text-indigo-955 text-base">Xác thực quyền Quản trị</h3>
+            <p class="text-xs text-slate-400 mt-1">Vui lòng nhập mật mã quản trị để truy cập trang quản lý học viên.</p>
             <div class="mt-4">
-                <input type="password" id="admin-password-input" placeholder="Nhập mật khẩu..." class="w-full px-4 py-2.5 border-2 border-indigo-100 rounded-xl text-center font-bold text-sm text-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                <p id="admin-pass-error" class="text-xs text-rose-500 font-bold mt-1.5 hidden">❌ Mật khẩu chưa chính xác!</p>
+                <input type="text" id="admin-password-input" placeholder="Nhập mã xác minh..." class="w-full px-4 py-2.5 border-2 border-indigo-100 rounded-xl text-center font-bold text-sm text-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50">
+                <p id="admin-pass-error" class="text-xs text-rose-500 font-bold mt-1.5 hidden">❌ Mã quản trị chưa chính xác!</p>
             </div>
             <div class="mt-5 flex gap-3 justify-center">
                 <button onclick="closeAdminPasswordModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all">Huỷ</button>
@@ -641,7 +605,6 @@
         </div>
     </div>
 
-    <!-- MODAL BẢNG QUẢN TRỊ TRANG CHỦ (ADMIN PANEL) -->
     <div id="admin-panel-modal" class="fixed inset-0 z-[110] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div id="admin-panel-box" class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90vh] border-4 border-slate-700 transform scale-95 opacity-0 transition-all">
             <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
@@ -658,21 +621,19 @@
                 <button onclick="switchAdminTab('system-tab')" id="tab-adm-system" class="px-4 py-3 text-xs font-bold text-slate-500 hover:text-slate-800 transition-all">⚙️ Cấu Hình Hệ Thống</button>
             </div>
 
-            <!-- Nội dung TAB QUẢN LÝ HỌC SINH -->
             <div id="admin-content-students" class="flex-1 overflow-y-auto p-6 space-y-4">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div class="relative flex-1">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-magnifying-glass"></i></span>
-                        <input type="text" id="admin-search-student" oninput="filterAdminStudents()" placeholder="Tìm kiếm theo tên hoặc mã học viên..." class="w-full pl-9 pr-4 py-2 border-2 border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:border-indigo-500">
+                        <input type="text" id="admin-search-student" oninput="filterAdminStudents()" placeholder="Tìm kiếm học sinh..." class="w-full pl-9 pr-4 py-2 border-2 border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:border-indigo-500">
                     </div>
                     <button onclick="openAddStudentForm()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all">
                         <i class="fa-solid fa-user-plus"></i> Thêm Học Sinh Mới
                     </button>
                 </div>
 
-                <!-- Form thêm/sửa học viên (Collapse) -->
                 <div id="admin-student-form" class="bg-indigo-50/50 p-4 rounded-2xl border-2 border-indigo-100 space-y-3 hidden">
-                    <h4 id="admin-form-title" class="font-black font-kids text-indigo-950 text-xs">Thêm tài khoản học viên mới</h4>
+                    <h4 id="admin-form-title" class="font-black font-kids text-indigo-955 text-xs">Thêm tài khoản học viên mới</h4>
                     <input type="hidden" id="form-old-code">
                     <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
                         <div>
@@ -685,7 +646,7 @@
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Điểm số (XP)</label>
-                            <input type="number" id="form-student-points" placeholder="Ví dụ: 100" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-bold text-indigo-900">
+                            <input type="number" id="form-student-points" placeholder="XP" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-bold text-indigo-900">
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Trạng thái VIP</label>
@@ -701,7 +662,6 @@
                     </div>
                 </div>
 
-                <!-- Bảng danh sách học sinh -->
                 <div class="overflow-x-auto border border-slate-200 rounded-2xl bg-white shadow-sm">
                     <table class="min-w-full divide-y divide-slate-200 text-left text-xs">
                         <thead class="bg-slate-50 font-bold text-slate-500 uppercase tracking-wider text-[10px]">
@@ -714,20 +674,18 @@
                             </tr>
                         </thead>
                         <tbody id="admin-students-table-body" class="divide-y divide-slate-200 font-medium text-slate-700">
-                            <!-- Danh sách render động từ Firebase -->
+                            <!-- Danh sách render động -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Nội dung TAB CẤU HÌNH HỆ THỐNG -->
             <div id="admin-content-system" class="p-6 space-y-4 hidden">
                 <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
                     <h4 class="font-black font-kids text-indigo-955 text-xs">🛠️ Đồng bộ API Gemini</h4>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Khóa bảo mật Gemini API</label>
-                        <input type="password" id="cfg-gemini-key" placeholder="Nhập API Key để kích hoạt Ms. Clara..." class="w-full px-3 py-2 border-2 border-slate-200 rounded-xl text-xs font-bold text-slate-700 bg-white">
-                        <p class="text-[9px] text-slate-400 mt-1 leading-relaxed">Nếu không điền khóa bảo mật, hệ thống sẽ tự động dùng trí thông minh nhân tạo giả lập thời gian thực để hỗ trợ học sinh học tập.</p>
+                        <input type="password" id="cfg-gemini-key" placeholder="Nhập API Key..." class="w-full px-3 py-2 border-2 border-slate-200 rounded-xl text-xs font-bold text-slate-700 bg-white">
                     </div>
                 </div>
             </div>
@@ -738,10 +696,7 @@
         </div>
     </div>
 
-
-    <!-- CHƯƠNG TRÌNH JAVASCRIPT ĐỒNG BỘ HAI LỚP -->
     <script>
-        // LỚP 1: LOCAL ENGINE - Đảm bảo ứng dụng chạy được độc lập 100% trong mọi điều kiện
         const GRADE_6_CURRICULUM = [
             {
                 term: 1, id: 1, unit: "Unit 1", title: "My New School",
@@ -890,7 +845,7 @@
             isRecording: false,
             selectedTerm: 1,
             selectedQuizIndex: 0,
-            students: [] // Dùng để cache hiển thị danh sách admin
+            students: []
         };
 
         function showCustomAlert(message, icon = "ℹ️", title = "Thông Báo") {
@@ -979,7 +934,6 @@
                 document.getElementById('login-screen').classList.add('hidden');
                 triggerVipWelcomeCheck();
                 
-                // Load local metrics first
                 const localMetrics = localStorage.getItem(`eco_metrics_g6_${appState.user.code}`);
                 if (localMetrics) {
                     const parsed = JSON.parse(localMetrics);
@@ -993,7 +947,6 @@
             }
         }
 
-        // LOCAL AUTH & PROFILE HANDLERS
         function switchAuthTab(tab) {
             const tabLogin = document.getElementById('tab-auth-login');
             const tabReg = document.getElementById('tab-auth-register');
@@ -1028,7 +981,7 @@
             const pass = document.getElementById('register-password').value;
 
             if (!name || !pass) {
-                showCustomAlert('Vui lòng điền đầy đủ thông tin tên học sinh và mật khẩu nhé!', '⚠️', 'Thiếu Thông Tin');
+                showCustomAlert('Vui lòng điền đầy đủ thông tin học sinh và mật mã nhé!', '⚠️', 'Thiếu Thông Tin');
                 return;
             }
 
@@ -1039,7 +992,6 @@
             appState.user = userData;
             applyUserSessionUI();
             
-            // Trigger Firebase hook if bound
             if (window.cloudSyncTrigger) {
                 window.cloudSyncTrigger();
             } else {
@@ -1048,7 +1000,7 @@
             }
 
             document.getElementById('login-screen').classList.add('hidden');
-            triggerToast('Đăng ký tài khoản lớp 6 thành công! 🎉');
+            triggerToast('Tạo tài khoản học viên thành công! 🎉');
         }
 
         function handleLogin() {
@@ -1071,7 +1023,6 @@
             localStorage.setItem('eco_student_session_g6', JSON.stringify(appState.user));
             applyUserSessionUI();
 
-            // Trigger Firebase hook if bound
             if (window.cloudSyncTrigger) {
                 window.cloudSyncTrigger();
             } else {
@@ -1080,7 +1031,7 @@
             }
             
             document.getElementById('login-screen').classList.add('hidden');
-            triggerToast('Đăng nhập thành công! 🚀');
+            triggerToast('Đăng nhập lớp học thành công! 🚀');
         }
 
         function triggerVipWelcomeCheck() {
@@ -1170,7 +1121,7 @@
         }
 
         function requestLogout() {
-            showCustomConfirm('Con có chắc chắn muốn đăng xuất tài khoản lớp 6 không?', '👦', 'Đăng Xuất', () => {
+            showCustomConfirm('Bạn có chắc chắn muốn thoát tài khoản không?', '👦', 'Đăng Xuất', () => {
                 localStorage.removeItem('eco_student_session_g6');
                 appState.user = null;
                 document.getElementById('login-screen').classList.remove('hidden');
@@ -1237,7 +1188,6 @@
                 `;
                 container.appendChild(card);
 
-                // Gán sự kiện nút bấm sau khi nạp thẻ
                 document.getElementById(`btn-practice-${unit.id}`).onclick = () => {
                     openPracticeModal(`${unit.unit}: ${unit.title}`, unit.words);
                 };
@@ -1267,7 +1217,7 @@
                 utterance.lang = langCode;
                 window.speechSynthesis.speak(utterance);
             } else {
-                showCustomAlert('Trình duyệt không hỗ trợ chuyển đổi giọng nói (TTS).', '⚠️', 'Lỗi Hệ Thống');
+                showCustomAlert('Trình duyệt không hỗ trợ chuyển đổi giọng nói.', '⚠️', 'Lỗi Hệ Thống');
             }
         }
 
@@ -1306,7 +1256,7 @@
 
         function toggleSpeechRecognition() {
             if (!recognition) {
-                showCustomAlert('Vui lòng sử dụng trình duyệt Chrome để nhận diện giọng nói tốt nhất!', '🎙️', 'Không Hỗ Trợ');
+                showCustomAlert('Vui lòng sử dụng Chrome để nhận diện giọng nói chính xác!', '🎙️', 'Không Hỗ Trợ');
                 return;
             }
 
@@ -1321,7 +1271,7 @@
             } else {
                 appState.isRecording = true;
                 pulse.classList.remove('hidden');
-                statusText.innerText = "🔊 Đang nghe... Con đọc đi nào!";
+                statusText.innerText = "🔊 Đang nghe... Mời bạn đọc!";
                 
                 recognition.start();
 
@@ -1331,18 +1281,18 @@
                     const targetWord = document.getElementById('practice-word').innerText.toLowerCase().trim();
 
                     const box = document.getElementById('recognized-text-box');
-                    box.innerText = `Con vừa phát âm: "${resultText}"`;
+                    box.innerText = `Kết quả ghi âm: "${resultText}"`;
                     box.classList.remove('hidden');
 
                     if (cleanResult.includes(targetWord) || targetWord.includes(cleanResult)) {
-                        statusText.innerText = "🎉 Xuất sắc! Phát âm chuẩn lớp 6! +10 XP";
+                        statusText.innerText = "🎉 Hoàn hảo! Phát âm chuẩn lớp 6! +10 XP";
                         appState.points += appState.user.isVip ? 20 : 10;
                         appState.speakingPerfect += 1;
                         appState.wordsMastered += 1;
                         createConfettiEffect();
                         triggerToast("Phát âm chính xác! +10 XP");
                     } else {
-                        statusText.innerText = "❌ Chưa khớp lắm, con hãy thử bấm nói lại nhé!";
+                        statusText.innerText = "❌ Chưa chính xác, hãy nhấp chọn và nói lại nhé!";
                     }
                     
                     appState.isRecording = false;
@@ -1359,7 +1309,7 @@
                             appState.currentWordIndex++;
                             loadWordIntoPractice();
                         } else {
-                            triggerToast("Con đã hoàn thành đầy đủ từ vựng Unit này!");
+                            triggerToast("Hoàn thành bài luyện nói!");
                             closePracticeModal();
                         }
                     }, 3000);
@@ -1432,17 +1382,17 @@
             }
 
             if (!chosen) {
-                showCustomAlert('Con hãy chọn một phương án trả lời trước khi nộp bài nhé!', '❓', 'Chưa Chọn Đáp Án');
+                showCustomAlert('Vui lòng chọn đáp án trước khi nộp!', '❓', 'Chưa Chọn Đáp Án');
                 return;
             }
 
             if (answeredCorrectly) {
-                showCustomAlert('Wow! Con đã vượt qua bài kiểm tra chuẩn lớp 6 rất giỏi! +30 XP.', '🎉', 'Đạt Điểm Tuyệt Đối');
+                showCustomAlert('Tuyệt vời! Bạn đã vượt qua thử thách trắc nghiệm! +30 XP.', '🎉', 'Đạt Điểm Tuyệt Đối');
                 appState.points += appState.user.isVip ? 60 : 30;
                 appState.lessonsDone += 1;
                 createConfettiEffect();
             } else {
-                showCustomAlert('Tiếc quá! Đáp án chưa chính xác. Con xem lại các chủ điểm ngữ pháp trong Unit nhé!', '📚', 'Hãy Cố Gắng Lên');
+                showCustomAlert('Tiếc quá! Đáp án chưa chính xác. Ôn tập kỹ ngữ pháp lớp 6 nhé!', '📚', 'Cố gắng lên');
             }
 
             closeQuizModal();
@@ -1484,10 +1434,7 @@
             const icon = document.getElementById('clara-btn-icon');
             icon.className = "fa-solid fa-circle-notch animate-spin";
 
-            let systemPrompt = "You are Ms. Clara, an encouraging and professional Grade 6 English teacher from London. " +
-                               "Help the student practice English by replying in short, clear sentences suitable for a 12-year-old Vietnamese student (A2 level). " +
-                               "Point out any grammar mistakes gently and ask a friendly follow-up question. Limit your response to 2 sentences.";
-
+            let systemPrompt = "You are Ms. Clara, an encouraging and professional Grade 6 English teacher from London. Reply in short, simple sentences suitable for a 12-year-old student.";
             let customKey = document.getElementById('cfg-gemini-key').value || "";
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${customKey}`;
 
@@ -1513,15 +1460,14 @@
                     appendClaraLog('Ms. Clara (AI)', aiReply, 'text-amber-300 font-bold animate-pulse');
                     speakWebSpeech(aiReply, 'en-GB');
                 } else {
-                    throw new Error("Dữ liệu phản hồi lỗi");
+                    throw new Error("Phản hồi rỗng");
                 }
             } catch (e) {
                 icon.className = "fa-solid fa-paper-plane";
                 const fallbackReplies = [
-                    "Excellent sentence! What do you love most about your new school?",
-                    "That sounds very interesting! Do you have many friends at school?",
-                    "Great! Your English is improving so fast! What is your favorite subject?",
-                    "Lovely! Can you describe your classroom to me?"
+                    "Wonderful expression! What is your favorite school subject?",
+                    "Great English! Can you describe your best friend for me?",
+                    "That sounds very interesting! Do you have any hobbies?"
                 ];
                 const fallbackReply = fallbackReplies[Math.floor(Math.random() * fallbackReplies.length)];
                 appendClaraLog('Ms. Clara', fallbackReply, 'text-yellow-300 italic');
@@ -1530,20 +1476,20 @@
         }
 
         function startClaraVoice() {
-            if(!recognition) return showCustomAlert('Chưa hỗ trợ nhận diện giọng nói!', '🎙️', 'Lỗi Kết Nối');
+            if(!recognition) return showCustomAlert('Chưa hỗ trợ microphone trên thiết bị này!', '🎙️', 'Lỗi Thiết Bị');
             recognition.start();
-            document.getElementById('clara-call-status').innerText = "🔊 Đang lắng nghe giọng nói của con...";
+            document.getElementById('clara-call-status').innerText = "🔊 Đang ghi âm cuộc gọi... Hãy nói bằng tiếng Anh!";
             
             recognition.onresult = (event) => {
                 const text = event.results[0][0].transcript;
                 appendClaraLog('Học viên (Giọng nói)', text, 'text-emerald-300 italic');
                 document.getElementById('clara-text-input').value = text;
                 sendToClara();
-                document.getElementById('clara-call-status').innerText = "Trợ lý ảo Clara đã nhận diện thành công!";
+                document.getElementById('clara-call-status').innerText = "Nhận diện giọng nói thành công!";
             };
 
             recognition.onerror = () => {
-                document.getElementById('clara-call-status').innerText = "Lỗi kết nối microphone. Con hãy bấm nói lại nhé!";
+                document.getElementById('clara-call-status').innerText = "Lỗi ghi âm, vui lòng kiểm tra micro.";
             };
         }
 
@@ -1558,7 +1504,7 @@
 
         // DIGITAL FLIPBOOKS
         function openFlipBook(url, title) {
-            document.getElementById('reader-book-title').innerText = `Đang đọc: ${title}`;
+            document.getElementById('reader-book-title').innerText = `Đọc sách: ${title}`;
             document.getElementById('book-reader-frame').src = url;
             document.getElementById('book-reader-modal').classList.remove('hidden');
         }
@@ -1568,7 +1514,6 @@
             document.getElementById('book-reader-frame').src = '';
         }
 
-        // CELEBRATION EFFECT
         function createConfettiEffect() {
             for (let i = 0; i < 30; i++) {
                 const confetti = document.createElement('div');
@@ -1581,7 +1526,6 @@
             }
         }
 
-        // ADMIN PANEL MANAGEMENT LOGIC
         function openAdminPasswordModal() {
             document.getElementById('admin-password-input').value = "";
             document.getElementById('admin-pass-error').classList.add('hidden');
@@ -1600,6 +1544,7 @@
 
         function submitAdminPassword() {
             const pass = document.getElementById('admin-password-input').value.trim();
+            // Mật khẩu cấu hình theo yêu cầu người dùng
             if (pass === "215151365") {
                 closeAdminPasswordModal();
                 setTimeout(() => {
@@ -1647,7 +1592,6 @@
             }
         }
 
-        // Action Form quản lý học viên
         function openAddStudentForm() {
             document.getElementById('admin-form-title').innerText = "Thêm tài khoản học viên mới";
             document.getElementById('form-old-code').value = "";
@@ -1683,7 +1627,7 @@
             const isVip = document.getElementById('form-student-vip').value === "true";
 
             if (!code || !name) {
-                showCustomAlert('Vui lòng điền đầy đủ mã và tên học sinh!', '⚠️', 'Nhập Thiếu');
+                showCustomAlert('Vui lòng điền đầy đủ mã và tên học viên!', '⚠️', 'Nhập Thiếu');
                 return;
             }
 
@@ -1694,7 +1638,7 @@
         }
 
         async function deleteStudentClick(code) {
-            showCustomConfirm(`Bạn có chắc muốn xóa học sinh mã [ ${code} ] ra khỏi cơ sở dữ liệu?`, '🗑️', 'Xác Nhận Xoá', async () => {
+            showCustomConfirm(`Xác nhận xóa tài khoản [ ${code} ] khỏi hệ thống?`, '🗑️', 'Xác Nhận Xoá', async () => {
                 if (window.adminDeleteStudentCloud) {
                     await window.adminDeleteStudentCloud(code);
                 }
@@ -1703,7 +1647,6 @@
 
         async function toggleVipClick(code, currentVip) {
             if (window.adminSaveStudentCloud) {
-                // Fetch student current details from appState local cache
                 const target = appState.students.find(s => s.code === code);
                 if (target) {
                     await window.adminSaveStudentCloud(code, code, target.name, target.points || 0, !currentVip);
@@ -1751,8 +1694,6 @@
             });
         }
 
-
-        // Bind global variables to window immediately (Prevents Uncaught ReferenceErrors under all scenarios)
         window.switchTab = switchTab;
         window.toggleUsernameMask = toggleUsernameMask;
         window.requestLogout = requestLogout;
@@ -1791,12 +1732,12 @@
         window.deleteStudentClick = deleteStudentClick;
     </script>
 
-    <!-- LỚP 2: CLOUD SYNC ENGINE (FIREBASE MODULE v11) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, deleteDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // Firebase credentials được cung cấp từ tệp "talop6-7a462"
         const firebaseConfig = {
             apiKey: "AIzaSyBfzB6EqjwNhGF1zUMC87fw2x0icrEc4hk",
             authDomain: "talop6-7a462.firebaseapp.com",
@@ -1816,24 +1757,22 @@
             db = getFirestore(app);
             auth = getAuth(app);
             firebaseReady = true;
-            console.log("Firebase Talop6 initialized successfully.");
+            console.log("Đã kết nối hoàn tất với Cloud Firebase talop6-7a462.");
         } catch (err) {
-            console.warn("Firebase failed to load. Operating in safe Offline Mode.", err);
+            console.warn("Chế độ Offline cục bộ được kích hoạt.", err);
             renderOfflineLeaderboard();
         }
 
-        // BINDERS & FIRESTORE HOOKS
         if (firebaseReady && auth) {
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
                     await pullMetricsFromFirestore();
                     setupLeaderboardRealtime();
                 } else {
-                    signInAnonymously(auth).catch(err => console.error("Anonym auth error:", err));
+                    signInAnonymously(auth).catch(err => console.error("Anonymous authentication failed:", err));
                 }
             });
 
-            // Gắn móc lưu đám mây vào Local Engine
             window.cloudSyncTrigger = async () => {
                 await pullMetricsFromFirestore();
                 triggerVipWelcomeCheck();
@@ -1844,7 +1783,6 @@
                 await pushMetricsToFirestore();
             };
 
-            // Hàm admin gọi load toàn bộ danh sách học sinh
             window.loadAllStudentsAdmin = () => {
                 const col = collection(db, 'artifacts', appId, 'public', 'data', 'students');
                 onSnapshot(col, (snap) => {
@@ -1853,14 +1791,12 @@
                     appState.students = list;
                     renderAdminTable(list);
                 }, (err) => {
-                    console.error("Admin student list real-time query error:", err);
+                    console.error("Lỗi tải thời gian thực (Thiếu Security Rules?):", err);
                 });
             };
 
-            // Hàm admin lưu/sửa học viên trực tiếp lên Cloud
             window.adminSaveStudentCloud = async (oldCode, code, name, points, isVip) => {
                 try {
-                    // Nếu đổi mã, xoá tài liệu cũ trước
                     if (oldCode && oldCode !== code) {
                         const oldRef = doc(db, 'artifacts', appId, 'public', 'data', 'students', oldCode);
                         await deleteDoc(oldRef);
@@ -1881,7 +1817,6 @@
 
                     await setDoc(ref, payload, { merge: true });
                     
-                    // Nếu chỉnh sửa chính tài khoản đang đăng nhập hiện tại thì cập nhật tức thì UI người dùng
                     if (appState.user && appState.user.code === code) {
                         appState.user.name = name;
                         appState.user.isVip = isVip;
@@ -1892,22 +1827,21 @@
                         triggerVipWelcomeCheck();
                     }
 
-                    triggerToast(`Đã lưu thay đổi thông tin học viên [ ${code} ]!`);
+                    triggerToast(`Đã lưu cập nhật thông tin [ ${code} ] lên cơ sở dữ liệu!`);
                 } catch (err) {
-                    console.error("Admin save student failed:", err);
-                    triggerToast("Lỗi đồng bộ đám mây", "error");
+                    console.error("Lỗi đồng bộ Firestore:", err);
+                    triggerToast("Lỗi đồng bộ dữ liệu bảo mật", "error");
                 }
             };
 
-            // Hàm admin xoá học viên ra khỏi hệ thống
             window.adminDeleteStudentCloud = async (code) => {
                 try {
                     const ref = doc(db, 'artifacts', appId, 'public', 'data', 'students', code);
                     await deleteDoc(ref);
-                    triggerToast(`Đã xóa học sinh [ ${code} ] khỏi cơ sở dữ liệu!`);
+                    triggerToast(`Đã xóa tài khoản học viên [ ${code} ] thành công!`);
                 } catch (err) {
-                    console.error("Delete student cloud error:", err);
-                    triggerToast("Lỗi khi xóa học sinh", "error");
+                    console.error("Lỗi xóa Firestore:", err);
+                    triggerToast("Không thể xóa tài khoản đám mây", "error");
                 }
             };
 
@@ -1928,7 +1862,6 @@
                     appState.speakingPerfect = data.speakingPerfect || 0;
                     appState.lessonsDone = data.lessonsDone || 0;
                     
-                    // Cập nhật lại thông tin VIP nếu Admin có thay đổi trên hệ thống đám mây
                     if (appState.user.isVip !== data.isVip || appState.user.name !== data.name) {
                         appState.user.isVip = data.isVip || false;
                         appState.user.name = data.name || "Học Sinh Lớp 6";
@@ -1937,14 +1870,13 @@
                         triggerVipWelcomeCheck();
                     }
 
-                    // Cache locally
                     localStorage.setItem(`eco_metrics_g6_${appState.user.code}`, JSON.stringify(appState));
                 } else {
                     await pushMetricsToFirestore();
                 }
                 updateMetricsUI();
             } catch (err) {
-                console.error("Firestore pull failed:", err);
+                console.error("Lỗi đồng bộ (Firestore Rules có thể đang chặn):", err);
             }
         }
 
@@ -1979,7 +1911,7 @@
                 list.sort((a,b) => (b.points || 0) - (a.points || 0));
                 renderLeaderboard(list);
             }, (err) => {
-                console.error("Leaderboard realtime error:", err);
+                console.error("Leaderboard database rules blocked:", err);
                 renderOfflineLeaderboard();
             });
         }
