@@ -647,7 +647,7 @@
     <!-- CHƯƠNG TRÌNH JAVASCRIPT ĐỒNG BỘ HAI LỚP -->
     <script>
         // LỚP 1: LOCAL ENGINE - Đảm bảo ứng dụng chạy được độc lập 100% trong mọi điều kiện
-        const GRADE_6_CURRICULUM = [
+         GRADE_6_CURRICULUM = [
             {
                 term: 1, id: 1, unit: "Unit 1", title: "My New School",
                 desc: "Từ vựng đồ dùng học tập, Thì Hiện tại đơn và trạng từ tần suất.",
@@ -798,12 +798,12 @@
         };
 
         function showCustomAlert(message, icon = "ℹ️", title = "Thông Báo") {
-            const modal = document.getElementById('custom-dialog-modal');
-            const dIcon = document.getElementById('dialog-icon');
-            const dTitle = document.getElementById('dialog-title');
-            const dMsg = document.getElementById('dialog-message');
-            const cancelBtn = document.getElementById('dialog-cancel-btn');
-            const okBtn = document.getElementById('dialog-ok-btn');
+             modal = document.getElementById('custom-dialog-modal');
+             dIcon = document.getElementById('dialog-icon');
+             dTitle = document.getElementById('dialog-title');
+             dMsg = document.getElementById('dialog-message');
+             cancelBtn = document.getElementById('dialog-cancel-btn');
+             okBtn = document.getElementById('dialog-ok-btn');
 
             dIcon.innerText = icon;
             dTitle.innerText = title;
@@ -817,11 +817,11 @@
         }
 
         function showCustomConfirm(message, icon = "❓", title = "Xác Nhận", onConfirm) {
-            const modal = document.getElementById('custom-dialog-modal');
-            const dIcon = document.getElementById('dialog-icon');
-            const dTitle = document.getElementById('dialog-title');
-            const dMsg = document.getElementById('dialog-message');
-            const cancelBtn = document.getElementById('dialog-cancel-btn');
+             modal = document.getElementById('custom-dialog-modal');
+             dIcon = document.getElementById('dialog-icon');
+             dTitle = document.getElementById('dialog-title');
+             dMsg = document.getElementById('dialog-message');
+             cancelBtn = document.getElementById('dialog-cancel-btn');
             const okBtn = document.getElementById('dialog-ok-btn');
 
             dIcon.innerText = icon;
@@ -1527,15 +1527,16 @@
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyB4H03pSC5qFCzJfChRqZasqimPUR3p8UM",
-            authDomain: "tieng-anh-lop-6.firebaseapp.com",
-            projectId: "tieng-anh-lop-6",
-            storageBucket: "tieng-anh-lop-6.firebasestorage.app",
-            messagingSenderId: "87591795237",
-            appId: "1:87591795237:web:b68d6e81be88e03d911dcc",
-            measurementId: "G-WB7635LRPZ"
-        };
+       const firebaseConfig = {
+  apiKey: "AIzaSyBfzB6EqjwNhGF1zUMC87fw2x0icrEc4hk",
+  authDomain: "talop6-7a462.firebaseapp.com",
+  projectId: "talop6-7a462",
+  storageBucket: "talop6-7a462.firebasestorage.app",
+  messagingSenderId: "1027888242290",
+  appId: "1:1027888242290:web:283ac3b7294d0e5fe22ceb",
+  measurementId: "G-CVVPH1QSB9"
+};
+
 
         let app, db, auth;
         let firebaseReady = false;
