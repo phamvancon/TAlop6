@@ -271,6 +271,7 @@
                     <select id="voice-selector" class="mt-2 w-full bg-slate-800 border-2 border-indigo-800 text-slate-100 text-xs font-bold rounded-xl p-2 focus:outline-none">
                         <option value="en-US" selected>Mặc Định Giọng Anh - Mỹ</option>
                         <option value="en-GB">Giọng Anh - Anh (London)</option>
+                        <option value="vi-VN">Giọng Tiếng Việt (Clara dịch)</option>
                     </select>
                     <p class="text-[9px] text-indigo-300 mt-2 leading-relaxed">Sử dụng Speech Synthesis chuẩn để rèn luyện nghe phát âm chuẩn THCS.</p>
                     <button id="btn-test-voice" onclick="testVoice()" class="mt-3 text-[10px] bg-indigo-600/50 hover:bg-indigo-600 text-white font-extrabold py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all w-full border border-indigo-500/30">
@@ -685,7 +686,7 @@
                     <h4 class="font-black font-kids text-indigo-955 text-xs">🛠️ Đồng bộ API Gemini</h4>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Khóa bảo mật Gemini API</label>
-                        <input type="password" id="cfg-gemini-key" placeholder="Nhập API Key..." class="w-full px-3 py-2 border-2 border-slate-200 rounded-xl text-xs font-bold text-slate-700 bg-white">
+                        <input type="password" id="cfg-gemini-key" value="395f6b744a34ff3eb6e042656cde6ffe" placeholder="Nhập API Key..." class="w-full px-3 py-2 border-2 border-slate-200 rounded-xl text-xs font-bold text-slate-700 bg-white">
                     </div>
                 </div>
             </div>
@@ -1040,6 +1041,11 @@
                 document.getElementById('vip-welcome-code').innerText = `MÃ: ${appState.user.code}`;
                 document.getElementById('vip-welcome-overlay').classList.remove('hidden');
                 document.getElementById('ai-assistant-locked').classList.add('hidden');
+                
+                // Tự động tắt màn hình chào mừng VIP sau 1000ms (1 giây) và kích hoạt hiệu ứng pháo hoa chúc mừng
+                setTimeout(() => {
+                    dismissVipWelcome();
+                }, 1000);
             } else {
                 document.getElementById('ai-assistant-locked').classList.remove('hidden');
             }
@@ -1200,7 +1206,7 @@
         // SPEECH AND PRACTICE CORE HANDLERS
         function testVoice() {
             const selector = document.getElementById('voice-selector');
-            const txt = "Hello students! Welcome to English grade 6 success.";
+            const txt = selector.value === 'vi-VN' ? "Xin chào các em học sinh lớp 6! Chúc các em học tập thật tốt." : "Hello students! Welcome to English grade 6 success.";
             speakWebSpeech(txt, selector.value);
         }
 
@@ -1434,8 +1440,8 @@
             const icon = document.getElementById('clara-btn-icon');
             icon.className = "fa-solid fa-circle-notch animate-spin";
 
-            let systemPrompt = "You are Ms. Clara, an encouraging and professional Grade 6 English teacher from London. Reply in short, simple sentences suitable for a 12-year-old student.";
-            let customKey = document.getElementById('cfg-gemini-key').value || "";
+            let systemPrompt = "You are Ms. Clara, an encouraging and professional Grade 6 English teacher from London. You can communicate fluently in both English and Vietnamese to help Vietnamese students learn. When students speak to you in Vietnamese, you can reply in Vietnamese to explain English concepts, translate for them, or answer their questions. Keep encouraging them to use English whenever possible! Reply in short, simple sentences suitable for a 12-year-old student.";
+            let customKey = document.getElementById('cfg-gemini-key').value || "395f6b744a34ff3eb6e042656cde6ffe";
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${customKey}`;
 
             const payload = {
@@ -1458,27 +1464,39 @@
                 if (candidate && candidate.content?.parts?.[0]?.text) {
                     const aiReply = candidate.content.parts[0].text;
                     appendClaraLog('Ms. Clara (AI)', aiReply, 'text-amber-300 font-bold animate-pulse');
-                    speakWebSpeech(aiReply, 'en-GB');
+                    
+                    // Kiểm tra phản hồi có chứa tiếng Việt không để tự động dùng giọng vi-VN đọc bài
+                    const hasVietnamese = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i.test(aiReply);
+                    let speakLang = hasVietnamese ? 'vi-VN' : (document.getElementById('voice-selector').value || 'en-GB');
+                    speakWebSpeech(aiReply, speakLang);
                 } else {
                     throw new Error("Phản hồi rỗng");
                 }
             } catch (e) {
                 icon.className = "fa-solid fa-paper-plane";
                 const fallbackReplies = [
-                    "Wonderful expression! What is your favorite school subject?",
-                    "Great English! Can you describe your best friend for me?",
-                    "That sounds very interesting! Do you have any hobbies?"
+                    "Tuyệt vời! Em có muốn cô giúp gì thêm về từ vựng hay ngữ pháp tiếng Anh lớp 6 hôm nay không?",
+                    "Great English! Cùng cô Clara tiếp tục luyện nói tiếng Anh nhé!",
+                    "That sounds very interesting! Em có câu hỏi nào cần cô giải đáp bằng tiếng Việt nữa không?"
                 ];
                 const fallbackReply = fallbackReplies[Math.floor(Math.random() * fallbackReplies.length)];
                 appendClaraLog('Ms. Clara', fallbackReply, 'text-yellow-300 italic');
-                speakWebSpeech(fallbackReply, 'en-GB');
+                
+                const hasVietnamese = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i.test(fallbackReply);
+                let speakLang = hasVietnamese ? 'vi-VN' : 'en-GB';
+                speakWebSpeech(fallbackReply, speakLang);
             }
         }
 
         function startClaraVoice() {
             if(!recognition) return showCustomAlert('Chưa hỗ trợ microphone trên thiết bị này!', '🎙️', 'Lỗi Thiết Bị');
+            
+            const selectedVoice = document.getElementById('voice-selector').value;
+            // Nếu người dùng chọn giọng Tiếng Việt, hỗ trợ nhận diện trực tiếp bằng tiếng Việt
+            recognition.lang = selectedVoice === 'vi-VN' ? 'vi-VN' : 'en-GB';
+            
             recognition.start();
-            document.getElementById('clara-call-status').innerText = "🔊 Đang ghi âm cuộc gọi... Hãy nói bằng tiếng Anh!";
+            document.getElementById('clara-call-status').innerText = `🔊 Đang ghi âm (${recognition.lang === 'vi-VN' ? 'tiếng Việt' : 'tiếng Anh'})... Hãy nói đi nào!`;
             
             recognition.onresult = (event) => {
                 const text = event.results[0][0].transcript;
